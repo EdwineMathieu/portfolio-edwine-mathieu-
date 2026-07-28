@@ -186,7 +186,12 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
+}
+
+.photo-align-top {
+  object-position: center top;
 }
 
 .case-image img.photo {
