@@ -91,7 +91,7 @@
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  document.querySelectorAll('img.photo').forEach(function (img) {
+  document.querySelectorAll('.case-image img.photo').forEach(function (img) {
     img.addEventListener('click', function (e) {
       e.stopPropagation();
       openLightbox(img.currentSrc || img.src, img.alt);

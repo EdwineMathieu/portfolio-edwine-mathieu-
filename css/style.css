@@ -189,7 +189,7 @@ body {
   display: block;
 }
 
-img.photo {
+.case-image img.photo {
   cursor: zoom-in;
 }
 
