@@ -17,10 +17,20 @@
     });
 
     if (anchorId) {
-      setTimeout(function () {
+      var scrollToAnchor = function () {
         var el = document.getElementById(anchorId);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 60);
+        if (el) el.scrollIntoView();
+      };
+      // Wait for images to finish loading (or fall back to a placeholder) first:
+      // scrolling before layout settles would land on the wrong offset once
+      // images above the target resolve and push it further down.
+      if (document.readyState === 'complete') {
+        setTimeout(scrollToAnchor, 60);
+      } else {
+        window.addEventListener('load', function () {
+          setTimeout(scrollToAnchor, 60);
+        }, { once: true });
+      }
     } else {
       window.scrollTo(0, 0);
     }
@@ -38,6 +48,19 @@
       showView(el.dataset.nav, el.dataset.anchor);
     });
   });
+
+  // Deep link on load, e.g. index.html#cs-automobile: open the view that
+  // contains the target anchor and scroll to it ourselves. The hash is
+  // stripped immediately so the browser's own native fragment-scroll (which
+  // it can retry once the target becomes visible/laid out) never fights our
+  // controlled, view-aware smooth scroll below.
+  var initialAnchor = window.location.hash.slice(1);
+  if (initialAnchor) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    var initialTarget = document.getElementById(initialAnchor);
+    var initialPanel = initialTarget && initialTarget.closest('[data-view-panel]');
+    if (initialPanel) showView(initialPanel.dataset.viewPanel, initialAnchor);
+  }
 
   document.querySelectorAll('img.photo').forEach(function (img) {
     img.addEventListener('error', function () {
