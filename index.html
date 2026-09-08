@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Edwine Mathieu — Product Designer Senior</title>
-<meta name="description" content="Portfolio d'Edwine Mathieu, Product Designer Senior — SaaS, Embedded Finance, IA.">
+<title data-i18n="doc-title">Edwine Mathieu — Product Designer Senior</title>
+<meta name="description" content="Portfolio d'Edwine Mathieu, Product Designer Senior — SaaS, Embedded Finance, IA." data-i18n-attr="content" data-i18n="meta-description">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,9 +15,13 @@
 <header class="nav">
   <div class="nav-logo">E.M — Product Designer</div>
   <nav class="nav-links" aria-label="Navigation principale">
-    <button type="button" class="nav-item is-active" data-view="accueil" aria-current="page">Accueil</button>
-    <button type="button" class="nav-item" data-view="cv">CV</button>
-    <button type="button" class="nav-item" data-view="projets">Projets</button>
+    <button type="button" class="nav-item is-active" data-view="accueil" aria-current="page" data-i18n="nav-accueil">Accueil</button>
+    <button type="button" class="nav-item" data-view="cv" data-i18n="nav-cv">CV</button>
+    <button type="button" class="nav-item" data-view="projets" data-i18n="nav-projets">Projets</button>
+    <div class="lang-switch" role="group" aria-label="Langue / Language">
+      <button type="button" class="lang-btn is-active" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
   </nav>
 </header>
 
@@ -28,16 +32,16 @@
       <div class="hero-copy">
         <div class="badge">
           <span class="badge-dot"></span>
-          Disponible pour de nouveaux projets
+          <span data-i18n="badge-available">Disponible pour de nouveaux projets</span>
         </div>
         <h1 class="hero-title">
-          Edwine Mathieu<br><span class="accent">Product Designer Senior</span>
+          <span data-i18n="hero-name">Edwine Mathieu</span><br><span class="accent" data-i18n="hero-role">Product Designer Senior</span>
         </h1>
-        <p class="hero-text">
+        <p class="hero-text" data-i18n="hero-text">
           6 ans d'expérience à piloter des produits SaaS de bout en bout — de la discovery au lancement — pour des équipes produit françaises et internationales, du SaaS de facturation à l'intégration d'agents IA.
         </p>
         <div class="hero-actions">
-          <a href="#" class="btn btn-primary" data-nav="projets">Voir les projets</a>
+          <a href="#" class="btn btn-primary" data-nav="projets" data-i18n="btn-voir-projets">Voir les projets</a>
           <a href="mailto:edwmathieu@gmail.com" class="btn btn-outline">edwmathieu@gmail.com</a>
         </div>
       </div>
@@ -48,42 +52,42 @@
 
     <section class="stats">
       <div class="stat-card">
-        <div class="stat-value">6 ans</div>
-        <div class="stat-label">d'expérience produit, du discovery au post-lancement</div>
+        <div class="stat-value" data-i18n="stat1-value">6 ans</div>
+        <div class="stat-label" data-i18n="stat1-label">d'expérience produit, du discovery au post-lancement</div>
       </div>
       <div class="stat-card">
         <div class="stat-value">100%</div>
-        <div class="stat-label">du cycle produit piloté en autonomie</div>
+        <div class="stat-label" data-i18n="stat2-label">du cycle produit piloté en autonomie</div>
       </div>
       <div class="stat-card">
         <div class="stat-value">FR / Int.</div>
-        <div class="stat-label">collaboration avec équipes pluridisciplinaires</div>
+        <div class="stat-label" data-i18n="stat3-label">collaboration avec équipes pluridisciplinaires</div>
       </div>
     </section>
 
     <section class="about">
       <div>
-        <div class="eyebrow">À propos</div>
-        <p class="about-text">
+        <div class="eyebrow" data-i18n="about-eyebrow">À propos</div>
+        <p class="about-text" data-i18n="about-p1">
           Product Designer orienté product management, j'interviens sur tout le cycle de vie produit : compréhension du problème en discovery, conception, jusqu'à l'amélioration continue post-lancement. J'ai eu la chance de collaborer avec des équipes pluridisciplinaires françaises et internationales, et de piloter des projets IA — intégration d'un agent conversationnel, refonte des process design.
         </p>
-        <p class="about-text">
+        <p class="about-text" data-i18n="about-p2">
           Mon leitmotiv : identifier le bon problème, apporter la bonne solution, l'évaluer et l'optimiser.
         </p>
       </div>
       <div>
-        <div class="eyebrow">Expertise</div>
+        <div class="eyebrow" data-i18n="expertise-eyebrow">Expertise</div>
         <div class="pill-row">
-          <div class="pill">Conception UX</div>
+          <div class="pill" data-i18n="pill-ux-design">Conception UX</div>
           <div class="pill">UI Design</div>
           <div class="pill">UX Research</div>
-          <div class="pill">Prototypage</div>
+          <div class="pill" data-i18n="pill-prototyping">Prototypage</div>
           <div class="pill">Design Systems</div>
-          <div class="pill">Facilitation d'ateliers</div>
+          <div class="pill" data-i18n="pill-workshop">Facilitation d'ateliers</div>
           <div class="pill">Data-Driven Design</div>
-          <div class="pill">Accessibilité</div>
+          <div class="pill" data-i18n="pill-accessibility">Accessibilité</div>
         </div>
-        <div class="eyebrow" style="margin-top:28px">Types de projets</div>
+        <div class="eyebrow" style="margin-top:28px" data-i18n="project-types-eyebrow">Types de projets</div>
         <div class="pill-row">
           <div class="pill pill-outline">SaaS</div>
           <div class="pill pill-outline">Software</div>
@@ -94,8 +98,8 @@
 
     <section class="featured">
       <div class="section-head">
-        <h2>Projets clés</h2>
-        <a href="#" class="link-arrow" data-nav="projets">Tous les projets →</a>
+        <h2 data-i18n="key-projects-title">Projets clés</h2>
+        <a href="#" class="link-arrow" data-nav="projets" data-i18n="all-projects-link">Tous les projets →</a>
       </div>
       <div class="featured-grid">
         <article class="project-card" data-nav="projets" data-anchor="cs-hubbix">
@@ -105,7 +109,7 @@
           <div class="project-body">
             <div class="project-tag">SaaS · EBP / Cegid</div>
             <div class="project-title">Hubbix Bâtiment</div>
-            <div class="project-blurb">Facturation pensée pour les artisans du bâtiment — de la discovery au lancement.</div>
+            <div class="project-blurb" data-i18n="feat-hubbix-blurb">Facturation pensée pour les artisans du bâtiment — de la discovery au lancement.</div>
           </div>
         </article>
         <article class="project-card" data-nav="projets" data-anchor="cs-finance">
@@ -113,9 +117,9 @@
             <img class="photo" src="images/finance-embarquee-compte-pro.png" alt="Finance embarquée + IA" data-placeholder="Finance embarquée + IA">
           </div>
           <div class="project-body">
-            <div class="project-tag">Embedded Finance · IA</div>
-            <div class="project-title">Finance embarquée &amp; assistant IA</div>
-            <div class="project-blurb">Parcours d'activation de compte pro et co-conception d'un chatbot métier.</div>
+            <div class="project-tag" data-i18n="feat-finance-tag">Embedded Finance · IA</div>
+            <div class="project-title" data-i18n="feat-finance-title">Finance embarquée &amp; assistant IA</div>
+            <div class="project-blurb" data-i18n="feat-finance-blurb">Parcours d'activation de compte pro et co-conception d'un chatbot métier.</div>
           </div>
         </article>
         <article class="project-card" data-nav="projets" data-anchor="cs-cegid">
@@ -124,8 +128,8 @@
           </div>
           <div class="project-body">
             <div class="project-tag">Design System</div>
-            <div class="project-title">Cegid — Refonte marque &amp; DS</div>
-            <div class="project-blurb">Tests de 5 directions artistiques auprès de 100 utilisateurs pour orienter la marque.</div>
+            <div class="project-title" data-i18n="feat-cegid-title">Cegid — Refonte marque &amp; DS</div>
+            <div class="project-blurb" data-i18n="feat-cegid-blurb">Tests de 5 directions artistiques auprès de 100 utilisateurs pour orienter la marque.</div>
           </div>
         </article>
       </div>
@@ -133,11 +137,11 @@
 
     <footer class="site-footer">
       <div class="site-footer-inner">
-        <div>© Edwine Mathieu — Product Designer</div>
+        <div data-i18n="footer-copyright">© Edwine Mathieu — Product Designer</div>
         <div class="footer-links">
           <a href="https://linkedin.com/in/edwine-mathieu-ux-ui-designer" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://behance.net/edmat" target="_blank" rel="noopener">Behance</a>
-          <a href="mailto:edwmathieu@gmail.com">Email</a>
+          <a href="mailto:edwmathieu@gmail.com" data-i18n="footer-email">Email</a>
         </div>
       </div>
     </footer>
@@ -146,12 +150,12 @@
   <!-- ===== CV ===== -->
   <section id="view-cv" class="view" data-view-panel="cv">
     <div class="page-narrow">
-      <h1 class="page-title">Parcours</h1>
-      <p class="page-intro">
+      <h1 class="page-title" data-i18n="cv-title">Parcours</h1>
+      <p class="page-intro" data-i18n="cv-intro">
         Product Designer orienté product management avec 6 ans d'expérience sur l'ensemble du cycle de vie produit — discovery, conception, amélioration continue — au service de la roadmap produit et des objectifs business.
       </p>
 
-      <div class="eyebrow" style="margin-bottom:24px">Expérience professionnelle</div>
+      <div class="eyebrow" style="margin-bottom:24px" data-i18n="cv-experience-eyebrow">Expérience professionnelle</div>
       <div class="experience-list">
         <div class="experience-item">
           <div class="experience-meta">
@@ -159,30 +163,30 @@
             <div class="experience-employer">Shine by Cegid (EBP Informatique)</div>
           </div>
           <div>
-            <div class="experience-title">Product Designer — Facturation, Embedded Finance, IA</div>
+            <div class="experience-title" data-i18n="exp1-title">Product Designer — Facturation, Embedded Finance, IA</div>
             <ul class="experience-bullets">
-              <li>Piloter la conception UX/UI des logiciels de facturation Hubbix Bâtiment (SaaS) et Open Line Bâtiment (on-premise / SaaS).</li>
-              <li>Structurer wireframes et prototypes en cohérence avec le design system, au service des priorités du MVP.</li>
-              <li>Coordonner les équipes produit en transverse pour déployer la facture électronique et la finance embarquée.</li>
-              <li>Animer un Design Sprint et appliquer le Design Thinking pour impulser le projet Hubbix Bâtiment.</li>
-              <li>Interviewer et tester des utilisateurs, y compris pour l'intégration d'un nouvel assistant IA.</li>
-              <li>Accompagner l'équipe produit lors du Programme Early Adopter (3 semaines) avant le lancement.</li>
-              <li>Collaborer avec développeurs, consultants métiers, PO, PM, PMM (design reviews, cérémonies agiles).</li>
-              <li>Analyser les données d'usage pour objectiver les décisions de design et maximiser l'efficacité des parcours.</li>
-              <li>Initier le premier UI Kit Mobile de l'entreprise : composants responsive documentés pour la cohérence multi-plateforme.</li>
+              <li data-i18n="exp1-b1">Piloter la conception UX/UI des logiciels de facturation Hubbix Bâtiment (SaaS) et Open Line Bâtiment (on-premise / SaaS).</li>
+              <li data-i18n="exp1-b2">Structurer wireframes et prototypes en cohérence avec le design system, au service des priorités du MVP.</li>
+              <li data-i18n="exp1-b3">Coordonner les équipes produit en transverse pour déployer la facture électronique et la finance embarquée.</li>
+              <li data-i18n="exp1-b4">Animer un Design Sprint et appliquer le Design Thinking pour impulser le projet Hubbix Bâtiment.</li>
+              <li data-i18n="exp1-b5">Interviewer et tester des utilisateurs, y compris pour l'intégration d'un nouvel assistant IA.</li>
+              <li data-i18n="exp1-b6">Accompagner l'équipe produit lors du Programme Early Adopter (3 semaines) avant le lancement.</li>
+              <li data-i18n="exp1-b7">Collaborer avec développeurs, consultants métiers, PO, PM, PMM (design reviews, cérémonies agiles).</li>
+              <li data-i18n="exp1-b8">Analyser les données d'usage pour objectiver les décisions de design et maximiser l'efficacité des parcours.</li>
+              <li data-i18n="exp1-b9">Initier le premier UI Kit Mobile de l'entreprise : composants responsive documentés pour la cohérence multi-plateforme.</li>
             </ul>
           </div>
         </div>
         <div class="experience-item">
           <div class="experience-meta">
             <div class="experience-period">2020 – 2023</div>
-            <div class="experience-employer">Freelance &amp; salarié</div>
+            <div class="experience-employer" data-i18n="exp2-employer">Freelance &amp; salarié</div>
           </div>
           <div>
-            <div class="experience-title">Webdesigner UI/UX / Graphiste</div>
+            <div class="experience-title" data-i18n="exp2-title">Webdesigner UI/UX / Graphiste</div>
             <ul class="experience-bullets">
-              <li>Créations et refontes de sites sous WordPress (Elementor) pour Yvelines Info Jeunes, CEP Paritaire IDF, Crésus IDF, Onlytravaux, etc.</li>
-              <li>Conception de supports de communication : plaquettes, flyers, livrets, posts réseaux sociaux, logos.</li>
+              <li data-i18n="exp2-b1">Créations et refontes de sites sous WordPress (Elementor) pour Yvelines Info Jeunes, CEP Paritaire IDF, Crésus IDF, Onlytravaux, etc.</li>
+              <li data-i18n="exp2-b2">Conception de supports de communication : plaquettes, flyers, livrets, posts réseaux sociaux, logos.</li>
             </ul>
           </div>
         </div>
@@ -192,10 +196,10 @@
             <div class="experience-employer">Innovation Maker Alliance, CRIP, Itiforums, Kubakub, MSHB, Miss Hype</div>
           </div>
           <div>
-            <div class="experience-title">Chargée de communication</div>
+            <div class="experience-title" data-i18n="exp3-title">Chargée de communication</div>
             <ul class="experience-bullets">
-              <li>Création et gestion de supports de communication print et digital.</li>
-              <li>Coordination de projets de communication institutionnelle et événementielle.</li>
+              <li data-i18n="exp3-b1">Création et gestion de supports de communication print et digital.</li>
+              <li data-i18n="exp3-b2">Coordination de projets de communication institutionnelle et événementielle.</li>
             </ul>
           </div>
         </div>
@@ -203,48 +207,48 @@
 
       <div class="cv-columns">
         <div>
-          <div class="eyebrow">Compétences clés</div>
+          <div class="eyebrow" data-i18n="skills-eyebrow">Compétences clés</div>
           <div class="skill-cat">
             <div class="skill-name">UX Research</div>
-            <div class="skill-items">Interviews, tests utilisateurs, analyse de données, personas, parcours utilisateurs</div>
+            <div class="skill-items" data-i18n="skill-research-items">Interviews, tests utilisateurs, analyse de données, personas, parcours utilisateurs</div>
           </div>
           <div class="skill-cat">
-            <div class="skill-name">Design &amp; Prototypage</div>
+            <div class="skill-name" data-i18n="skill-design-name">Design &amp; Prototypage</div>
             <div class="skill-items">Figma, FigJam, Figma Make, Design Systems</div>
           </div>
           <div class="skill-cat">
-            <div class="skill-name">Méthodologies</div>
+            <div class="skill-name" data-i18n="skill-method-name">Méthodologies</div>
             <div class="skill-items">Design Thinking, Design Sprint, Agile/Scrum, Lean UX</div>
           </div>
           <div class="skill-cat">
             <div class="skill-name">UX Analytics</div>
-            <div class="skill-items">Maze, Dovetail, Microsoft Clarity, heatmaps, analyse data-driven, Claude, ChatGPT, Gemini</div>
+            <div class="skill-items" data-i18n="skill-analytics-items">Maze, Dovetail, Microsoft Clarity, heatmaps, analyse data-driven, Claude, ChatGPT, Gemini</div>
           </div>
           <div class="skill-cat">
-            <div class="skill-name">Front-end (bases)</div>
+            <div class="skill-name" data-i18n="skill-frontend-name">Front-end (bases)</div>
             <div class="skill-items">HTML, CSS, Github, Claude Code, Cursor</div>
           </div>
           <div class="skill-cat">
-            <div class="skill-name">Accessibilité</div>
-            <div class="skill-items">Bonnes pratiques WCAG, design inclusif</div>
+            <div class="skill-name" data-i18n="pill-accessibility">Accessibilité</div>
+            <div class="skill-items" data-i18n="skill-a11y-items">Bonnes pratiques WCAG, design inclusif</div>
           </div>
           <div class="skill-cat" style="margin-top:24px">
-            <div class="skill-name">Langues</div>
-            <div class="skill-items">Français (natif) · Anglais (B1) · Espagnol (A1)</div>
+            <div class="skill-name" data-i18n="skill-languages-name">Langues</div>
+            <div class="skill-items" data-i18n="skill-languages-items">Français (natif) · Anglais (B1) · Espagnol (A1)</div>
           </div>
         </div>
         <div>
-          <div class="eyebrow">Éducation</div>
+          <div class="eyebrow" data-i18n="education-eyebrow">Éducation</div>
           <div class="edu-item">
-            <div class="edu-title">O'clock — Développeur web fullstack JavaScript</div>
+            <div class="edu-title" data-i18n="edu1-title">O'clock — Développeur web fullstack JavaScript</div>
             <div class="edu-period">01/2022 – 06/2022</div>
           </div>
           <div class="edu-item">
-            <div class="edu-title">Marcorel — BTS Designer graphique print et web UX-UI</div>
+            <div class="edu-title" data-i18n="edu2-title">Marcorel — BTS Designer graphique print et web UX-UI</div>
             <div class="edu-period">09/2019 – 06/2020</div>
           </div>
           <div class="edu-item">
-            <div class="edu-title">Université Rennes II — Master &amp; Licence Info-Communication</div>
+            <div class="edu-title" data-i18n="edu3-title">Université Rennes II — Master &amp; Licence Info-Communication</div>
             <div class="edu-period">09/2009 – 09/2014</div>
           </div>
         </div>
@@ -255,57 +259,154 @@
   <!-- ===== PROJETS ===== -->
   <section id="view-projets" class="view" data-view-panel="projets">
     <div class="page-wide">
-      <h1 class="page-title">Projets</h1>
-      <p class="page-intro">
+      <h1 class="page-title" data-i18n="projets-title">Projets</h1>
+      <p class="page-intro" data-i18n="projets-intro">
         Études de cas produit, du SaaS de facturation à l'intégration d'agents IA, ainsi que quelques projets freelance et explorations personnelles.
       </p>
+
+      <div class="project-gallery">
+        <button type="button" class="project-card" data-target="cs-agent-ia">
+          <div class="project-thumb">
+            <img class="photo" src="images/agent-ia-openline.png" alt="Assistant IA — EBP Open Line" data-placeholder="Assistant IA — EBP Open Line">
+          </div>
+          <div class="project-body">
+            <div class="project-tag" data-i18n="agentia-tag">IA · Design Leadership</div>
+            <div class="project-title" data-i18n="agentia-title">Agent conversationnel IA — EBP Open Line</div>
+            <div class="project-blurb" data-i18n="gal-agent-ia-blurb">Recherche utilisateurs et pilotage produit pour l'intégration d'un assistant IA dans la suite EBP Open Line.</div>
+          </div>
+        </button>
+        <button type="button" class="project-card" data-target="cs-hubbix">
+          <div class="project-thumb">
+            <img class="photo" src="images/hubbix-devis.png" alt="Hubbix Bâtiment — captures produit" data-placeholder="Hubbix Bâtiment — captures produit">
+          </div>
+          <div class="project-body">
+            <div class="project-tag">SaaS · EBP / Cegid</div>
+            <div class="project-title">Hubbix Bâtiment</div>
+            <div class="project-blurb" data-i18n="feat-hubbix-blurb">Facturation pensée pour les artisans du bâtiment — de la discovery au lancement.</div>
+          </div>
+        </button>
+        <button type="button" class="project-card" data-target="cs-finance">
+          <div class="project-thumb">
+            <img class="photo" src="images/finance-embarquee-compte-pro.png" alt="Finance embarquée + IA" data-placeholder="Finance embarquée + IA">
+          </div>
+          <div class="project-body">
+            <div class="project-tag" data-i18n="feat-finance-tag">Embedded Finance · IA</div>
+            <div class="project-title" data-i18n="feat-finance-title">Finance embarquée &amp; assistant IA</div>
+            <div class="project-blurb" data-i18n="feat-finance-blurb">Parcours d'activation de compte pro et co-conception d'un chatbot métier.</div>
+          </div>
+        </button>
+        <button type="button" class="project-card" data-target="cs-cegid">
+          <div class="project-thumb">
+            <img class="photo" src="images/cegid-dashboard.png" alt="Cegid — moodboard &amp; prototypes" data-placeholder="Cegid — moodboard &amp; prototypes">
+          </div>
+          <div class="project-body">
+            <div class="project-tag">Design System</div>
+            <div class="project-title" data-i18n="feat-cegid-title">Cegid — Refonte marque &amp; DS</div>
+            <div class="project-blurb" data-i18n="feat-cegid-blurb">Tests de 5 directions artistiques auprès de 100 utilisateurs pour orienter la marque.</div>
+          </div>
+        </button>
+        <button type="button" class="project-card" data-target="cs-citymoov">
+          <div class="project-thumb">
+            <img class="photo" src="images/citymoov-miniature.png" alt="City Moov — application mobilité" data-placeholder="City Moov — application mobilité">
+          </div>
+          <div class="project-body">
+            <div class="project-tag" data-i18n="citymoov-tag">Mobilité · Accessibilité</div>
+            <div class="project-title">City Moov</div>
+            <div class="project-blurb" data-i18n="gal-citymoov-blurb">Prototype de mobilité intégrée pensé pour la transition écologique et l'accessibilité.</div>
+          </div>
+        </button>
+        <button type="button" class="project-card" data-target="cs-automobile">
+          <div class="project-thumb">
+            <img class="photo" src="images/cockpit-ev.png" alt="Cockpit numérique — écran conducteur &amp; écran central" data-placeholder="Cockpit numérique — écran conducteur &amp; écran central">
+          </div>
+          <div class="project-body">
+            <div class="project-tag" data-i18n="automobile-tag">Automobile · Mobilité</div>
+            <div class="project-title">Automobile &amp; Mobilité</div>
+            <div class="project-blurb" data-i18n="gal-automobile-blurb">Cockpit numérique HMI pour véhicule électrique — écran conducteur et écran central.</div>
+          </div>
+        </button>
+        <button type="button" class="project-card" data-target="cs-yij">
+          <div class="project-thumb">
+            <img class="photo" src="images/YIJ_Miniature.png" alt="Yvelines Info Jeunes — refonte site" data-placeholder="Yvelines Info Jeunes — refonte site">
+          </div>
+          <div class="project-body">
+            <div class="project-tag" data-i18n="yij-tag">Freelance · Web</div>
+            <div class="project-title">Yvelines Info Jeunes</div>
+            <div class="project-blurb" data-i18n="gal-yij-blurb">Refonte complète d'un site jeunesse, de la recherche utilisateurs au développement WordPress.</div>
+          </div>
+        </button>
+        <button type="button" class="project-card" data-target="cs-cep">
+          <div class="project-thumb">
+            <img class="photo" src="images/cep-idf.png" alt="CEP Paritaire IDF &amp; Crésus IDF" data-placeholder="CEP Paritaire IDF &amp; Crésus IDF">
+          </div>
+          <div class="project-body">
+            <div class="project-tag" data-i18n="cep-tag">Freelance · Institutionnel</div>
+            <div class="project-title">CEP Paritaire IDF &amp; Crésus IDF</div>
+            <div class="project-blurb" data-i18n="gal-cep-blurb">Site responsive multi-publics et refonte de parcours pour deux structures institutionnelles.</div>
+          </div>
+        </button>
+        <button type="button" class="project-card" data-target="cs-luxe">
+          <div class="project-thumb">
+            <img class="photo photo-align-top" src="images/hermes-page.png" alt="Hermès &amp; Versace — explorations" data-placeholder="Hermès &amp; Versace — explorations">
+          </div>
+          <div class="project-body">
+            <div class="project-tag" data-i18n="luxe-tag">Coup de cœur · Luxe</div>
+            <div class="project-title">Hermès &amp; Versace</div>
+            <div class="project-blurb" data-i18n="gal-luxe-blurb">Exploration des codes visuels et de l'UX du secteur du luxe, à travers Hermès et Versace.</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="project-modal" id="project-modal">
+        <button type="button" class="project-modal-close" aria-label="Fermer">&times;</button>
+        <div class="project-modal-inner">
 
       <div id="cs-agent-ia" class="case-study">
         <div class="case-image">
           <img class="photo" src="images/agent-ia-openline.png" alt="Assistant IA — EBP Open Line" data-placeholder="Assistant IA — EBP Open Line">
         </div>
         <div class="case-body">
-          <div class="project-tag">IA · Design Leadership</div>
-          <h2 class="case-title">Agent conversationnel IA — EBP Open Line</h2>
+          <div class="project-tag" data-i18n="agentia-tag">IA · Design Leadership</div>
+          <h2 class="case-title" data-i18n="agentia-title">Agent conversationnel IA — EBP Open Line</h2>
           <div class="case-block">
-            <div class="case-block-heading">Contexte</div>
-            <p class="case-block-text">Intégration d'un agent conversationnel dans la suite EBP Open Line (Comptabilité, Bâtiment, Gestion commerciale), en binôme avec une autre Product Designer et l'équipe IA (Product Owner, développeurs).</p>
+            <div class="case-block-heading" data-i18n="agentia-h1">Contexte</div>
+            <p class="case-block-text" data-i18n="agentia-t1">Intégration d'un agent conversationnel dans la suite EBP Open Line (Comptabilité, Bâtiment, Gestion commerciale), en binôme avec une autre Product Designer et l'équipe IA (Product Owner, développeurs).</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Cadrage amont</div>
-            <p class="case-block-text">En amont, j'ai intégré un groupe de travail Cegid dédié à l'IA : observation et collecte des besoins utilisateurs sur les logiciels du groupe, analyse des bonnes pratiques IA, formalisées dans un article partagé à l'ensemble du groupe Cegid. Cette étape m'a permis d'appréhender les usages de l'IA à travers différents logiciels avant de cadrer le projet Open Line.</p>
+            <div class="case-block-heading" data-i18n="agentia-h2">Cadrage amont</div>
+            <p class="case-block-text" data-i18n="agentia-t2">En amont, j'ai intégré un groupe de travail Cegid dédié à l'IA : observation et collecte des besoins utilisateurs sur les logiciels du groupe, analyse des bonnes pratiques IA, formalisées dans un article partagé à l'ensemble du groupe Cegid. Cette étape m'a permis d'appréhender les usages de l'IA à travers différents logiciels avant de cadrer le projet Open Line.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Pilotage de la recherche utilisateurs</div>
-            <p class="case-block-text">Missionnée sur les produits Open Line, j'ai coordonné PM, marketing, commerce et pôle data pour identifier les besoins et définir l'offre. J'ai conçu la grille d'interview, mené les entretiens clients en binôme et présenté la restitution aux parties prenantes.</p>
+            <div class="case-block-heading" data-i18n="agentia-h3">Pilotage de la recherche utilisateurs</div>
+            <p class="case-block-text" data-i18n="agentia-t3">Missionnée sur les produits Open Line, j'ai coordonné PM, marketing, commerce et pôle data pour identifier les besoins et définir l'offre. J'ai conçu la grille d'interview, mené les entretiens clients en binôme et présenté la restitution aux parties prenantes.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Portée de la recherche</div>
-            <p class="case-block-text">37 clients EBP interrogés sur leur rapport à l'IA via une enquête quantitative menée avec le pôle data (janvier 2026). 14 entreprises clientes EBP (TPE/PME, de 1 à plus de 50 salariés) interviewées entre le 10 et le 31 mars 2026, sur les produits Comptabilité, Gestion commerciale, Méca et Bâtiment.</p>
+            <div class="case-block-heading" data-i18n="agentia-h4">Portée de la recherche</div>
+            <p class="case-block-text" data-i18n="agentia-t4">37 clients EBP interrogés sur leur rapport à l'IA via une enquête quantitative menée avec le pôle data (janvier 2026). 14 entreprises clientes EBP (TPE/PME, de 1 à plus de 50 salariés) interviewées entre le 10 et le 31 mars 2026, sur les produits Comptabilité, Gestion commerciale, Méca et Bâtiment.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Résultats &amp; suivi</div>
-            <p class="case-block-text">Depuis la mise en production, aucune remontée liée à l'agent conversationnel auprès de l'assistance technique ; les utilisateurs se disent satisfaits de l'outil. J'ai piloté la mise en place d'un tableau de bord interne d'observabilité pour affiner l'usage de l'assistant, mesurer l'adoption en continu et confirmer ou infirmer les hypothèses issues de la recherche.</p>
+            <div class="case-block-heading" data-i18n="agentia-h5">Résultats &amp; suivi</div>
+            <p class="case-block-text" data-i18n="agentia-t5">Depuis la mise en production, aucune remontée liée à l'agent conversationnel auprès de l'assistance technique ; les utilisateurs se disent satisfaits de l'outil. J'ai piloté la mise en place d'un tableau de bord interne d'observabilité pour affiner l'usage de l'assistant, mesurer l'adoption en continu et confirmer ou infirmer les hypothèses issues de la recherche.</p>
           </div>
           <div class="case-stats">
             <div class="case-stat">
               <div class="case-stat-value">37</div>
-              <div class="case-stat-label">clients interrogés (quanti)</div>
+              <div class="case-stat-label" data-i18n="agentia-s1">clients interrogés (quanti)</div>
             </div>
             <div class="case-stat">
               <div class="case-stat-value">14</div>
-              <div class="case-stat-label">entreprises interviewées</div>
+              <div class="case-stat-label" data-i18n="agentia-s2">entreprises interviewées</div>
             </div>
             <div class="case-stat">
               <div class="case-stat-value">0</div>
-              <div class="case-stat-label">ticket assistance post-lancement</div>
+              <div class="case-stat-label" data-i18n="agentia-s3">ticket assistance post-lancement</div>
             </div>
           </div>
           <div class="tag-row">
-            <div class="tag">IA</div>
+            <div class="tag" data-i18n="tag-ia">IA</div>
             <div class="tag">UX Research</div>
             <div class="tag">Leadership</div>
-            <div class="tag">Coordination transverse</div>
+            <div class="tag" data-i18n="tag-coord">Coordination transverse</div>
           </div>
         </div>
       </div>
@@ -315,42 +416,42 @@
           <img class="photo" src="images/hubbix-devis.png" alt="Hubbix Bâtiment — captures produit" data-placeholder="Hubbix Bâtiment — captures produit">
         </div>
         <div class="case-body">
-          <div class="project-tag">SaaS · Facturation bâtiment</div>
+          <div class="project-tag" data-i18n="hubbix-tag">SaaS · Facturation bâtiment</div>
           <h2 class="case-title">Hubbix Bâtiment</h2>
           <div class="case-block">
-            <div class="case-block-heading">Contexte &amp; problématique</div>
-            <p class="case-block-text">Créer un logiciel de facturation adapté au secteur du bâtiment (PME, artisans). Les outils existants étaient trop complexes, manquaient d'ergonomie et faisaient perdre du temps sur les tâches administratives.</p>
+            <div class="case-block-heading" data-i18n="hubbix-h1">Contexte &amp; problématique</div>
+            <p class="case-block-text" data-i18n="hubbix-t1">Créer un logiciel de facturation adapté au secteur du bâtiment (PME, artisans). Les outils existants étaient trop complexes, manquaient d'ergonomie et faisaient perdre du temps sur les tâches administratives.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Rôle &amp; méthodologie</div>
-            <p class="case-block-text">UX/UI Designer sur 100% du cycle produit : 10 interviews utilisateurs, benchmark SaaS, wireframes et parcours, 5 tests utilisateurs, programme early adopters, UX Analytics (Microsoft Clarity, Heap), méthodologie agile avec PO/PM/devs/marketing.</p>
+            <div class="case-block-heading" data-i18n="hubbix-h2">Rôle &amp; méthodologie</div>
+            <p class="case-block-text" data-i18n="hubbix-t2">UX/UI Designer sur 100% du cycle produit : 10 interviews utilisateurs, benchmark SaaS, wireframes et parcours, 5 tests utilisateurs, programme early adopters, UX Analytics (Microsoft Clarity, Heap), méthodologie agile avec PO/PM/devs/marketing.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Solutions</div>
-            <p class="case-block-text">Dashboard clair et hiérarchisé, navigation par parcours (devis → validation → facturation), UI sobre et professionnelle, contribution au design system (boutons, formulaires, alertes).</p>
+            <div class="case-block-heading" data-i18n="hubbix-h3">Solutions</div>
+            <p class="case-block-text" data-i18n="hubbix-t3">Dashboard clair et hiérarchisé, navigation par parcours (devis → validation → facturation), UI sobre et professionnelle, contribution au design system (boutons, formulaires, alertes).</p>
           </div>
           <div class="case-stats">
             <div class="case-stat">
               <div class="case-stat-value">+238</div>
-              <div class="case-stat-label">clients (juin 2025)</div>
+              <div class="case-stat-label" data-i18n="hubbix-s1">clients (juin 2025)</div>
             </div>
             <div class="case-stat">
               <div class="case-stat-value">1m54s</div>
-              <div class="case-stat-label">temps moyen / facture</div>
+              <div class="case-stat-label" data-i18n="hubbix-s2">temps moyen / facture</div>
             </div>
             <div class="case-stat">
               <div class="case-stat-value">5</div>
-              <div class="case-stat-label">tests utilisateurs</div>
+              <div class="case-stat-label" data-i18n="hubbix-s3">tests utilisateurs</div>
             </div>
           </div>
           <div class="tag-row">
             <div class="tag">SaaS</div>
-            <div class="tag">Agilité</div>
+            <div class="tag" data-i18n="tag-agilite">Agilité</div>
             <div class="tag">UX Research</div>
             <div class="tag">UX Analytics</div>
-            <div class="tag">Accessibilité</div>
+            <div class="tag" data-i18n="pill-accessibility">Accessibilité</div>
           </div>
-          <a href="https://www.behance.net/gallery/211812587/Hubbix-Batiment" target="_blank" rel="noopener" class="case-link">Voir sur Behance →</a>
+          <a href="https://www.behance.net/gallery/211812587/Hubbix-Batiment" target="_blank" rel="noopener" class="case-link" data-i18n="behance-link">Voir sur Behance →</a>
         </div>
       </div>
 
@@ -359,24 +460,24 @@
           <img class="photo" src="images/finance-embarquee-compte-pro.png" alt="Finance embarquée — parcours produit" data-placeholder="Finance embarquée — parcours produit">
         </div>
         <div class="case-body">
-          <div class="project-tag">Embedded Finance · IA</div>
-          <h2 class="case-title">EBP — Finance embarquée &amp; assistant IA</h2>
+          <div class="project-tag" data-i18n="feat-finance-tag">Embedded Finance · IA</div>
+          <h2 class="case-title" data-i18n="finance-title">EBP — Finance embarquée &amp; assistant IA</h2>
           <div class="case-block">
-            <div class="case-block-heading">Objectif</div>
-            <p class="case-block-text">Intégrer des services bancaires embarqués accessibles sans quitter l'application, pour permettre aux artisans et commerçants de connecter leur logiciel de facturation à un compte pro.</p>
+            <div class="case-block-heading" data-i18n="finance-h1">Objectif</div>
+            <p class="case-block-text" data-i18n="finance-t1">Intégrer des services bancaires embarqués accessibles sans quitter l'application, pour permettre aux artisans et commerçants de connecter leur logiciel de facturation à un compte pro.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Contribution</div>
-            <p class="case-block-text">Prototypage du parcours d'activation de compte pro, de son alimentation, et du parcours de règlement des factures. Co-conception de l'interface du chatbot IA avec le Product Manager et les développeurs.</p>
+            <div class="case-block-heading" data-i18n="finance-h2">Contribution</div>
+            <p class="case-block-text" data-i18n="finance-t2">Prototypage du parcours d'activation de compte pro, de son alimentation, et du parcours de règlement des factures. Co-conception de l'interface du chatbot IA avec le Product Manager et les développeurs.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Impact</div>
-            <p class="case-block-text">Participation au groupe de travail sur l'adoption des assistants et agents IA par les clients dans des logiciels professionnels.</p>
+            <div class="case-block-heading" data-i18n="finance-h3">Impact</div>
+            <p class="case-block-text" data-i18n="finance-t3">Participation au groupe de travail sur l'adoption des assistants et agents IA par les clients dans des logiciels professionnels.</p>
           </div>
           <div class="tag-row">
             <div class="tag">Embedded Finance</div>
-            <div class="tag">IA</div>
-            <div class="tag">Prototypage</div>
+            <div class="tag" data-i18n="tag-ia">IA</div>
+            <div class="tag" data-i18n="pill-prototyping">Prototypage</div>
           </div>
         </div>
       </div>
@@ -387,14 +488,14 @@
         </div>
         <div class="case-body">
           <div class="project-tag">Design System · Brand</div>
-          <h2 class="case-title">Cegid — Refonte de la marque &amp; Design System</h2>
+          <h2 class="case-title" data-i18n="cegid-title">Cegid — Refonte de la marque &amp; Design System</h2>
           <div class="case-block">
-            <div class="case-block-heading">Démarche</div>
-            <p class="case-block-text">5 groupes de designers ont proposé un prototype incarnant la nouvelle marque Cegid. Après veille et conception, les 5 prototypes finaux ont été testés auprès de 100 testeurs avec l'aide d'un paneliste.</p>
+            <div class="case-block-heading" data-i18n="cegid-h1">Démarche</div>
+            <p class="case-block-text" data-i18n="cegid-t1">5 groupes de designers ont proposé un prototype incarnant la nouvelle marque Cegid. Après veille et conception, les 5 prototypes finaux ont été testés auprès de 100 testeurs avec l'aide d'un paneliste.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Résultats</div>
-            <p class="case-block-text">Comparaison des projets selon des critères établis (couleur, ergonomie...) pour identifier points de friction et éléments attractifs, et orienter les décisions de design à l'échelle du groupe.</p>
+            <div class="case-block-heading" data-i18n="cegid-h2">Résultats</div>
+            <p class="case-block-text" data-i18n="cegid-t2">Comparaison des projets selon des critères établis (couleur, ergonomie...) pour identifier points de friction et éléments attractifs, et orienter les décisions de design à l'échelle du groupe.</p>
           </div>
           <div class="tag-row">
             <div class="tag">Design System</div>
@@ -409,22 +510,22 @@
           <img class="photo" src="images/citymoov-miniature.png" alt="City Moov — application mobilité" data-placeholder="City Moov — application mobilité">
         </div>
         <div class="case-body">
-          <div class="project-tag">Mobilité · Accessibilité</div>
+          <div class="project-tag" data-i18n="citymoov-tag">Mobilité · Accessibilité</div>
           <h2 class="case-title">City Moov</h2>
           <div class="case-block">
-            <div class="case-block-heading">Contexte</div>
-            <p class="case-block-text">Prototype d'application de mobilité intégrée : transition écologique, multimodalité et accessibilité territoriale, combinant transports publics, covoiturage et voiture partagée.</p>
+            <div class="case-block-heading" data-i18n="citymoov-h1">Contexte</div>
+            <p class="case-block-text" data-i18n="citymoov-t1">Prototype d'application de mobilité intégrée : transition écologique, multimodalité et accessibilité territoriale, combinant transports publics, covoiturage et voiture partagée.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Approche</div>
-            <p class="case-block-text">Réflexions sur la décarbonation, la sobriété énergétique et la fluidité des parcours. Volet accessibilité dédié : repenser l'expérience de mobilité pour les personnes en situation de handicap.</p>
+            <div class="case-block-heading" data-i18n="citymoov-h2">Approche</div>
+            <p class="case-block-text" data-i18n="citymoov-t2">Réflexions sur la décarbonation, la sobriété énergétique et la fluidité des parcours. Volet accessibilité dédié : repenser l'expérience de mobilité pour les personnes en situation de handicap.</p>
           </div>
           <div class="tag-row">
-            <div class="tag">Mobilité</div>
-            <div class="tag">Accessibilité</div>
-            <div class="tag">Prototypage</div>
+            <div class="tag" data-i18n="pill-mobilite">Mobilité</div>
+            <div class="tag" data-i18n="pill-accessibility">Accessibilité</div>
+            <div class="tag" data-i18n="pill-prototyping">Prototypage</div>
           </div>
-          <a href="https://www.behance.net/gallery/218329645/City-Moov" target="_blank" rel="noopener" class="case-link">Voir sur Behance →</a>
+          <a href="https://www.behance.net/gallery/218329645/City-Moov" target="_blank" rel="noopener" class="case-link" data-i18n="behance-link">Voir sur Behance →</a>
         </div>
       </div>
 
@@ -433,39 +534,39 @@
           <img class="photo" src="images/cockpit-ev.png" alt="Cockpit numérique — écran conducteur &amp; écran central" data-placeholder="Cockpit numérique — écran conducteur &amp; écran central">
         </div>
         <div class="case-body">
-          <div class="project-tag">Automobile · Mobilité</div>
+          <div class="project-tag" data-i18n="automobile-tag">Automobile · Mobilité</div>
           <h2 class="case-title">Automobile &amp; Mobilité</h2>
           <div class="case-block">
-            <div class="case-block-heading">Vision</div>
-            <p class="case-block-text">Product Designer spécialisée en UX/UI, j'ai travaillé sur des produits digitaux variés et je concentre aujourd'hui mon attention sur les expériences automobiles — services connectés, interfaces embarquées et produits de mobilité. Ma démarche : comprendre comment les entreprises abordent l'UX à l'ère du véhicule software-defined, et échanger avec les équipes qui relèvent ces défis.</p>
+            <div class="case-block-heading" data-i18n="auto-h1">Vision</div>
+            <p class="case-block-text" data-i18n="auto-t1">Product Designer spécialisée en UX/UI, j'ai travaillé sur des produits digitaux variés et je concentre aujourd'hui mon attention sur les expériences automobiles — services connectés, interfaces embarquées et produits de mobilité. Ma démarche : comprendre comment les entreprises abordent l'UX à l'ère du véhicule software-defined, et échanger avec les équipes qui relèvent ces défis.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Cockpit EV — écran conducteur &amp; écran central</div>
-            <p class="case-block-text">Prototype animé d'interface HMI pour véhicule électrique : cluster conducteur et écran central conçus comme deux plans d'information distincts, avec modes de conduite Éco / Confort / Sport, navigation, gestion de l'énergie et de la recharge, climatisation et média.</p>
+            <div class="case-block-heading" data-i18n="auto-h2">Cockpit EV — écran conducteur &amp; écran central</div>
+            <p class="case-block-text" data-i18n="auto-t2">Prototype animé d'interface HMI pour véhicule électrique : cluster conducteur et écran central conçus comme deux plans d'information distincts, avec modes de conduite Éco / Confort / Sport, navigation, gestion de l'énergie et de la recharge, climatisation et média.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Hiérarchie — une information par plan</div>
-            <p class="case-block-text">Le cluster ne porte que la conduite : vitesse, voie, énergie. Tout le reste vit sur l'écran central. Les 2px de règle séparent les plans sans ajouter d'ornement.</p>
+            <div class="case-block-heading" data-i18n="auto-h3">Hiérarchie — une information par plan</div>
+            <p class="case-block-text" data-i18n="auto-t3">Le cluster ne porte que la conduite : vitesse, voie, énergie. Tout le reste vit sur l'écran central. Les 2px de règle séparent les plans sans ajouter d'ornement.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Couleur — le rouge ne décore jamais</div>
-            <p class="case-block-text">L'accent est réservé au mode actif, à l'itinéraire et aux alertes. Les modes se distinguent par la typographie et la densité, pas par un habillage coloré.</p>
+            <div class="case-block-heading" data-i18n="auto-h4">Couleur — le rouge ne décore jamais</div>
+            <p class="case-block-text" data-i18n="auto-t4">L'accent est réservé au mode actif, à l'itinéraire et aux alertes. Les modes se distinguent par la typographie et la densité, pas par un habillage coloré.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Grille — six tuiles, jamais plus</div>
-            <p class="case-block-text">La personnalisation se fait dans une grille 3×2 fermée : l'utilisateur choisit le contenu, le système garde le rythme et les cibles tactiles.</p>
+            <div class="case-block-heading" data-i18n="auto-h5">Grille — six tuiles, jamais plus</div>
+            <p class="case-block-text" data-i18n="auto-t5">La personnalisation se fait dans une grille 3×2 fermée : l'utilisateur choisit le contenu, le système garde le rythme et les cibles tactiles.</p>
           </div>
           <div class="case-block">
-            <div class="case-block-heading">Énergie — le chiffre utile, pas le chiffre brut</div>
-            <p class="case-block-text">L'autonomie est exprimée en kilomètres et en état de charge à l'arrivée. La consommation instantanée reste secondaire, en histogramme.</p>
+            <div class="case-block-heading" data-i18n="auto-h6">Énergie — le chiffre utile, pas le chiffre brut</div>
+            <p class="case-block-text" data-i18n="auto-t6">L'autonomie est exprimée en kilomètres et en état de charge à l'arrivée. La consommation instantanée reste secondaire, en histogramme.</p>
           </div>
           <div class="tag-row">
             <div class="tag">UX/UI</div>
-            <div class="tag">Automobile</div>
+            <div class="tag" data-i18n="tag-automobile">Automobile</div>
             <div class="tag">HMI</div>
-            <div class="tag">Prototypage</div>
+            <div class="tag" data-i18n="pill-prototyping">Prototypage</div>
           </div>
-          <a href="cockpit-ev.html" target="_blank" rel="noopener" class="case-link">Voir le prototype animé →</a>
+          <a href="cockpit-ev.html" target="_blank" rel="noopener" class="case-link" data-i18n="cockpit-link">Voir le prototype animé →</a>
         </div>
       </div>
 
@@ -474,16 +575,16 @@
           <img class="photo" src="images/YIJ_Miniature.png" alt="Yvelines Info Jeunes — refonte site" data-placeholder="Yvelines Info Jeunes — refonte site">
         </div>
         <div class="case-body">
-          <div class="project-tag">Freelance · Web</div>
+          <div class="project-tag" data-i18n="yij-tag">Freelance · Web</div>
           <h2 class="case-title">Yvelines Info Jeunes</h2>
           <div class="case-block">
-            <div class="case-block-heading">Mission</div>
-            <p class="case-block-text">Refonte complète d'un site trop dense et daté. Maquettes Figma, interviews auprès de jeunes utilisateurs, développement WordPress. Prise en charge de la communication print et digitale (bannières, flyers, réseaux sociaux).</p>
+            <div class="case-block-heading" data-i18n="yij-h1">Mission</div>
+            <p class="case-block-text" data-i18n="yij-t1">Refonte complète d'un site trop dense et daté. Maquettes Figma, interviews auprès de jeunes utilisateurs, développement WordPress. Prise en charge de la communication print et digitale (bannières, flyers, réseaux sociaux).</p>
           </div>
           <div class="tag-row">
             <div class="tag">WordPress</div>
-            <div class="tag">UX Writing</div>
-            <div class="tag">Accessibilité</div>
+            <div class="tag" data-i18n="tag-uxwriting">UX Writing</div>
+            <div class="tag" data-i18n="pill-accessibility">Accessibilité</div>
           </div>
         </div>
       </div>
@@ -493,19 +594,19 @@
           <img class="photo" src="images/cep-idf.png" alt="CEP Paritaire IDF &amp; Crésus IDF" data-placeholder="CEP Paritaire IDF &amp; Crésus IDF">
         </div>
         <div class="case-body">
-          <div class="project-tag">Freelance · Institutionnel</div>
+          <div class="project-tag" data-i18n="cep-tag">Freelance · Institutionnel</div>
           <h2 class="case-title">CEP Paritaire IDF &amp; Crésus IDF</h2>
           <div class="case-block">
             <div class="case-block-heading">CEP Paritaire IDF</div>
-            <p class="case-block-text">Conception d'un site responsive et accessible pour 3 publics (salariés, employeurs, représentants du personnel), identité de marque et plaquettes institutionnelles.</p>
+            <p class="case-block-text" data-i18n="cep-t1">Conception d'un site responsive et accessible pour 3 publics (salariés, employeurs, représentants du personnel), identité de marque et plaquettes institutionnelles.</p>
           </div>
           <div class="case-block">
             <div class="case-block-heading">Crésus IDF</div>
-            <p class="case-block-text">Amélioration du parcours de prise de rendez-vous et refonte de la carte interactive des centres d'accueil, avec optimisation du contenu pour le référencement.</p>
+            <p class="case-block-text" data-i18n="cep-t2">Amélioration du parcours de prise de rendez-vous et refonte de la carte interactive des centres d'accueil, avec optimisation du contenu pour le référencement.</p>
           </div>
           <div class="tag-row">
-            <div class="tag">Responsive</div>
-            <div class="tag">Accessibilité</div>
+            <div class="tag" data-i18n="tag-responsive">Responsive</div>
+            <div class="tag" data-i18n="pill-accessibility">Accessibilité</div>
             <div class="tag">SEO</div>
           </div>
         </div>
@@ -516,23 +617,26 @@
           <img class="photo photo-align-top" src="images/hermes-page.png" alt="Hermès &amp; Versace — explorations" data-placeholder="Hermès &amp; Versace — explorations">
         </div>
         <div class="case-body">
-          <div class="project-tag">Coup de cœur · Luxe</div>
+          <div class="project-tag" data-i18n="luxe-tag">Coup de cœur · Luxe</div>
           <h2 class="case-title">Hermès &amp; Versace</h2>
           <div class="case-block">
-            <div class="case-block-heading">Exploration personnelle</div>
-            <p class="case-block-text">Exploration de l'univers digital d'Hermès et Versace pour comprendre les codes visuels et l'expérience utilisateur du secteur du luxe et de la mode — comment le design sublime l'image de marque tout en optimisant les parcours clients.</p>
+            <div class="case-block-heading" data-i18n="luxe-h1">Exploration personnelle</div>
+            <p class="case-block-text" data-i18n="luxe-t1">Exploration de l'univers digital d'Hermès et Versace pour comprendre les codes visuels et l'expérience utilisateur du secteur du luxe et de la mode — comment le design sublime l'image de marque tout en optimisant les parcours clients.</p>
           </div>
           <div class="tag-row">
-            <div class="tag">Luxe</div>
+            <div class="tag" data-i18n="tag-luxe">Luxe</div>
             <div class="tag">UI</div>
             <div class="tag">Branding</div>
           </div>
-          <a href="https://www.behance.net/gallery/230050373/Hermes" target="_blank" rel="noopener" class="case-link">Voir sur Behance →</a>
+          <a href="https://www.behance.net/gallery/230050373/Hermes" target="_blank" rel="noopener" class="case-link" data-i18n="behance-link">Voir sur Behance →</a>
+        </div>
+      </div>
+
         </div>
       </div>
 
       <div class="tools-section">
-        <div class="eyebrow">Outils</div>
+        <div class="eyebrow" data-i18n="tools-eyebrow">Outils</div>
         <div class="pill-row">
           <div class="pill">Figma</div>
           <div class="pill">FigJam</div>
@@ -557,11 +661,11 @@
 
     <footer class="site-footer">
       <div class="site-footer-inner">
-        <div>© Edwine Mathieu — Product Designer</div>
+        <div data-i18n="footer-copyright">© Edwine Mathieu — Product Designer</div>
         <div class="footer-links">
           <a href="https://linkedin.com/in/edwine-mathieu-ux-ui-designer" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://behance.net/edmat" target="_blank" rel="noopener">Behance</a>
-          <a href="mailto:edwmathieu@gmail.com">Email</a>
+          <a href="mailto:edwmathieu@gmail.com" data-i18n="footer-email">Email</a>
         </div>
       </div>
     </footer>
@@ -573,7 +677,7 @@
   <div class="lightbox-viewport">
     <img class="lightbox-img" src="" alt="">
   </div>
-  <div class="lightbox-hint">Molette ou double-clic pour zoomer — Échap pour fermer</div>
+  <div class="lightbox-hint" data-i18n="lightbox-hint">Molette ou double-clic pour zoomer — Échap pour fermer</div>
 </div>
 
 <script src="js/script.js"></script>
