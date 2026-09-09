@@ -153,10 +153,26 @@
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  document.querySelectorAll('.case-image img.photo').forEach(function (img) {
+  document.querySelectorAll('.case-carousel img.photo').forEach(function (img) {
     img.addEventListener('click', function (e) {
       e.stopPropagation();
       openLightbox(img.currentSrc || img.src, img.alt);
+    });
+  });
+
+  // Case image galleries: clicking a thumbnail swaps the carousel's photo.
+  document.querySelectorAll('.case-image').forEach(function (caseImage) {
+    var carouselImg = caseImage.querySelector('.case-carousel img.photo');
+    var thumbs = caseImage.querySelectorAll('.gallery-thumb');
+    if (!carouselImg || !thumbs.length) return;
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+        thumb.classList.add('is-active');
+        carouselImg.src = thumb.dataset.src;
+        carouselImg.alt = thumb.dataset.alt || '';
+        carouselImg.dataset.placeholder = thumb.dataset.alt || '';
+      });
     });
   });
 

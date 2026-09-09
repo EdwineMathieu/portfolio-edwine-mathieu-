@@ -228,7 +228,7 @@ body {
   object-position: center top;
 }
 
-.case-image img.photo {
+.case-carousel img.photo {
   cursor: zoom-in;
 }
 
@@ -624,11 +624,42 @@ body {
 }
 
 .case-image {
-  aspect-ratio: 4 / 3;
   position: sticky;
   top: 100px;
+}
+
+.case-carousel {
+  aspect-ratio: 4 / 3;
   border-radius: 14px;
   overflow: hidden;
+}
+
+.case-gallery {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.gallery-thumb {
+  flex: 1 1 0;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity .15s ease, border-color .15s ease;
+}
+
+.gallery-thumb:hover {
+  opacity: 0.85;
+}
+
+.gallery-thumb.is-active {
+  opacity: 1;
+  border-color: var(--accent);
 }
 
 .case-title {
@@ -742,7 +773,8 @@ body {
   .experience-item { grid-template-columns: 1fr; gap: 12px; }
   .cv-columns { grid-template-columns: 1fr; gap: 32px; }
   .case-study { grid-template-columns: 1fr; gap: 24px; }
-  .case-image { position: static; aspect-ratio: 16 / 10; }
+  .case-image { position: static; }
+  .case-carousel { aspect-ratio: 16 / 10; }
   .project-gallery { grid-template-columns: 1fr 1fr; }
   .project-modal-inner { padding: 76px 24px 64px; }
   .project-modal-close { top: 12px; right: 12px; }
