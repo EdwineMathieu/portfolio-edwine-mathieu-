@@ -391,7 +391,7 @@
 
     'auto-h1': 'Vision',
     'auto-t1': "A Product Designer specialized in UX/UI, I've worked on a range of digital products and now focus on automotive experiences — connected services, in-vehicle interfaces, and mobility products. My approach: understanding how companies are tackling UX in the software-defined vehicle era, and connecting with the teams facing these challenges.",
-    'auto-h2': 'Cockpit EV — driver cluster &amp; central screen',
+    'auto-h2': 'Use case 1: Cockpit EV — driver cluster &amp; central screen',
     'auto-t2': 'An animated HMI prototype for an electric vehicle: driver cluster and central screen designed as two distinct information planes, with Eco / Comfort / Sport drive modes, navigation, energy and charging management, climate, and media.',
     'auto-h3': 'Hierarchy — one layer of information per plane',
     'auto-t3': 'The cluster carries driving only: speed, lane, energy. Everything else lives on the central screen. A 2px rule separates the planes without adding ornament.',
@@ -405,7 +405,7 @@
     'tag-automobile': 'Automotive',
     'cockpit-link': 'View the animated prototype →',
 
-    'eorizon-h0': 'E-Orizon — planning a long-distance EV trip',
+    'eorizon-h0': 'Use case 2: E-Orizon — planning a long-distance EV trip',
     'eorizon-t0': "A mobile app prototype for electric mobility: from planning a long-distance trip to arrival, accounting for battery, subscription network, chargers available along the route, and charging budget — 7 screens, for a one-way Paris → Arcachon trip.",
     'eorizon-h1': 'Subscription network, visible priority',
     'eorizon-t1': "The subscription network (Eleckar) is highlighted along the route and on the map, with the subscriber rate set apart from the public rate — the user sees at a glance where they pay less.",
