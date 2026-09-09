@@ -89,8 +89,16 @@
   if (initialAnchor) {
     history.replaceState(null, '', window.location.pathname + window.location.search);
     var initialTarget = document.getElementById(initialAnchor);
-    var initialPanel = initialTarget && initialTarget.closest('[data-view-panel]');
-    if (initialPanel) showView(initialPanel.dataset.viewPanel, initialAnchor);
+    if (initialTarget && initialTarget.classList.contains('case-study')) {
+      // Case studies now live in #project-modal, a sibling of the .view
+      // sections (moved there so the modal can be sized to the viewport
+      // rather than to whichever animated view used to contain it) — so
+      // they're no longer reachable via closest('[data-view-panel]').
+      showView('projets', initialAnchor);
+    } else {
+      var initialPanel = initialTarget && initialTarget.closest('[data-view-panel]');
+      if (initialPanel) showView(initialPanel.dataset.viewPanel, initialAnchor);
+    }
   }
 
   document.querySelectorAll('img.photo').forEach(function (img) {
@@ -396,6 +404,18 @@
 
     'tag-automobile': 'Automotive',
     'cockpit-link': 'View the animated prototype →',
+
+    'eorizon-h0': 'E-Orizon — planning a long-distance EV trip',
+    'eorizon-t0': "A mobile app prototype for electric mobility: from planning a long-distance trip to arrival, accounting for battery, subscription network, chargers available along the route, and charging budget — 7 screens, for a one-way Paris → Arcachon trip.",
+    'eorizon-h1': 'Subscription network, visible priority',
+    'eorizon-t1': "The subscription network (Eleckar) is highlighted along the route and on the map, with the subscriber rate set apart from the public rate — the user sees at a glance where they pay less.",
+    'eorizon-h2': 'The budget follows the whole trip',
+    'eorizon-t2': 'An estimated amount at departure, updated live while driving, checked against the actual cost on arrival — never a surprise.',
+    'eorizon-h3': 'Continuous recalculation, never frozen',
+    'eorizon-t3': "Actual consumption, wind, temperature, and charger availability recalculate the route continuously; a delay of more than 20 minutes automatically pushes back the charger reservation.",
+    'eorizon-h4': 'Compare before you stop',
+    'eorizon-t4': "Before each stop, alternative providers are compared by total cost of the detour, not just the price per kWh.",
+    'eorizon-link': 'View the E-Orizon prototype →',
 
     'yij-h1': 'Mission',
     'yij-t1': 'A full redesign of an overly dense, dated site. Figma mockups, interviews with young users, WordPress development. Handled print and digital communications (banners, flyers, social media).',
