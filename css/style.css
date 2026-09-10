@@ -228,6 +228,10 @@ body {
   object-position: center top;
 }
 
+.photo-align-center {
+  object-position: center !important;
+}
+
 .case-carousel img.photo {
   cursor: zoom-in;
 }
