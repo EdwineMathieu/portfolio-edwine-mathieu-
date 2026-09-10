@@ -668,13 +668,16 @@ body {
 
 .case-gallery {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
   margin-top: 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
 }
 
 .gallery-thumb {
   flex: 0 0 calc((100% - 16px) / 3);
+  scroll-snap-align: start;
   aspect-ratio: 4 / 3;
   padding: 0;
   border: 2px solid transparent;
