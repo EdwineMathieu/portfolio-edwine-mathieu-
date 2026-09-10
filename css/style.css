@@ -629,41 +629,42 @@ body {
 }
 
 .case-carousel {
-  position: relative;
   aspect-ratio: 4 / 3;
   border-radius: 14px;
   overflow: hidden;
 }
 
+.carousel-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carousel-row .case-carousel {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  flex: 0 0 auto;
   width: 36px;
   height: 36px;
-  border: none;
+  border: 1px solid var(--border-light);
   border-radius: 50%;
-  background: rgba(20, 20, 20, 0.55);
-  color: white;
+  background: white;
+  color: var(--text-main);
   font-size: 18px;
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
   transition: background .15s ease;
 }
 
 .carousel-nav:hover {
-  background: rgba(20, 20, 20, 0.8);
-}
-
-.carousel-prev {
-  left: 12px;
-}
-
-.carousel-next {
-  right: 12px;
+  background: oklch(0.94 0.008 90);
 }
 
 .case-gallery {

@@ -210,8 +210,12 @@
         showIndex(current + 1);
       });
 
-      carousel.appendChild(prevBtn);
-      carousel.appendChild(nextBtn);
+      var row = document.createElement('div');
+      row.className = 'carousel-row';
+      carousel.parentNode.insertBefore(row, carousel);
+      row.appendChild(prevBtn);
+      row.appendChild(carousel);
+      row.appendChild(nextBtn);
     }
 
     // Dot pagination: one dot per photo, replacing the scrollbar as the
