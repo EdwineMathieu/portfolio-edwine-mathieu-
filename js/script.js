@@ -116,6 +116,8 @@
   var closeBtn = lightbox.querySelector('.lightbox-close');
   var lightboxPrevBtn = lightbox.querySelector('.lightbox-prev');
   var lightboxNextBtn = lightbox.querySelector('.lightbox-next');
+  var zoomInBtn = lightbox.querySelector('.lightbox-zoom-in');
+  var zoomOutBtn = lightbox.querySelector('.lightbox-zoom-out');
 
   var scale = 1, translateX = 0, translateY = 0;
   var isDragging = false, dragStartX = 0, dragStartY = 0, dragOriginX = 0, dragOriginY = 0;
@@ -131,6 +133,15 @@
     scale = 1;
     translateX = 0;
     translateY = 0;
+    applyTransform();
+  }
+
+  function zoomBy(delta) {
+    scale = Math.min(4, Math.max(1, scale + delta));
+    if (scale === 1) {
+      translateX = 0;
+      translateY = 0;
+    }
     applyTransform();
   }
 
@@ -309,14 +320,18 @@
 
   lightboxImg.addEventListener('wheel', function (e) {
     e.preventDefault();
-    var delta = -e.deltaY * 0.0015;
-    scale = Math.min(4, Math.max(1, scale + delta));
-    if (scale === 1) {
-      translateX = 0;
-      translateY = 0;
-    }
-    applyTransform();
+    zoomBy(-e.deltaY * 0.0015);
   }, { passive: false });
+
+  zoomInBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    zoomBy(0.5);
+  });
+
+  zoomOutBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    zoomBy(-0.5);
+  });
 
   lightboxImg.addEventListener('mousedown', function (e) {
     if (scale <= 1) return;
