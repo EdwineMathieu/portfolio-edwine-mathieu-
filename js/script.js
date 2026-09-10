@@ -160,20 +160,56 @@
     });
   });
 
-  // Case image galleries: clicking a thumbnail swaps the carousel's photo.
+  // Case image galleries: clicking a thumbnail (or the prev/next arrows,
+  // added automatically when there's more than one photo) swaps the
+  // carousel's photo.
   document.querySelectorAll('.case-image').forEach(function (caseImage) {
+    var carousel = caseImage.querySelector('.case-carousel');
     var carouselImg = caseImage.querySelector('.case-carousel img.photo');
-    var thumbs = caseImage.querySelectorAll('.gallery-thumb');
-    if (!carouselImg || !thumbs.length) return;
-    thumbs.forEach(function (thumb) {
-      thumb.addEventListener('click', function () {
-        thumbs.forEach(function (t) { t.classList.remove('is-active'); });
-        thumb.classList.add('is-active');
-        carouselImg.src = thumb.dataset.src;
-        carouselImg.alt = thumb.dataset.alt || '';
-        carouselImg.dataset.placeholder = thumb.dataset.alt || '';
-      });
+    var thumbs = Array.prototype.slice.call(caseImage.querySelectorAll('.gallery-thumb'));
+    if (!carousel || !carouselImg || !thumbs.length) return;
+
+    var current = thumbs.findIndex(function (t) { return t.classList.contains('is-active'); });
+    if (current === -1) current = 0;
+
+    function showIndex(i) {
+      current = (i + thumbs.length) % thumbs.length;
+      var thumb = thumbs[current];
+      thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+      thumb.classList.add('is-active');
+      carouselImg.src = thumb.dataset.src;
+      carouselImg.alt = thumb.dataset.alt || '';
+      carouselImg.dataset.placeholder = thumb.dataset.alt || '';
+    }
+
+    thumbs.forEach(function (thumb, i) {
+      thumb.addEventListener('click', function () { showIndex(i); });
     });
+
+    if (thumbs.length > 1) {
+      var prevBtn = document.createElement('button');
+      prevBtn.type = 'button';
+      prevBtn.className = 'carousel-nav carousel-prev';
+      prevBtn.setAttribute('aria-label', 'Image précédente');
+      prevBtn.textContent = '‹';
+      prevBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        showIndex(current - 1);
+      });
+
+      var nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.className = 'carousel-nav carousel-next';
+      nextBtn.setAttribute('aria-label', 'Image suivante');
+      nextBtn.textContent = '›';
+      nextBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        showIndex(current + 1);
+      });
+
+      carousel.appendChild(prevBtn);
+      carousel.appendChild(nextBtn);
+    }
   });
 
   closeBtn.addEventListener('click', closeLightbox);
