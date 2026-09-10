@@ -795,6 +795,7 @@ body {
   aspect-ratio: 16 / 9;
   border-radius: 14px;
   margin: 20px 0;
+  cursor: pointer;
 }
 
 .case-block-text {

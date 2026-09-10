@@ -104,6 +104,16 @@
     });
   });
 
+  // Use-case images (Cockpit EV, E-Orizon): clicking the photo opens the
+  // same prototype as the button that follows it in the section.
+  document.querySelectorAll('.usecase-image').forEach(function (img) {
+    var link = img.nextElementSibling;
+    if (!link || !link.classList.contains('prototype-link')) return;
+    img.addEventListener('click', function () {
+      openPrototype(link.getAttribute('href'));
+    });
+  });
+
   prototypeModalClose.addEventListener('click', closePrototype);
   prototypeModalBack.addEventListener('click', closePrototype);
 
