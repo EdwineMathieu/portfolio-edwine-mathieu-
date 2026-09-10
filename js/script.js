@@ -77,9 +77,33 @@
     if (e.target === projectModal) closeProject();
   });
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && projectModal.classList.contains('is-open')) closeProject();
+  // Prototype viewer: opens local prototype pages (Cockpit EV, E-Orizon,
+  // City Moov) in an in-page iframe overlay instead of a new tab, so the
+  // prototype stays encapsulated in the site rather than navigating away.
+  var prototypeModal = document.getElementById('prototype-modal');
+  var prototypeFrame = document.getElementById('prototype-frame');
+  var prototypeModalClose = prototypeModal.querySelector('.prototype-modal-close');
+
+  function openPrototype(src) {
+    prototypeFrame.src = src;
+    prototypeModal.classList.add('is-open');
+    prototypeModal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closePrototype() {
+    prototypeModal.classList.remove('is-open');
+    prototypeModal.setAttribute('aria-hidden', 'true');
+    prototypeFrame.src = '';
+  }
+
+  document.querySelectorAll('.prototype-link').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      openPrototype(link.getAttribute('href'));
+    });
   });
+
+  prototypeModalClose.addEventListener('click', closePrototype);
 
   // Deep link on load, e.g. index.html#cs-automobile: open the view that
   // contains the target anchor (opening the project modal for a case study,
@@ -305,7 +329,16 @@
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    if (e.key !== 'Escape') return;
+    // Close only the topmost overlay: prototype iframe, then image
+    // lightbox, then the project modal underneath them.
+    if (prototypeModal.classList.contains('is-open')) {
+      closePrototype();
+    } else if (lightbox.classList.contains('is-open')) {
+      closeLightbox();
+    } else if (projectModal.classList.contains('is-open')) {
+      closeProject();
+    }
   });
 
   lightboxImg.addEventListener('dblclick', function (e) {
