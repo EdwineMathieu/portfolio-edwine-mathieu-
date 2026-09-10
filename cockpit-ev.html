@@ -83,7 +83,7 @@
 
     <div style="height: 118px; background: {{ glassGradient }}; border-bottom: 1px solid #1e2538; position: relative; overflow: hidden;">
       <div style="position: absolute; inset: auto 0 0 0; height: 44px; background: linear-gradient(180deg, rgba(9,13,22,0), #090d16);"></div>
-      <div style="position: absolute; left: 32px; bottom: 12px; font-family: Geist, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #64748b;">{{ glassLabel }}</div>
+      <div style="position: absolute; left: 32px; bottom: 12px; font-family: Geist, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #94a3b8;">{{ glassLabel }}</div>
     </div>
 
     <div style="height: 32px; background: linear-gradient(180deg, #111625, #0f172a); display: flex; align-items: center; padding: 0 32px;">
@@ -111,11 +111,11 @@
                   <div style="font-family: Outfit, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #10b981; margin-bottom: 8px;">{{ modeLabel }}</div>
                   <div style="display: flex; align-items: flex-end; gap: 8px;">
                     <div style="font-family: Outfit, sans-serif; font-weight: 800; font-size: 86px; line-height: 100%; letter-spacing: -.03em; color: #ffffff; font-variant-numeric: tabular-nums;">{{ speedStr }}</div>
-                    <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; color: #64748b; padding-bottom: 8px;">km/h</div>
+                    <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; color: #94a3b8; padding-bottom: 8px;">km/h</div>
                   </div>
                   <div style="margin-top: 12px; display: flex; align-items: center; gap: 8px;">
                     <div style="border-radius: 8px; background: #1e293b; box-shadow: inset 0 0 0 1px #2a334a; color: #ffffff; font-family: Outfit, sans-serif; font-weight: 700; font-size: 13px; padding: 3px 8px; font-variant-numeric: tabular-nums;">130</div>
-                    <div style="font-family: Geist, sans-serif; font-size: 12px; color: #64748b;">Régul. {{ cruiseStr }}</div>
+                    <div style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8;">Régul. {{ cruiseStr }}</div>
                   </div>
                 </div>
 
@@ -124,10 +124,10 @@
                     <path d="M92 150 L118 10" stroke="#94a3b8" stroke-opacity=".7" stroke-width="2" fill="none"></path>
                     <path d="M168 150 L142 10" stroke="#94a3b8" stroke-opacity=".7" stroke-width="2" fill="none"></path>
                     <path d="M130 150 L130 10" stroke="#334155" stroke-width="2" fill="none" stroke-dasharray="16 14" style="animation: dashRun 1.6s linear infinite; animation-play-state: {{ playState }};"></path>
-                    <rect x="116" y="120" width="28" height="18" rx="5" fill="#10b981"></rect>
+                    <image href="uploads/Group%201901.png" x="118.7" y="99.2" width="22.6" height="37.6" preserveAspectRatio="xMidYMid meet"></image>
                     <rect x="122" y="58" width="18" height="12" rx="4" fill="#475569" style="animation: leadDrift 6s ease-in-out infinite; animation-play-state: {{ playState }};"></rect>
                   </svg>
-                  <div style="position: absolute; left: 0; bottom: 0; font-family: Geist, sans-serif; font-size: 12px; color: #64748b;">Voie tenue · {{ gapStr }} s</div>
+                  <div style="position: absolute; left: 0; bottom: 0; font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8;">Voie tenue · {{ gapStr }} s</div>
                 </div>
               </div>
 
@@ -137,15 +137,15 @@
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px;">
                   <div>
-                    <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #64748b;">Autonomie</div>
+                    <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #94a3b8;">Autonomie</div>
                     <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 20px; color: #ffffff; font-variant-numeric: tabular-nums;">{{ rangeStr }} km</div>
                   </div>
                   <div>
-                    <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #64748b;">Batterie</div>
+                    <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #94a3b8;">Batterie</div>
                     <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 20px; color: #ffffff; font-variant-numeric: tabular-nums;">{{ socStr }} %</div>
                   </div>
                   <div>
-                    <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #64748b;">{{ powerLabel }}</div>
+                    <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #94a3b8;">{{ powerLabel }}</div>
                     <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 20px; color: #ffffff; font-variant-numeric: tabular-nums;">{{ powerStr }} kW</div>
                   </div>
                 </div>
@@ -158,7 +158,7 @@
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 24px; border-bottom: 1px solid #1e2538;">
             <div style="display: flex; align-items: baseline; gap: 12px; min-width: 0;">
               <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 18px; color: #ffffff;">{{ modeLabel }}</div>
-              <div style="font-family: Geist, sans-serif; font-size: 12px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ modeNote }}</div>
+              <div style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ modeNote }}</div>
             </div>
             <div style="display: flex; gap: 20px; font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8; white-space: nowrap;">
               <span>{{ headingLabel }}</span>
@@ -196,7 +196,7 @@
                 <div style="flex: 1; min-height: 0; padding: 20px 24px; display: flex; flex-direction: column;">
                   <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid #1e2538; padding-bottom: 12px;">
                     <div>
-                      <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #64748b;">{{ openKicker }}</div>
+                      <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #94a3b8;">{{ openKicker }}</div>
                       <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 24px; color: #ffffff;">{{ openTitle }}</div>
                     </div>
                     <button type="button" onClick="{{ closeOpen }}" style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 12px; color: #ffffff; background: #1e293b; border: 1px solid #2a334a; border-radius: 12px; padding: 8px 14px; cursor: pointer;">Fermer</button>
@@ -208,7 +208,7 @@
                           <div style="flex: 1; height: {{ b.h }}; border-radius: 3px 3px 0 0; background: {{ b.fill }};"></div>
                         </sc-for>
                       </div>
-                      <div style="font-family: Geist, sans-serif; font-size: 12px; color: #64748b;">{{ detailAxis }}</div>
+                      <div style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8;">{{ detailAxis }}</div>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 8px;">
                       <sc-for list="{{ detailRows }}" as="r" hint-placeholder-count="5">
@@ -235,27 +235,19 @@
                   <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1.25fr; gap: 24px;">
                     <div style="min-width: 0; display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: 1fr 1fr; align-items: center; gap: 8px 12px;">
                       <div style="text-align: right;">
-                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 16px; color: #ffffff; font-variant-numeric: tabular-nums;">2,9 <span style="font-family: Geist, sans-serif; font-weight: 400; font-size: 10px; color: #64748b;">bar</span></div>
+                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 16px; color: #ffffff; font-variant-numeric: tabular-nums;">2,9 <span style="font-family: Geist, sans-serif; font-weight: 400; font-size: 10px; color: #94a3b8;">bar</span></div>
                       </div>
-                      <div style="grid-row: span 2; grid-column: 2; align-self: center;">
-                        <svg viewBox="0 0 160 108" style="width: 100%; height: auto; display: block;">
-                          <path d="M28 30 C52 16 108 16 132 30 C142 34 146 46 146 54 C146 62 142 74 132 78 C108 92 52 92 28 78 C18 74 14 62 14 54 C14 46 18 34 28 30 Z" fill="#0f172a" stroke="#2a334a" stroke-width="1.5"></path>
-                          <path d="M52 34 C74 28 96 28 112 34 L108 50 L56 50 Z" fill="#1e293b" stroke="#1e2538" stroke-width="1.2"></path>
-                          <rect x="54" y="56" width="56" height="24" rx="6" fill="rgba(16,185,129,.102)" stroke="#10b981" stroke-width="1.4"></rect>
-                          <rect x="24" y="20" width="20" height="9" rx="4" fill="#475569"></rect>
-                          <rect x="24" y="79" width="20" height="9" rx="4" fill="#475569"></rect>
-                          <rect x="116" y="20" width="20" height="9" rx="4" fill="#475569"></rect>
-                          <rect x="116" y="79" width="20" height="9" rx="4" fill="#475569"></rect>
-                        </svg>
+                      <div style="grid-row: span 2; grid-column: 2; align-self: center; position: relative; height: 100%;">
+                        <img src="uploads/Car-6000ac44.png" alt="Véhicule" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, calc(-50% + 16px)); width: 200%; max-width: none; height: 216px; object-fit: contain; display: block; pointer-events: none;">
                       </div>
                       <div>
-                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 16px; color: #ffffff; font-variant-numeric: tabular-nums;">2,8 <span style="font-family: Geist, sans-serif; font-weight: 400; font-size: 10px; color: #64748b;">bar</span></div>
+                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 16px; color: #ffffff; font-variant-numeric: tabular-nums;">2,8 <span style="font-family: Geist, sans-serif; font-weight: 400; font-size: 10px; color: #94a3b8;">bar</span></div>
                       </div>
                       <div style="text-align: right;">
-                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 16px; color: #ffffff; font-variant-numeric: tabular-nums;">2,9 <span style="font-family: Geist, sans-serif; font-weight: 400; font-size: 10px; color: #64748b;">bar</span></div>
+                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 16px; color: #ffffff; font-variant-numeric: tabular-nums;">2,9 <span style="font-family: Geist, sans-serif; font-weight: 400; font-size: 10px; color: #94a3b8;">bar</span></div>
                       </div>
                       <div style="grid-column: 3;">
-                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 16px; color: #ffffff; font-variant-numeric: tabular-nums;">2,8 <span style="font-family: Geist, sans-serif; font-weight: 400; font-size: 10px; color: #64748b;">bar</span></div>
+                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 16px; color: #ffffff; font-variant-numeric: tabular-nums;">2,8 <span style="font-family: Geist, sans-serif; font-weight: 400; font-size: 10px; color: #94a3b8;">bar</span></div>
                       </div>
                     </div>
 
@@ -272,7 +264,7 @@
                           <path d="{{ energyLine }}" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linejoin="round"></path>
                         </svg>
                       </div>
-                      <div style="font-family: Geist, sans-serif; font-size: 12px; color: #64748b;">Consommation (kWh/100 km) · moyenne {{ consStr }}</div>
+                      <div style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8;">Consommation (kWh/100 km) · moyenne {{ consStr }}</div>
                     </div>
                   </div>
                 </div>
@@ -293,7 +285,7 @@
 
                   <div style="border-radius: 20px; background: #0f172a; box-shadow: inset 0 0 0 1px #1e2538; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
                     <span style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 14px; color: #ffffff;">Réglages fenêtres</span>
-                    <span style="font-family: Geist, sans-serif; font-size: 12px; color: #64748b;">Ouverture confort</span>
+                    <span style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8;">Ouverture confort</span>
                   </div>
 
                   <div style="display: flex; flex-direction: column; gap: 6px;">
@@ -355,7 +347,7 @@
                         <div style="display: flex; align-items: center; gap: 16px; justify-content: space-between;">
                           <div style="min-width: 0;">
                             <div style="font-family: Geist, sans-serif; font-size: 14px; color: #ffffff;">{{ sw.title }}</div>
-                            <div style="font-family: Geist, sans-serif; font-size: 12px; color: #64748b;">{{ sw.desc }}</div>
+                            <div style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8;">{{ sw.desc }}</div>
                           </div>
                           <button type="button" role="switch" aria-checked="{{ sw.on }}" aria-label="{{ sw.title }}" onClick="{{ sw.onClick }}" style="{{ sw.trackStyle }}">
                             <span style="{{ sw.knobStyle }}"></span>
@@ -420,13 +412,215 @@
                 </div>
               </sc-if>
 
+              <sc-if value="{{ showSeats }}" hint-placeholder-val="{{ false }}">
+                <div class="hmi-scroll" style="flex: 1; min-height: 0; padding: 12px 24px 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid #1e2538;">
+                    <div style="display: flex; align-items: center; gap: 24px;">
+                      <sc-for list="{{ seatTabs }}" as="t" hint-placeholder-count="2">
+                        <button type="button" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+                      </sc-for>
+                    </div>
+                    <span style="font-family: Geist, sans-serif; font-size: 11px; color: #94a3b8; padding-bottom: 10px;">Paramètres de la clé</span>
+                  </div>
+
+                  <div style="display: grid; grid-template-columns: 168px 1fr; gap: 20px; align-items: start;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                      <sc-for list="{{ seatPads }}" as="p" hint-placeholder-count="4">
+                        <button type="button" aria-label="{{ p.label }}" onClick="{{ p.onClick }}" style="{{ p.style }}">
+                          <span style="{{ p.dotStyle }}"></span>
+                          <span style="font-family: Geist, sans-serif; font-size: 10px; color: #94a3b8;">{{ p.short }}</span>
+                        </button>
+                      </sc-for>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
+                      <sc-if value="{{ tabMassage }}" hint-placeholder-val="{{ true }}">
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                          <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 14px; color: #ffffff;">{{ seatTitle }}</div>
+                          <button type="button" onClick="{{ toggleMassage }}" style="{{ massagePowerStyle }}">
+                            <span style="font-size: 14px;">⏻</span>
+                            <span>{{ seatTitle }}</span>
+                          </button>
+
+                          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <sc-for list="{{ massagePrograms }}" as="o" hint-placeholder-count="6">
+                              <button type="button" onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button>
+                            </sc-for>
+                          </div>
+
+                          <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 13px; color: #ffffff; padding-top: 2px;">Intensité du massage</div>
+                          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                            <sc-for list="{{ massageLevels }}" as="o" hint-placeholder-count="3">
+                              <button type="button" onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button>
+                            </sc-for>
+                          </div>
+                        </div>
+                      </sc-if>
+
+                      <sc-if value="{{ tabReglage }}" hint-placeholder-val="{{ false }}">
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                          <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 14px; color: #ffffff;">{{ seatShort }}</div>
+                          <button type="button" onClick="{{ openSeatSettings }}" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 11px 16px; border-radius: 12px; cursor: pointer; font-family: Outfit, sans-serif; font-weight: 600; font-size: 13px; border: 1px solid #1e2538; background: #1e293b; color: #ffffff;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.7" stroke-linecap="round" style="width: 18px; height: 18px; flex: 0 0 auto;">
+                              <path d="M5 6h14M5 12h9M5 18h12"></path>
+                            </svg>
+                            <span>Réglages du siège</span>
+                          </button>
+
+                          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;">
+                            <div style="min-width: 0;">
+                              <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 13px; color: #ffffff;">Habitudes d’utilisation de la voiture</div>
+                              <div style="font-family: Geist, sans-serif; font-size: 11px; color: #94a3b8;">Peut se souvenir de la position du siège conducteur et des rétroviseurs latéraux</div>
+                            </div>
+                            <span style="font-family: Geist, sans-serif; font-size: 11px; color: #94a3b8; white-space: nowrap;">Gestion des habitudes ›</span>
+                          </div>
+
+                          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <sc-for list="{{ profiles }}" as="p" hint-placeholder-count="3">
+                              <button type="button" onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</button>
+                            </sc-for>
+                          </div>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ showDrive }}" hint-placeholder-val="{{ false }}">
+                <div class="hmi-scroll" style="flex: 1; min-height: 0; padding: 12px 24px 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;">
+                  <div style="text-align: center;">
+                    <div style="font-family: Outfit, sans-serif; font-weight: 800; font-style: italic; font-size: 24px; letter-spacing: .04em; color: {{ driveModeColor }};">{{ driveModeTitle }}</div>
+                    <div style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8; margin-top: 4px;">{{ driveModeDesc }}</div>
+                  </div>
+
+                  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                    <sc-for list="{{ driveModes }}" as="o" hint-placeholder-count="4">
+                      <button type="button" onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <span style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8;">Réponse de puissance</span>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                      <sc-for list="{{ powerOpts }}" as="o" hint-placeholder-count="3">
+                        <button type="button" onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <span style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 13px; color: #ffffff;">Direction assistée</span>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                      <sc-for list="{{ steerOpts }}" as="o" hint-placeholder-count="3">
+                        <button type="button" onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <span style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 13px; color: #ffffff;">Sensation de la pédale de frein</span>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                      <sc-for list="{{ brakeOpts }}" as="o" hint-placeholder-count="3">
+                        <button type="button" onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ showSr }}" hint-placeholder-val="{{ false }}">
+                <div class="hmi-scroll" style="flex: 1; min-height: 0; padding: 16px 24px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;">
+                  <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;">
+                    <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 16px; color: #ffffff; min-width: 0;">Perception Omnisciente Assistance de conduite intelligente</div>
+                    <svg viewBox="0 0 120 56" style="width: 108px; height: 50px; flex: 0 0 auto;">
+                      <path d="M14 42 C18 28 30 20 46 18 L74 16 C90 15 102 22 108 34 L110 42 Z" fill="#1e293b" stroke="#475569" stroke-width="1.5"></path>
+                      <path d="M40 22 C52 18 70 17 82 20 L90 30 L44 32 Z" fill="#0f172a"></path>
+                      <circle cx="36" cy="43" r="6" fill="#0f172a" stroke="#64748b" stroke-width="1.5"></circle>
+                      <circle cx="92" cy="43" r="6" fill="#0f172a" stroke="#64748b" stroke-width="1.5"></circle>
+                    </svg>
+                  </div>
+
+                  <div style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8;">Conduite</div>
+
+                  <sc-for list="{{ srSwitches }}" as="sw" hint-placeholder-count="2">
+                    <div style="display: flex; align-items: flex-start; gap: 16px; padding: 14px 16px; border-radius: 20px; background: #0f172a; box-shadow: inset 0 0 0 1px #1e2538;">
+                      <button type="button" role="switch" aria-checked="{{ sw.on }}" aria-label="{{ sw.title }}" onClick="{{ sw.onClick }}" style="{{ sw.trackStyle }}">
+                        <span style="{{ sw.knobStyle }}"></span>
+                      </button>
+                      <div style="min-width: 0;">
+                        <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 14px; color: #ffffff;">{{ sw.title }}</div>
+                        <div style="font-family: Geist, sans-serif; font-size: 12px; line-height: 1.45; color: #94a3b8;">{{ sw.desc }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ showAdas }}" hint-placeholder-val="{{ false }}">
+                <div class="hmi-scroll" style="flex: 1; min-height: 0; padding: 12px 24px 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;">
+                  <div style="display: flex; align-items: center; gap: 24px; border-bottom: 1px solid #1e2538;">
+                    <sc-for list="{{ adasTabs }}" as="t" hint-placeholder-count="3">
+                      <button type="button" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+                    </sc-for>
+                  </div>
+
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <span style="font-family: Outfit, sans-serif; font-weight: 800; font-size: 17px; letter-spacing: .02em; color: #ffffff;">XPILOT ASSIST</span>
+                      <span style="font-family: Geist, sans-serif; font-weight: 600; font-size: 12px; color: #94a3b8; background: #1e293b; border-radius: 8px; padding: 4px 10px;">Aide</span>
+                    </div>
+                    <svg viewBox="0 0 130 56" style="width: 130px; height: 56px; flex: 0 0 auto;">
+                      <path d="M6 54 C22 26 48 12 66 12 C86 12 108 28 122 54 Z" fill="rgba(6,182,212,.14)"></path>
+                      <image href="uploads/Car.png" x="18" y="0" width="96" height="56" preserveAspectRatio="xMidYMid meet"></image>
+                    </svg>
+                  </div>
+
+                  <sc-for list="{{ adasGroups }}" as="g" hint-placeholder-count="2">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                      <span style="font-family: Geist, sans-serif; font-size: 12px; color: #94a3b8;">{{ g.title }}</span>
+                      <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 16px; border-radius: 20px; background: #0f172a; box-shadow: inset 0 0 0 1px #1e2538;">
+                        <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="2">
+                          <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <sc-if value="{{ it.isSwitch }}" hint-placeholder-val="{{ true }}">
+                              <div style="display: flex; align-items: flex-start; gap: 14px;">
+                                <button type="button" role="switch" aria-checked="{{ it.on }}" aria-label="{{ it.title }}" onClick="{{ it.onClick }}" style="{{ it.trackStyle }}">
+                                  <span style="{{ it.knobStyle }}"></span>
+                                </button>
+                                <div style="min-width: 0;">
+                                  <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 14px; color: #ffffff;">{{ it.title }}</div>
+                                  <div style="font-family: Geist, sans-serif; font-size: 12px; line-height: 1.45; color: #94a3b8;">{{ it.desc }}</div>
+                                </div>
+                              </div>
+                            </sc-if>
+                            <sc-if value="{{ it.isChoice }}" hint-placeholder-val="{{ false }}">
+                              <div style="display: flex; flex-direction: column; gap: 6px;">
+                                <span style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 13px; color: #ffffff;">{{ it.title }}</span>
+                                <sc-if value="{{ it.hasNote }}" hint-placeholder-val="{{ false }}">
+                                  <div style="font-family: Geist, sans-serif; font-size: 11px; line-height: 1.5; color: #94a3b8;">{{ it.note }}</div>
+                                </sc-if>
+                                <div style="{{ it.gridStyle }}">
+                                  <sc-for list="{{ it.options }}" as="o" hint-placeholder-count="3">
+                                    <button type="button" onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button>
+                                  </sc-for>
+                                </div>
+                              </div>
+                            </sc-if>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
               <sc-if value="{{ showGridView }}" hint-placeholder-val="{{ true }}">
                 <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 16px;">
                   <sc-for list="{{ slots }}" as="w" hint-placeholder-count="6">
                     <div style="{{ w.cellStyle }}" onClick="{{ w.onClick }}">
                       <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
                         <div>
-                          <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #64748b;">{{ w.kicker }}</div>
+                          <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #94a3b8;">{{ w.kicker }}</div>
                           <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 15px; color: #ffffff; white-space: nowrap;">{{ w.title }}</div>
                         </div>
                         <sc-if value="{{ editing }}" hint-placeholder-val="{{ false }}">
@@ -459,7 +653,7 @@
                           </sc-for>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #1e2538; margin-top: 8px; padding-top: 8px;">
-                          <span style="font-family: Geist, sans-serif; font-size: 11px; color: #64748b; white-space: nowrap;">Moyenne 30 min</span>
+                          <span style="font-family: Geist, sans-serif; font-size: 11px; color: #94a3b8; white-space: nowrap;">Moyenne 30 min</span>
                           <span style="flex: 0 0 auto; font-family: Outfit, sans-serif; font-weight: 700; font-size: 15px; color: #ffffff; font-variant-numeric: tabular-nums; white-space: nowrap;">{{ consStr }} kWh/100</span>
                         </div>
                       </sc-if>
@@ -469,7 +663,7 @@
                           <sc-for list="{{ chargers }}" as="c" hint-placeholder-count="1">
                             <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid #1e2538; padding-bottom: 6px;">
                               <span style="font-family: Geist, sans-serif; font-size: 12px; color: #ffffff; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ c.name }}</span>
-                              <span style="flex: 0 0 auto; font-family: Geist, sans-serif; font-size: 11px; color: #64748b; font-variant-numeric: tabular-nums; white-space: nowrap;">{{ c.meta }}</span>
+                              <span style="flex: 0 0 auto; font-family: Geist, sans-serif; font-size: 11px; color: #94a3b8; font-variant-numeric: tabular-nums; white-space: nowrap;">{{ c.meta }}</span>
                             </div>
                           </sc-for>
                         </div>
@@ -482,7 +676,7 @@
                           <div style="height: 4px; border-radius: 100px; background: #1e293b; overflow: hidden;">
                             <div style="height: 100%; width: {{ mediaPct }}; background: #10b981;"></div>
                           </div>
-                          <div style="font-family: Geist, sans-serif; font-size: 11px; color: #64748b; font-variant-numeric: tabular-nums;">{{ mediaTime }} / 3:34</div>
+                          <div style="font-family: Geist, sans-serif; font-size: 11px; color: #94a3b8; font-variant-numeric: tabular-nums;">{{ mediaTime }} / 3:34</div>
                         </div>
                       </sc-if>
 
@@ -491,7 +685,7 @@
                           <button type="button" aria-label="Baisser" onClick="{{ tempDown }}" style="border: 1px solid #2a334a; border-radius: 12px; background: #1e293b; color: #ffffff; font-size: 13px; line-height: 1; padding: 6px 10px; cursor: pointer; flex: 0 0 auto;">−</button>
                           <div style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 28px; line-height: 1; color: #ffffff; font-variant-numeric: tabular-nums;">{{ cabinTemp }}°</div>
                           <button type="button" aria-label="Monter" onClick="{{ tempUp }}" style="border: 1px solid #2a334a; border-radius: 12px; background: #1e293b; color: #ffffff; font-size: 13px; line-height: 1; padding: 6px 10px; cursor: pointer; flex: 0 0 auto;">+</button>
-                          <span style="font-family: Geist, sans-serif; font-size: 11px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ hvacDraw }} kW</span>
+                          <span style="font-family: Geist, sans-serif; font-size: 11px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ hvacDraw }} kW</span>
                         </div>
                       </sc-if>
 
@@ -548,7 +742,7 @@
                 </div>
 
                 <div style="display: flex; align-items: center; gap: 8px; flex: 0 0 auto;">
-                  <span style="font-family: Geist, sans-serif; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #64748b; white-space: nowrap;">Passager</span>
+                  <span style="font-family: Geist, sans-serif; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #94a3b8; white-space: nowrap;">Passager</span>
                   <span style="font-family: Outfit, sans-serif; font-weight: 700; font-size: 14px; color: #ffffff; font-variant-numeric: tabular-nums;">{{ cabinTemp }}°</span>
                 </div>
               </div>
@@ -566,7 +760,7 @@
           <div style="width: 92px; height: 34px; border-radius: 12px; background: repeating-linear-gradient(180deg, #111625 0 3px, #0f172a 3px 8px); box-shadow: inset 0 0 0 1px #1e2538;"></div>
         </sc-for>
       </div>
-      <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #475569;">Console basse · commandes physiques</div>
+      <div style="font-family: Geist, sans-serif; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #94a3b8;">Console basse · commandes physiques</div>
     </div>
 
     <div style="{{ wheelStyle }}">
@@ -627,6 +821,37 @@ const CATALOG = {
   camera:   { title: 'Caméras',    kicker: 'Vision 360', kind: 'isCam' }
 };
 
+const ADAS = {
+  'Sécurité active': [
+    { title: 'Sécurité frontale', items: [
+      { key: 'fcw', title: 'Sensibilité de l’avertissement de collision frontale', desc: 'Alerte préventive en cas de risque de collision frontale et assistance au freinage' },
+      { key: 'fcwLevel', title: 'Sensibilité de détection préventive aux collisions frontales', options: ['Basse', 'Modérée', 'Élevée'] },
+      { key: 'startAssist', title: 'Aide à l’évitement d’obstacle au démarrage', desc: 'Limiter l’accélération en cas d’obstacles dans le sens de la marche au démarrage' }
+    ] },
+    { title: 'Sécurité latérale', items: [
+      { key: 'blindSpot', title: 'Surveillance des angles morts', desc: 'Signale les véhicules présents dans les angles morts lors d’un changement de voie' }
+    ] }
+  ],
+  'Conduite': [
+    { title: 'Contrôle de centrage de voie', items: [
+      { key: 'lcc', title: 'Contrôle de centrage de voie', desc: 'Contrôle de centrage de voie LCC aide à maintenir le véhicule centré entre les lignes de voie' },
+      { key: 'laneChange', title: 'Assistance au changement de voie', desc: 'Basculez le levier des clignotants pour faciliter le changement de voie' }
+    ] },
+    { title: 'Paramètres généraux', items: [
+      { key: 'curveSpeed', title: 'Adaptation de la vitesse en virage', desc: 'Adapte automatiquement la vitesse de conduite au virage détecté à l’avant' }
+    ] }
+  ],
+  'Parking': [
+    { title: 'Fonction de stationnement', items: [
+      { key: 'autoPark', title: 'Assistance de stationnement intelligente', desc: 'Assistance au conducteur pour se garer et sortir des places de parking perpendiculaires, parallèles ou en épis, ou assistance en manoeuvre de marche arrière' }
+    ] },
+    { title: 'Paramètres généraux', items: [
+      { key: 'reverseHold', title: 'Maintien de l’image en marche arrière', desc: 'Lors du changement de vitesse, l’image sera maintenue brièvement pour une observation optimale' },
+      { key: 'parkSound', title: 'Son de stationnement', note: 'Voix humaine : utilisées par les novices, veuillez faire attention aux instructions d’utilisation et aux conseils de sécurité\nEffets sonores : utilisés par les utilisateurs expérimentés, principalement des sons rapides, simples et efficaces', options: ['Voix', 'Effet sonore'] }
+    ] }
+  ]
+};
+
 const CAPACITY = 87.5;
 const ACC = '#10b981';
 
@@ -636,6 +861,13 @@ class Component extends DCLogic {
     playing: true, editing: false, night: false, open: null,
     section: 'Véhicule', graphRange: '2,5 km',
     portOpen: true, trunkOpen: false, unlockSignal: 'Flash', lockSignal: 'Flash + sonnerie', handles: true,
+    seatTab: 'Massage', seat: 'AR gauche', massageOn: true,
+    massageProgram: 'Massage de la taille', massageLevel: 'Haut',
+    profile: 'Test ↺',
+    srSound: true, srAhead: true,
+    adasTab: 'Conduite', fcw: true, fcwLevel: 'Modérée', startAssist: true, blindSpot: true,
+    lcc: true, laneChange: true, curveSpeed: true, autoPark: true, reverseHold: true, parkSound: 'Effet sonore',
+    driveProfile: 'Comfort', power: 'Comfort', steer: 'Moyenne', brake: 'Modéré',
     lightTab: 'Phares', headHeight: 'AUTO', headCommand: 'AUTO', offDelay: '30 s',
     smartBeam: true, homeLight: true,
     ambientOn: true, ambientLevel: 80, ambientMode: 'Selon la vitesse',
@@ -745,9 +977,9 @@ class Component extends DCLogic {
     const segStyle = (on) => 'font-family: Outfit, sans-serif; font-weight: 700; font-size: 14px; padding: 10px 18px; border-radius: 12px; border: 0; cursor: pointer; background: ' + (on ? ACC : 'transparent') + '; color: ' + (on ? '#090d16' : '#94a3b8') + ';';
     const optBtn = (on) => 'font-family: Outfit, sans-serif; font-weight: 600; font-size: 12px; padding: 9px 10px; border-radius: 12px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border: 1px solid ' + (on ? 'rgba(16,185,129,.251)' : '#1e2538') + '; background: ' + (on ? 'rgba(16,185,129,.102)' : '#1e293b') + '; color: ' + (on ? ACC : '#94a3b8') + ';';
     const cardBtn = (on) => 'display: flex; align-items: center; justify-content: space-between; gap: 16px; text-align: left; cursor: pointer; padding: 14px 20px; border-radius: 20px; background: #0f172a; border: 1px solid ' + (on ? 'rgba(16,185,129,.251)' : '#1e2538') + ';';
-    const tag = (on) => 'font-family: Geist, sans-serif; font-weight: 600; font-size: 12px; padding: 5px 12px; border-radius: 100px; white-space: nowrap; background: ' + (on ? 'rgba(16,185,129,.102)' : '#1e293b') + '; color: ' + (on ? ACC : '#64748b') + '; box-shadow: inset 0 0 0 1px ' + (on ? 'rgba(16,185,129,.251)' : 'transparent') + ';';
+    const tag = (on) => 'font-family: Geist, sans-serif; font-weight: 600; font-size: 12px; padding: 5px 12px; border-radius: 100px; white-space: nowrap; background: ' + (on ? 'rgba(16,185,129,.102)' : '#1e293b') + '; color: ' + (on ? ACC : '#94a3b8') + '; box-shadow: inset 0 0 0 1px ' + (on ? 'rgba(16,185,129,.251)' : 'transparent') + ';';
     const track = (on) => 'width: 52px; height: 28px; flex: 0 0 auto; border-radius: 100px; cursor: pointer; padding: 3px; display: flex; justify-content: ' + (on ? 'flex-end' : 'flex-start') + '; border: 1px solid ' + (on ? 'rgba(16,185,129,.251)' : '#2a334a') + '; background: ' + (on ? 'rgba(16,185,129,.102)' : '#1e293b') + ';';
-    const knob = (on) => 'width: 20px; height: 20px; border-radius: 100px; display: block; background: ' + (on ? ACC : '#64748b') + ';';
+    const knob = (on) => 'width: 20px; height: 20px; border-radius: 100px; display: block; background: ' + (on ? ACC : '#94a3b8') + ';';
 
     const slots = s.slots.map((id, i) => {
       const c = CATALOG[id];
@@ -767,7 +999,18 @@ class Component extends DCLogic {
       ? [{ k: 'Distance restante', v: '68 km' }, { k: 'Arrivée', v: '09:41' }, { k: 'Charge à l’arrivée', v: Math.max(6, Math.round(s.soc - 22)) + ' %' }, { k: 'Arrêt recharge', v: 'Villefranche · 18 min' }, { k: 'Trafic', v: '+4 min' }]
       : [{ k: 'Consommation moyenne', v: cons.toFixed(1) + ' kWh/100' }, { k: 'Puissance instantanée', v: Math.round(kw) + ' kW' }, { k: 'Récupérée depuis Mâcon', v: '3,4 kWh' }, { k: 'Climatisation', v: cfg.hvac.toFixed(1) + ' kW' }, { k: 'Autonomie estimée', v: Math.round(range) + ' km' }];
 
-    const panelSections = ['Véhicule', 'Fenêtres et portes', 'Éclairage'];
+    const panelSections = ['Véhicule', 'Fenêtres et portes', 'Éclairage', 'Sièges', 'Conduite', 'Assistance SR en temps réel', 'Assistance conducteur'];
+    const DRIVE = {
+      'Économie d’énergie': { key: 'eco', title: 'ECO', color: '#a3e635', desc: 'Une réponse lente en puissance permet d’étendre l’autonomie de croisière', power: 'Économie d’énergie', steer: 'Léger', brake: 'Lisse' },
+      'Comfort': { key: 'confort', title: 'COMFORT', color: '#34d399', desc: '« La réponse dynamique est fluide, soulageant le mal des transports et offrant une expérience de conduite plus confortable »', power: 'Comfort', steer: 'Moyenne', brake: 'Modéré' },
+      'Sport': { key: 'sport', title: 'SPORT', color: '#ef4444', desc: 'Réponse immédiate en puissance et direction ferme pour une conduite engagée', power: 'Sport', steer: 'Lourd', brake: 'Aiguë' },
+      'Individuel': { key: null, title: 'INDIVIDUEL', color: '#06b6d4', desc: 'Composez librement la réponse de puissance, la direction et la pédale de frein', power: null, steer: null, brake: null }
+    };
+    const dm = DRIVE[s.driveProfile];
+    const SEATS = {
+      'AV gauche': 'Massage conducteur', 'AV droit': 'Massage passager avant',
+      'AR gauche': 'Massage deuxième rangée gauche', 'AR droit': 'Massage deuxième rangée droite'
+    };
 
     return {
       glassGradient: s.night
@@ -823,7 +1066,7 @@ class Component extends DCLogic {
         const on = it.id === null ? s.open === null : s.open === it.id;
         return {
           label: it.label, icon: it.icon, icon2: it.icon2,
-          stroke: on ? ACC : '#64748b',
+          stroke: on ? ACC : '#94a3b8',
           onClick: () => this.setState({ open: it.id, editing: false }),
           style: 'display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: 0 0 auto; padding: 0; cursor: pointer; border-radius: 12px; border: 1px solid ' + (on ? 'rgba(16,185,129,.251)' : 'transparent') + '; background: ' + (on ? 'rgba(16,185,129,.102)' : 'transparent') + ';'
         };
@@ -838,7 +1081,7 @@ class Component extends DCLogic {
         { label: 'Assistance conducteur', icon: 'M12 4v4M5 12H3m18 0h-2', icon2: 'M6 19a6 6 0 0112 0z' }
       ].map((it) => ({
         label: it.label, icon: it.icon, icon2: it.icon2,
-        stroke: s.section === it.label ? ACC : '#64748b',
+        stroke: s.section === it.label ? ACC : '#94a3b8',
         onClick: () => this.setState({ section: it.label, open: null }),
         style: 'display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border-radius: 12px; border: 1px solid ' + (s.section === it.label ? 'rgba(16,185,129,.251)' : 'transparent') + '; background: ' + (s.section === it.label ? 'rgba(16,185,129,.102)' : 'transparent') + '; padding: 9px 12px; cursor: pointer; font-family: Outfit, sans-serif; font-weight: 600; font-size: 12px; line-height: 1.3; color: ' + (s.section === it.label ? ACC : '#94a3b8') + ';'
       })),
@@ -846,6 +1089,93 @@ class Component extends DCLogic {
       showVehicle: !open && !s.editing && s.section === 'Véhicule',
       showDoors: !open && !s.editing && s.section === 'Fenêtres et portes',
       showLights: !open && !s.editing && s.section === 'Éclairage',
+      showSeats: !open && !s.editing && s.section === 'Sièges',
+      showDrive: !open && !s.editing && s.section === 'Conduite',
+      showSr: !open && !s.editing && s.section === 'Assistance SR en temps réel',
+      showAdas: !open && !s.editing && s.section === 'Assistance conducteur',
+      adasTabs: ['Sécurité active', 'Conduite', 'Parking'].map((label) => ({
+        label,
+        onClick: () => this.setState({ adasTab: label }),
+        style: 'font-family: Outfit, sans-serif; font-weight: 700; font-size: 15px; background: transparent; border: 0; border-bottom: 2px solid ' + (s.adasTab === label ? ACC : 'transparent') + '; padding: 8px 0 10px; margin-bottom: -1px; cursor: pointer; color: ' + (s.adasTab === label ? '#ffffff' : '#94a3b8') + ';'
+      })),
+      adasGroups: (ADAS[s.adasTab] || []).map((g) => ({
+        title: g.title,
+        items: g.items.map((it) => {
+          if (it.options) {
+            return {
+              isSwitch: false, isChoice: true, title: it.title,
+              hasNote: !!it.note, note: it.note || '',
+              gridStyle: 'display: grid; grid-template-columns: repeat(' + it.options.length + ', 1fr); gap: 8px;',
+              options: it.options.map((label) => ({
+                label, onClick: () => this.setState({ [it.key]: label }), style: optBtn(s[it.key] === label)
+              }))
+            };
+          }
+          return {
+            isSwitch: true, isChoice: false, title: it.title, desc: it.desc, on: !!s[it.key],
+            onClick: () => this.setState({ [it.key]: !s[it.key] }),
+            trackStyle: track(!!s[it.key]), knobStyle: knob(!!s[it.key])
+          };
+        })
+      })),
+      srSwitches: [
+        { key: 'srSound', title: 'Son d’avertissement de risque de conduite', desc: 'Lorsqu’il existe un risque élevé de collision pendant la conduite, des effets sonores sont émis pour vous l’indiquer' },
+        { key: 'srAhead', title: 'Rappel de démarrage du véhicule précédent', desc: 'Après le freinage du véhicule, lorsque la voiture vous précédant recommence à accélérer : une notification sonore et une animation visuelle de guidage vous invitera à avancer' }
+      ].map((it) => ({
+        title: it.title, desc: it.desc, on: !!s[it.key],
+        onClick: () => this.setState({ [it.key]: !s[it.key] }),
+        trackStyle: track(!!s[it.key]), knobStyle: knob(!!s[it.key])
+      })),
+      driveModeTitle: dm.title, driveModeDesc: dm.desc, driveModeColor: dm.color,
+      driveModes: Object.keys(DRIVE).map((label) => {
+        const on = s.driveProfile === label;
+        return {
+          label,
+          onClick: () => {
+            const d = DRIVE[label];
+            const next = { driveProfile: label };
+            if (d.key) { next.mode = d.key; next.power = d.power; next.steer = d.steer; next.brake = d.brake; }
+            this.setState(next);
+          },
+          style: 'font-family: Outfit, sans-serif; font-weight: 600; font-size: 13px; padding: 12px 10px; border-radius: 12px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border: 1px solid ' + (on ? DRIVE[label].color : '#1e2538') + '; background: ' + (on ? DRIVE[label].color : '#1e293b') + '; color: ' + (on ? '#090d16' : '#94a3b8') + ';'
+        };
+      }),
+      powerOpts: ['Économie d’énergie', 'Comfort', 'Sport'].map((label) => ({
+        label, onClick: () => this.setState({ power: label, driveProfile: 'Individuel' }), style: optBtn(s.power === label)
+      })),
+      steerOpts: ['Léger', 'Moyenne', 'Lourd'].map((label) => ({
+        label, onClick: () => this.setState({ steer: label, driveProfile: 'Individuel' }), style: optBtn(s.steer === label)
+      })),
+      brakeOpts: ['Lisse', 'Modéré', 'Aiguë'].map((label) => ({
+        label, onClick: () => this.setState({ brake: label, driveProfile: 'Individuel' }), style: optBtn(s.brake === label)
+      })),
+      seatTabs: ['Réglage', 'Massage'].map((label) => ({
+        label,
+        onClick: () => this.setState({ seatTab: label }),
+        style: 'font-family: Outfit, sans-serif; font-weight: 700; font-size: 15px; background: transparent; border: 0; border-bottom: 2px solid ' + (s.seatTab === label ? ACC : 'transparent') + '; padding: 8px 0 10px; margin-bottom: -1px; cursor: pointer; color: ' + (s.seatTab === label ? '#ffffff' : '#94a3b8') + ';'
+      })),
+      tabReglage: s.seatTab === 'Réglage',
+      tabMassage: s.seatTab === 'Massage',
+      seatTitle: SEATS[s.seat],
+      seatPads: Object.keys(SEATS).map((label) => ({
+        label: SEATS[label], short: label,
+        onClick: () => this.setState({ seat: label }),
+        style: 'display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; height: 72px; border-radius: 12px; cursor: pointer; border: 1px solid ' + (s.seat === label ? 'rgba(16,185,129,.251)' : '#1e2538') + '; background: ' + (s.seat === label ? 'rgba(16,185,129,.102)' : '#1e293b') + ';',
+        dotStyle: 'width: 20px; height: 20px; border-radius: 100px; display: block; background: ' + (s.seat === label ? ACC : '#e2e8f0') + '; box-shadow: 0 0 0 4px ' + (s.seat === label ? 'rgba(16,185,129,.18)' : 'rgba(148,163,184,.14)') + ';'
+      })),
+      toggleMassage: () => this.setState({ massageOn: !s.massageOn }),
+      massagePowerStyle: 'display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 11px 16px; border-radius: 12px; cursor: pointer; font-family: Outfit, sans-serif; font-weight: 600; font-size: 13px; border: 1px solid ' + (s.massageOn ? 'rgba(16,185,129,.251)' : '#1e2538') + '; background: ' + (s.massageOn ? 'rgba(16,185,129,.102)' : '#1e293b') + '; color: ' + (s.massageOn ? ACC : '#94a3b8') + ';',
+      massagePrograms: ['Évacuation du stress', 'Réveil vitalité', 'Récupération physique', 'Loisirs et détente', 'Soulagement de la fatigue lors de longs trajets', 'Massage de la taille'].map((label) => ({
+        label, onClick: () => this.setState({ massageProgram: label, massageOn: true }), style: optBtn(s.massageProgram === label)
+      })),
+      massageLevels: ['Faible', 'Moyenne', 'Haut'].map((label) => ({
+        label, onClick: () => this.setState({ massageLevel: label }), style: optBtn(s.massageLevel === label)
+      })),
+      seatShort: s.seat === 'AV gauche' ? 'Conducteur' : s.seat === 'AV droit' ? 'Passager avant' : s.seat === 'AR gauche' ? 'Deuxième rangée gauche' : 'Deuxième rangée droite',
+      openSeatSettings: () => {},
+      profiles: ['Test ↺', 'Guillaume', 'tibo'].map((label) => ({
+        label, onClick: () => this.setState({ profile: label }), style: optBtn(s.profile === label)
+      })),
       showGridView: !(!!open && !s.editing) && !(!open && !s.editing && panelSections.indexOf(s.section) !== -1),
       openTitle: open ? open.title : '',
       openKicker: open ? open.kicker : '',
@@ -876,7 +1206,7 @@ class Component extends DCLogic {
       lightTabs: ['Phares', 'Ambiance'].map((label) => ({
         label,
         onClick: () => this.setState({ lightTab: label }),
-        style: 'font-family: Outfit, sans-serif; font-weight: 700; font-size: 15px; background: transparent; border: 0; border-bottom: 2px solid ' + (s.lightTab === label ? ACC : 'transparent') + '; padding: 8px 0 10px; margin-bottom: -1px; cursor: pointer; color: ' + (s.lightTab === label ? '#ffffff' : '#64748b') + ';'
+        style: 'font-family: Outfit, sans-serif; font-weight: 700; font-size: 15px; background: transparent; border: 0; border-bottom: 2px solid ' + (s.lightTab === label ? ACC : 'transparent') + '; padding: 8px 0 10px; margin-bottom: -1px; cursor: pointer; color: ' + (s.lightTab === label ? '#ffffff' : '#94a3b8') + ';'
       })),
       tabPhares: s.lightTab === 'Phares',
       tabAmbiance: s.lightTab === 'Ambiance',
@@ -899,7 +1229,7 @@ class Component extends DCLogic {
       })),
       ambientOn: s.ambientOn,
       toggleAmbient: () => this.setState({ ambientOn: !s.ambientOn }),
-      ambientPowerStyle: 'width: 44px; height: 44px; flex: 0 0 auto; border-radius: 12px; cursor: pointer; font-size: 15px; line-height: 1; border: 1px solid ' + (s.ambientOn ? 'rgba(16,185,129,.251)' : '#2a334a') + '; background: ' + (s.ambientOn ? 'rgba(16,185,129,.102)' : '#1e293b') + '; color: ' + (s.ambientOn ? ACC : '#64748b') + ';',
+      ambientPowerStyle: 'width: 44px; height: 44px; flex: 0 0 auto; border-radius: 12px; cursor: pointer; font-size: 15px; line-height: 1; border: 1px solid ' + (s.ambientOn ? 'rgba(16,185,129,.251)' : '#2a334a') + '; background: ' + (s.ambientOn ? 'rgba(16,185,129,.102)' : '#1e293b') + '; color: ' + (s.ambientOn ? ACC : '#94a3b8') + ';',
       ambientLevel: s.ambientLevel,
       setAmbientLevel: (e) => this.setState({ ambientLevel: Number(e.target.value) }),
       ambientModes: ['Luminosité fixe', 'Respiration fluide', 'Selon la vitesse', 'Rythme musical'].map((label) => ({
