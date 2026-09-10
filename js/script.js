@@ -189,7 +189,10 @@
       thumb.addEventListener('click', function () { showIndex(i); });
     });
 
-    if (thumbs.length > 1) {
+    var galleryEl = caseImage.querySelector('.case-gallery');
+    var galleryRow = galleryEl;
+
+    if (thumbs.length > 1 && galleryEl) {
       var prevBtn = document.createElement('button');
       prevBtn.type = 'button';
       prevBtn.className = 'carousel-nav carousel-prev';
@@ -210,17 +213,16 @@
         showIndex(current + 1);
       });
 
-      var row = document.createElement('div');
-      row.className = 'carousel-row';
-      carousel.parentNode.insertBefore(row, carousel);
-      row.appendChild(prevBtn);
-      row.appendChild(carousel);
-      row.appendChild(nextBtn);
+      galleryRow = document.createElement('div');
+      galleryRow.className = 'gallery-row';
+      galleryEl.parentNode.insertBefore(galleryRow, galleryEl);
+      galleryRow.appendChild(prevBtn);
+      galleryRow.appendChild(galleryEl);
+      galleryRow.appendChild(nextBtn);
     }
 
     // Dot pagination: one dot per photo, replacing the scrollbar as the
     // way to reveal thumbnails beyond the 3 visible in the strip.
-    var galleryEl = caseImage.querySelector('.case-gallery');
     if (galleryEl && thumbs.length > 3) {
       var dotsWrap = document.createElement('div');
       dotsWrap.className = 'gallery-dots';
@@ -235,7 +237,7 @@
         dots.push(dot);
       });
 
-      galleryEl.insertAdjacentElement('afterend', dotsWrap);
+      galleryRow.insertAdjacentElement('afterend', dotsWrap);
     }
   });
 

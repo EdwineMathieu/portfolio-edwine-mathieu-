@@ -634,15 +634,17 @@ body {
   overflow: hidden;
 }
 
-.carousel-row {
+.gallery-row {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-top: 8px;
 }
 
-.carousel-row .case-carousel {
+.gallery-row .case-gallery {
   flex: 1 1 auto;
   min-width: 0;
+  margin-top: 0;
 }
 
 .carousel-nav {
