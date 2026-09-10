@@ -380,6 +380,10 @@ body {
   aspect-ratio: 4 / 3;
 }
 
+#view-projets .project-thumb .photo {
+  object-position: left;
+}
+
 .project-body {
   padding: 20px;
 }
