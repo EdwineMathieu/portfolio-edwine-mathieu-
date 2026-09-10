@@ -442,6 +442,8 @@ body {
   margin-top: 56px;
   padding-top: 24px;
   border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: flex-end;
 }
 
 .project-modal-footer .footer-links {
@@ -775,6 +777,16 @@ body {
   color: var(--text-main);
   letter-spacing: -0.01em;
   margin-bottom: 10px;
+}
+
+.usecase-section {
+  margin-top: 32px;
+}
+
+.usecase-section + .usecase-section {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-light);
 }
 
 .case-block-text {
