@@ -629,16 +629,14 @@ body {
 }
 
 .case-carousel {
-  height: calc(100vh - 160px);
-  min-height: 320px;
+  aspect-ratio: 16 / 9;
   border-radius: 14px;
   overflow: hidden;
 }
 
 /* Case studies without a carousel: a single photo, sized the same way. */
 .case-image > .photo {
-  height: calc(100vh - 160px);
-  min-height: 320px;
+  aspect-ratio: 16 / 9;
   border-radius: 14px;
 }
 
@@ -852,8 +850,6 @@ body {
   .cv-columns { grid-template-columns: 1fr; gap: 32px; }
   .case-study { grid-template-columns: 1fr; gap: 24px; }
   .case-image { position: static; }
-  .case-carousel { height: auto; min-height: 0; aspect-ratio: 16 / 10; }
-  .case-image > .photo { height: auto; min-height: 0; aspect-ratio: 16 / 10; }
   .project-gallery { grid-template-columns: 1fr 1fr; }
   .project-modal-inner { padding: 76px 24px 64px; }
   .project-modal-close { top: 12px; right: 12px; }
