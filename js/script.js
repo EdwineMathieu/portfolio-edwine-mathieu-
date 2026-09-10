@@ -114,10 +114,13 @@
   var lightbox = document.getElementById('lightbox');
   var lightboxImg = lightbox.querySelector('.lightbox-img');
   var closeBtn = lightbox.querySelector('.lightbox-close');
+  var lightboxPrevBtn = lightbox.querySelector('.lightbox-prev');
+  var lightboxNextBtn = lightbox.querySelector('.lightbox-next');
 
   var scale = 1, translateX = 0, translateY = 0;
   var isDragging = false, dragStartX = 0, dragStartY = 0, dragOriginX = 0, dragOriginY = 0;
   var pinchStartDist = 0, pinchStartScale = 1;
+  var lightboxList = null, lightboxIndex = 0, lightboxOnNavigate = null;
 
   function applyTransform() {
     lightboxImg.style.transform = 'translate(' + translateX + 'px,' + translateY + 'px) scale(' + scale + ')';
@@ -131,13 +134,31 @@
     applyTransform();
   }
 
-  function openLightbox(src, alt) {
+  // list/index/onNavigate are optional: pass them when the image belongs to
+  // a gallery, so the lightbox can offer prev/next through the same photos
+  // (and keep the underlying carousel in sync as it navigates).
+  function openLightbox(src, alt, list, index, onNavigate) {
+    lightboxList = (list && list.length > 1) ? list : null;
+    lightboxIndex = index || 0;
+    lightboxOnNavigate = onNavigate || null;
     lightboxImg.src = src;
     lightboxImg.alt = alt || '';
     resetZoom();
+    lightboxPrevBtn.hidden = !lightboxList;
+    lightboxNextBtn.hidden = !lightboxList;
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+  }
+
+  function showLightboxIndex(i) {
+    if (!lightboxList) return;
+    lightboxIndex = (i + lightboxList.length) % lightboxList.length;
+    var entry = lightboxList[lightboxIndex];
+    lightboxImg.src = entry.src;
+    lightboxImg.alt = entry.alt || '';
+    resetZoom();
+    if (lightboxOnNavigate) lightboxOnNavigate(lightboxIndex);
   }
 
   function closeLightbox() {
@@ -145,6 +166,8 @@
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     lightboxImg.src = '';
+    lightboxList = null;
+    lightboxOnNavigate = null;
   }
 
   function touchDistance(touches) {
@@ -153,7 +176,24 @@
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  document.querySelectorAll('.case-carousel img.photo').forEach(function (img) {
+  lightboxPrevBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    showLightboxIndex(lightboxIndex - 1);
+  });
+
+  lightboxNextBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    showLightboxIndex(lightboxIndex + 1);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('is-open') || !lightboxList) return;
+    if (e.key === 'ArrowLeft') showLightboxIndex(lightboxIndex - 1);
+    if (e.key === 'ArrowRight') showLightboxIndex(lightboxIndex + 1);
+  });
+
+  // Case images without a gallery: click opens the lightbox on that single photo.
+  document.querySelectorAll('.case-image > img.photo').forEach(function (img) {
     img.addEventListener('click', function (e) {
       e.stopPropagation();
       openLightbox(img.currentSrc || img.src, img.alt);
@@ -187,6 +227,12 @@
 
     thumbs.forEach(function (thumb, i) {
       thumb.addEventListener('click', function () { showIndex(i); });
+    });
+
+    carouselImg.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var list = thumbs.map(function (t) { return { src: t.dataset.src, alt: t.dataset.alt }; });
+      openLightbox(carouselImg.currentSrc || carouselImg.src, carouselImg.alt, list, current, showIndex);
     });
 
     var galleryEl = caseImage.querySelector('.case-gallery');
