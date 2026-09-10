@@ -21,6 +21,9 @@
 <body>
   <script>
   (function () {
+    // Embedded in the portfolio's own prototype-viewer iframe: that overlay
+    // already has its own "Retour au portfolio" button, so skip this one.
+    if (window.self !== window.top) return;
     function addBackLink() {
       if (document.getElementById('__back_to_portfolio')) return;
       var a = document.createElement('a');

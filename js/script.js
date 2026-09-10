@@ -83,6 +83,7 @@
   var prototypeModal = document.getElementById('prototype-modal');
   var prototypeFrame = document.getElementById('prototype-frame');
   var prototypeModalClose = prototypeModal.querySelector('.prototype-modal-close');
+  var prototypeModalBack = document.getElementById('prototype-modal-back');
 
   function openPrototype(src) {
     prototypeFrame.src = src;
@@ -104,6 +105,7 @@
   });
 
   prototypeModalClose.addEventListener('click', closePrototype);
+  prototypeModalBack.addEventListener('click', closePrototype);
 
   // Deep link on load, e.g. index.html#cs-automobile: open the view that
   // contains the target anchor (opening the project modal for a case study,
@@ -591,6 +593,7 @@
     'eorizon-h4': 'Compare before you stop',
     'eorizon-t4': "Before each stop, alternative providers are compared by total cost of the detour, not just the price per kWh.",
     'eorizon-link': 'View the E-Orizon prototype →',
+    'prototype-back': '← Back to portfolio',
 
     'yij-h1': 'Mission',
     'yij-t1': 'A full redesign of an overly dense, dated site. Figma mockups, interviews with young users, WordPress development. Handled print and digital communications (banners, flyers, social media).',

@@ -905,11 +905,33 @@ body {
   display: block;
 }
 
-.prototype-modal-close {
+.prototype-modal-toolbar {
   position: fixed;
   top: 20px;
   right: 24px;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.prototype-modal-back {
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  background: white;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,.15);
+}
+
+.prototype-modal-back:hover {
+  background: oklch(0.94 0.008 90);
+}
+
+.prototype-modal-close {
   width: 44px;
   height: 44px;
   border-radius: 50%;
