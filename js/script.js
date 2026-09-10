@@ -531,6 +531,7 @@
 
     'tag-automobile': 'Automotive',
     'cockpit-link': 'View the animated prototype →',
+    'citymoov-link': 'View the animated prototype →',
 
     'eorizon-h0': 'Use case 2: E-Orizon — planning a long-distance EV trip',
     'eorizon-t0': "A mobile app prototype for electric mobility: from planning a long-distance trip to arrival, accounting for battery, subscription network, chargers available along the route, and charging budget — 7 screens, for a one-way Paris → Arcachon trip.",
