@@ -672,7 +672,38 @@ body {
   margin-top: 8px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+}
+
+.case-gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.gallery-dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--border-light);
+  cursor: pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+
+.gallery-dot:hover {
+  background: var(--accent-border);
+}
+
+.gallery-dot.is-active {
+  background: var(--accent);
+  transform: scale(1.3);
 }
 
 .gallery-thumb {

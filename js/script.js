@@ -210,6 +210,43 @@
       carousel.appendChild(prevBtn);
       carousel.appendChild(nextBtn);
     }
+
+    // Dot pagination for the thumbnail strip: one dot per page of 3
+    // thumbnails, replacing the scrollbar as the way to reveal the rest.
+    var galleryEl = caseImage.querySelector('.case-gallery');
+    if (galleryEl && thumbs.length > 3) {
+      var perPage = 3;
+      var pageCount = Math.ceil(thumbs.length / perPage);
+      var dots = [];
+      var dotsWrap = document.createElement('div');
+      dotsWrap.className = 'gallery-dots';
+
+      for (var p = 0; p < pageCount; p++) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'gallery-dot' + (p === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Photos ' + (p + 1) + ' sur ' + pageCount);
+        dot.addEventListener('click', (function (page) {
+          return function () {
+            galleryEl.scrollLeft = page * galleryEl.clientWidth;
+            dots.forEach(function (d, i) { d.classList.toggle('is-active', i === page); });
+          };
+        })(p));
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+      }
+
+      galleryEl.insertAdjacentElement('afterend', dotsWrap);
+
+      var scrollTimer;
+      galleryEl.addEventListener('scroll', function () {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function () {
+          var page = Math.round(galleryEl.scrollLeft / galleryEl.clientWidth);
+          dots.forEach(function (d, i) { d.classList.toggle('is-active', i === page); });
+        }, 80);
+      });
+    }
   });
 
   closeBtn.addEventListener('click', closeLightbox);
