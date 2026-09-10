@@ -476,7 +476,6 @@
     'cep-tag': 'Freelance · Institutional',
     'luxe-tag': 'Favorite · Luxury',
 
-    'behance-link': 'View on Behance →',
 
     'agentia-tag': 'AI · Design Leadership',
     'agentia-title': 'AI conversational agent — EBP Open Line',
