@@ -132,11 +132,6 @@ body {
   animation: fadeUp .5s ease both;
 }
 
-/* CV page: custom cursor (image capped at 150px tall). */
-#view-cv {
-  cursor: url('../images/cv-cursor.png') 43 75, auto;
-}
-
 /* Hero */
 .hero {
   max-width: 1180px;
@@ -1013,6 +1008,29 @@ a.is-copied {
 
 @media (max-width: 560px) {
   .project-gallery { grid-template-columns: 1fr; }
+}
+
+/* CV page: sticker that follows the cursor, offset beside it. */
+.cursor-sticker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-height: 150px;
+  width: auto;
+  pointer-events: none;
+  z-index: 3000;
+  opacity: 0;
+  transform: translate(18px, -50%);
+  transition: opacity 0.15s ease;
+  will-change: transform;
+}
+
+.cursor-sticker.is-active {
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .cursor-sticker { display: none; }
 }
 
 /* Prototype viewer */
