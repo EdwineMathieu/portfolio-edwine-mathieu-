@@ -676,28 +676,6 @@ a.is-copied {
   align-items: start;
 }
 
-/* Breaks out of the modal's centered max-width to span the full
-   viewport width, regardless of which column it's placed after. */
-.case-full-width {
-  grid-column: 1 / -1;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  margin-top: 32px;
-  padding: 0 56px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.case-full-width .photo {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  border-radius: 14px;
-  object-fit: cover;
-}
-
 .case-study.is-open {
   display: grid;
 }
@@ -975,7 +953,6 @@ a.is-copied {
   .cv-columns { grid-template-columns: 1fr; gap: 32px; }
   .case-study { grid-template-columns: 1fr; gap: 24px; }
   .case-image { position: static; }
-  .case-full-width { grid-template-columns: 1fr; padding: 0 24px; }
   .project-gallery { grid-template-columns: 1fr 1fr; }
   .project-modal-inner { padding: 76px 24px 64px; }
   .project-modal-close { top: 12px; right: 12px; }
