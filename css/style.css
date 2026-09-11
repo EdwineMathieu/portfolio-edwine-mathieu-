@@ -978,6 +978,7 @@ a.is-copied {
 }
 
 .tools-section {
+  margin-top: 56px;
   padding: 56px 0 0;
   border-top: 1px solid var(--border-light);
 }
