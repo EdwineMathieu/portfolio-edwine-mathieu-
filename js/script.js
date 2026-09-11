@@ -54,6 +54,21 @@
       cvCursorSticker.style.left = e.clientX + 'px';
       cvCursorSticker.style.top = e.clientY + 'px';
     });
+
+    // Swaps the sticker's image while hovering specific CV sections.
+    var defaultStickerSrc = cvCursorSticker.getAttribute('src');
+    [
+      { el: document.getElementById('cv-skills'), src: 'images/cv-cursor-coffee.png' },
+      { el: document.getElementById('cv-education'), src: 'images/cv-cursor-book.png' }
+    ].forEach(function (entry) {
+      if (!entry.el) return;
+      entry.el.addEventListener('mouseenter', function () {
+        cvCursorSticker.src = entry.src;
+      });
+      entry.el.addEventListener('mouseleave', function () {
+        cvCursorSticker.src = defaultStickerSrc;
+      });
+    });
   }
 
   // Email links: copy the address to the clipboard instead of triggering
