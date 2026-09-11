@@ -68,26 +68,31 @@
     });
   });
 
-  // Expertise pills: reveal them one by one, sweeping up from the
-  // bottom, once the section scrolls into view.
-  var expertisePills = document.querySelector('.expertise-pills');
-  if (expertisePills && 'IntersectionObserver' in window) {
-    var pillEls = Array.prototype.slice.call(expertisePills.querySelectorAll('.pill'));
-    pillEls.forEach(function (pill, i) {
-      pill.style.animationDelay = (i * 90) + 'ms';
+  // Reveals a container's children one by one, sweeping up from the
+  // bottom, once the container scrolls into view.
+  function sweepUpReveal(container, itemSelector, staggerMs) {
+    if (!container) return;
+    if (!('IntersectionObserver' in window)) {
+      container.classList.add('is-visible');
+      return;
+    }
+    var items = Array.prototype.slice.call(container.querySelectorAll(itemSelector));
+    items.forEach(function (item, i) {
+      item.style.animationDelay = (i * staggerMs) + 'ms';
     });
-    var pillsObserver = new IntersectionObserver(function (entries, observer) {
+    var observer = new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          obs.unobserve(entry.target);
         }
       });
     }, { threshold: 0.3 });
-    pillsObserver.observe(expertisePills);
-  } else if (expertisePills) {
-    expertisePills.classList.add('is-visible');
+    observer.observe(container);
   }
+
+  sweepUpReveal(document.querySelector('.expertise-pills'), '.pill', 90);
+  sweepUpReveal(document.querySelector('.stats-sweep'), '.stat-card', 120);
 
   // Project gallery modal: clicking a thumbnail opens the matching case
   // study full-screen; only one is ever visible (is-open) at a time.
