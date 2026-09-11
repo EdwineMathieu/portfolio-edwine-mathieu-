@@ -735,7 +735,7 @@ a.is-copied {
 
 .case-carousel {
   aspect-ratio: 16 / 9;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
 }
 
@@ -753,12 +753,12 @@ a.is-copied {
 /* Case studies without a carousel: a single photo, sized the same way. */
 .case-image > .photo {
   aspect-ratio: 16 / 9;
-  border-radius: 14px;
+  border-radius: 16px;
 }
 
 .case-image.is-tall {
   aspect-ratio: 16 / 9;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -909,7 +909,7 @@ a.is-copied {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 14px;
+  border-radius: 16px;
   margin: 20px 0;
   cursor: pointer;
 }
