@@ -1013,16 +1013,22 @@ body {
   overflow: hidden;
 }
 
-/* Images taller than 16:9: instead of shrinking the whole image to fit
-   the screen, show it at full width and let the viewport scroll. */
+/* Images taller than 16:9: show them in a fixed 16:9 window and scroll
+   vertically instead of shrinking the whole image to fit the screen. */
 .lightbox-viewport.is-tall {
+  width: min(92vw, 92vh * 16 / 9);
+  aspect-ratio: 16 / 9;
+  max-height: 92vh;
   align-items: flex-start;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .lightbox-viewport.is-tall .lightbox-img {
-  width: 92vw;
+  width: 100%;
+  max-width: none;
   max-height: none;
+  height: auto;
 }
 
 .lightbox-img {
