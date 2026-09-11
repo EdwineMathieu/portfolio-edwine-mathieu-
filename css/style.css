@@ -233,6 +233,11 @@ a.is-copied {
   aspect-ratio: 4 / 5;
   border-radius: 16px;
   overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.hero-portrait:hover {
+  transform: rotate(5deg);
 }
 
 /* Image slots */
