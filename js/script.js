@@ -41,6 +41,33 @@
     });
   });
 
+  // Email links: copy the address to the clipboard instead of triggering
+  // the OS "choose a mail app" dialog. Falls back to mailto: if the
+  // clipboard API is unavailable or denied.
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
+    var originalHTML = link.innerHTML;
+    var revertTimer = null;
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var email = link.href.replace('mailto:', '').split('?')[0];
+      if (!navigator.clipboard || !navigator.clipboard.writeText) {
+        window.location.href = link.href;
+        return;
+      }
+      navigator.clipboard.writeText(email).then(function () {
+        clearTimeout(revertTimer);
+        link.textContent = document.documentElement.lang === 'en' ? 'Copied!' : 'Copié !';
+        link.classList.add('is-copied');
+        revertTimer = setTimeout(function () {
+          link.innerHTML = originalHTML;
+          link.classList.remove('is-copied');
+        }, 1600);
+      }, function () {
+        window.location.href = link.href;
+      });
+    });
+  });
+
   // Project gallery modal: clicking a thumbnail opens the matching case
   // study full-screen; only one is ever visible (is-open) at a time.
   var projectModal = document.getElementById('project-modal');

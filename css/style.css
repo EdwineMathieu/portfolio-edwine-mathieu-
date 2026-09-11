@@ -225,6 +225,10 @@ body {
   color: var(--text-main);
 }
 
+a.is-copied {
+  color: var(--accent) !important;
+}
+
 .hero-portrait {
   aspect-ratio: 4 / 5;
   border-radius: 16px;
