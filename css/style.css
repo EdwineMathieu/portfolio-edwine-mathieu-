@@ -1010,29 +1010,6 @@ a.is-copied {
   .project-gallery { grid-template-columns: 1fr; }
 }
 
-/* CV page: small sticker that follows the cursor */
-.cursor-sticker {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 64px;
-  height: auto;
-  pointer-events: none;
-  z-index: 3000;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.15s ease;
-  will-change: transform;
-}
-
-.cursor-sticker.is-active {
-  opacity: 1;
-}
-
-@media (max-width: 900px) {
-  .cursor-sticker { display: none; }
-}
-
 /* Prototype viewer */
 .prototype-modal {
   display: none;
