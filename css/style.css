@@ -176,7 +176,7 @@ body {
   color: var(--accent);
 }
 
-.hero-role::after {
+.hero-role.is-typing::after {
   content: '';
   display: inline-block;
   width: 3px;

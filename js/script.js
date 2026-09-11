@@ -707,12 +707,15 @@
     var fullText = heroRole.textContent;
     clearTimeout(typewriterTimer);
     heroRole.textContent = '';
+    heroRole.classList.add('is-typing');
     var i = 0;
     function step() {
       heroRole.textContent = fullText.slice(0, i);
       i++;
       if (i <= fullText.length) {
         typewriterTimer = setTimeout(step, 55);
+      } else {
+        heroRole.classList.remove('is-typing');
       }
     }
     step();
