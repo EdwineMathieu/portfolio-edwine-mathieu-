@@ -666,6 +666,29 @@
       btn.setAttribute('aria-pressed', String(isActive));
     });
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    typewriterHeroRole();
+  }
+
+  // Types out the hero role (e.g. "Product Designer Senior") one letter at
+  // a time, as if on a typewriter. Re-run on language switch since
+  // applyLanguage() replaces the text instantly beforehand.
+  var heroRole = document.querySelector('.hero-role');
+  var typewriterTimer = null;
+
+  function typewriterHeroRole() {
+    if (!heroRole) return;
+    var fullText = heroRole.textContent;
+    clearTimeout(typewriterTimer);
+    heroRole.textContent = '';
+    var i = 0;
+    function step() {
+      heroRole.textContent = fullText.slice(0, i);
+      i++;
+      if (i <= fullText.length) {
+        typewriterTimer = setTimeout(step, 55);
+      }
+    }
+    step();
   }
 
   langButtons.forEach(function (btn) {
@@ -676,5 +699,9 @@
 
   var savedLang = 'fr';
   try { savedLang = localStorage.getItem(LANG_KEY) || 'fr'; } catch (e) {}
-  if (savedLang === 'en') applyLanguage('en');
+  if (savedLang === 'en') {
+    applyLanguage('en');
+  } else {
+    typewriterHeroRole();
+  }
 })();
