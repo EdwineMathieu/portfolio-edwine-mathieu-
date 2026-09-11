@@ -148,12 +148,15 @@
 
   // Lightbox
   var lightbox = document.getElementById('lightbox');
+  var lightboxViewport = lightbox.querySelector('.lightbox-viewport');
   var lightboxImg = lightbox.querySelector('.lightbox-img');
   var closeBtn = lightbox.querySelector('.lightbox-close');
   var lightboxPrevBtn = lightbox.querySelector('.lightbox-prev');
   var lightboxNextBtn = lightbox.querySelector('.lightbox-next');
   var zoomInBtn = lightbox.querySelector('.lightbox-zoom-in');
   var zoomOutBtn = lightbox.querySelector('.lightbox-zoom-out');
+
+  watchTallImage(lightboxViewport, lightboxImg);
 
   var scale = 1, translateX = 0, translateY = 0;
   var isDragging = false, dragStartX = 0, dragStartY = 0, dragOriginX = 0, dragOriginY = 0;

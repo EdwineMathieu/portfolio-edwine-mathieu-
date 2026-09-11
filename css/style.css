@@ -1013,6 +1013,18 @@ body {
   overflow: hidden;
 }
 
+/* Images taller than 16:9: instead of shrinking the whole image to fit
+   the screen, show it at full width and let the viewport scroll. */
+.lightbox-viewport.is-tall {
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+.lightbox-viewport.is-tall .lightbox-img {
+  width: 92vw;
+  max-height: none;
+}
+
 .lightbox-img {
   display: block;
   max-width: 92vw;
