@@ -382,11 +382,6 @@
     }
   });
 
-  lightboxImg.addEventListener('wheel', function (e) {
-    e.preventDefault();
-    zoomBy(-e.deltaY * 0.0015);
-  }, { passive: false });
-
   zoomInBtn.addEventListener('click', function (e) {
     e.stopPropagation();
     zoomBy(0.5);
@@ -638,7 +633,7 @@
     'tag-luxe': 'Luxury',
 
     'tools-eyebrow': 'Tools',
-    'lightbox-hint': 'Scroll or double-click to zoom — Esc to close',
+    'lightbox-hint': 'Double-click to zoom — Esc to close',
     'doc-title': 'Edwine Mathieu — Senior Product Designer',
     'meta-description': 'Portfolio of Edwine Mathieu, Senior Product Designer — SaaS, Embedded Finance, AI.'
   };
