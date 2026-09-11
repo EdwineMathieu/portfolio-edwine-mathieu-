@@ -132,6 +132,11 @@ body {
   animation: fadeUp .5s ease both;
 }
 
+/* CV page: custom cursor (image capped at 150px tall). */
+#view-cv {
+  cursor: url('../images/cv-cursor.png') 43 75, auto;
+}
+
 /* Hero */
 .hero {
   max-width: 1180px;
