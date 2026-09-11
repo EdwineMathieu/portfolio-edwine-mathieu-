@@ -656,10 +656,34 @@ body {
   overflow: hidden;
 }
 
+/* Images taller than the 1920x1080 (16:9) ratio: keep the 16:9 window
+   but scroll vertically instead of cropping the image. */
+.case-carousel.is-tall {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.case-carousel.is-tall > img.photo {
+  height: auto;
+}
+
 /* Case studies without a carousel: a single photo, sized the same way. */
 .case-image > .photo {
   aspect-ratio: 16 / 9;
   border-radius: 14px;
+}
+
+.case-image.is-tall {
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.case-image.is-tall > .photo {
+  aspect-ratio: unset;
+  height: auto;
+  border-radius: 0;
 }
 
 .gallery-row {

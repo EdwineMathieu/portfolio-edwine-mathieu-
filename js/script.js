@@ -239,8 +239,22 @@
     if (e.key === 'ArrowRight') showLightboxIndex(lightboxIndex + 1);
   });
 
+  // Images taller than the 16:9 (1920x1080) ratio get a scrollable 16:9
+  // window instead of being cropped by object-fit: cover.
+  function watchTallImage(frame, img) {
+    function check() {
+      if (!img.naturalWidth || !img.naturalHeight) return;
+      // Small tolerance so images that are essentially 16:9 (resizing/export
+      // rounding) don't get flagged as tall.
+      frame.classList.toggle('is-tall', (img.naturalHeight / img.naturalWidth) > (9 / 16) * 1.02);
+    }
+    img.addEventListener('load', check);
+    if (img.complete) check();
+  }
+
   // Case images without a gallery: click opens the lightbox on that single photo.
   document.querySelectorAll('.case-image > img.photo').forEach(function (img) {
+    watchTallImage(img.parentElement, img);
     img.addEventListener('click', function (e) {
       e.stopPropagation();
       openLightbox(img.currentSrc || img.src, img.alt);
@@ -255,6 +269,8 @@
     var carouselImg = caseImage.querySelector('.case-carousel img.photo');
     var thumbs = Array.prototype.slice.call(caseImage.querySelectorAll('.gallery-thumb'));
     if (!carousel || !carouselImg || !thumbs.length) return;
+
+    watchTallImage(carousel, carouselImg);
 
     var current = thumbs.findIndex(function (t) { return t.classList.contains('is-active'); });
     if (current === -1) current = 0;
