@@ -384,7 +384,8 @@ body {
   aspect-ratio: 4 / 3;
 }
 
-#view-projets .project-thumb .photo {
+#view-projets .project-thumb .photo,
+.featured-grid .project-thumb .photo {
   object-position: left;
 }
 
