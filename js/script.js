@@ -526,8 +526,8 @@
     'key-projects-title': 'Key projects',
     'all-projects-link': 'All projects →',
     'feat-hubbix-blurb': 'Invoicing designed for building-trade craftspeople — from discovery to launch.',
-    'feat-finance-tag': 'Embedded Finance · AI',
-    'feat-finance-title': 'Embedded finance &amp; AI assistant',
+    'feat-finance-tag': 'Embedded Finance',
+    'feat-finance-title': 'Embedded finance',
     'feat-finance-blurb': 'Business account activation journey and co-design of a business chatbot.',
     'feat-cegid-title': 'Cegid — Brand &amp; DS redesign',
     'feat-cegid-blurb': 'Tested 5 creative directions with 100 users to steer the brand.',
@@ -621,11 +621,11 @@
 
     'tag-agilite': 'Agility',
 
-    'finance-title': 'EBP — Embedded finance &amp; AI assistant',
+    'finance-title': 'EBP — Embedded finance',
     'finance-h1': 'Objective',
     'finance-t1': 'Integrate embedded banking services accessible without leaving the app, letting craftspeople and shopkeepers connect their invoicing software to a business account.',
     'finance-h2': 'Contribution',
-    'finance-t2': 'Prototyped the business account activation journey, its funding, and the invoice payment flow. Co-designed the AI chatbot interface with the Product Manager and developers.',
+    'finance-t2': 'Prototyped the business account activation journey, its funding, and the invoice payment flow.',
     'finance-h3': 'Impact',
     'finance-t3': 'Took part in the working group on customer adoption of AI assistants and agents in professional software.',
 
