@@ -1089,6 +1089,7 @@ body {
   bottom: 20px;
   right: 24px;
   display: flex;
+  flex-direction: column;
   gap: 8px;
   z-index: 1;
 }
