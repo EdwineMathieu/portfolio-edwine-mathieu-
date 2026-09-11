@@ -627,7 +627,7 @@
     'finance-h2': 'Contribution',
     'finance-t2': 'Prototyped the business account activation journey, its funding, and the invoice payment flow.',
     'finance-h3': 'Impact',
-    'finance-t3': 'Took part in the working group on customer adoption of AI assistants and agents in professional software.',
+    'finance-t3': 'Supported the team dedicated to the Embedded Finance project during convergence workshops, worked closely with business consultants, and delivered the journeys within 1 week. Presented the finalized journeys to management.',
 
     'cegid-title': 'Cegid — Brand &amp; Design System redesign',
     'cegid-h1': 'Approach',
