@@ -1,11 +1,15 @@
 (function () {
   var navItems = document.querySelectorAll('.nav-item');
   var views = document.querySelectorAll('.view');
+  var cvCursorSticker = document.getElementById('cv-cursor-sticker');
 
   function showView(name, anchorId) {
     views.forEach(function (view) {
       view.classList.toggle('is-active', view.dataset.viewPanel === name);
     });
+    if (cvCursorSticker && name !== 'cv') {
+      cvCursorSticker.classList.remove('is-active');
+    }
     navItems.forEach(function (item) {
       var isActive = item.dataset.view === name;
       item.classList.toggle('is-active', isActive);
@@ -40,6 +44,17 @@
       showView(el.dataset.nav, el.dataset.anchor);
     });
   });
+
+  // CV page: a small sticker follows the cursor while on that page.
+  var cvView = document.querySelector('[data-view-panel="cv"]');
+  if (cvCursorSticker && cvView) {
+    document.addEventListener('mousemove', function (e) {
+      if (!cvView.classList.contains('is-active')) return;
+      cvCursorSticker.classList.add('is-active');
+      cvCursorSticker.style.left = e.clientX + 'px';
+      cvCursorSticker.style.top = e.clientY + 'px';
+    });
+  }
 
   // Email links: copy the address to the clipboard instead of triggering
   // the OS "choose a mail app" dialog. Falls back to mailto: if the
