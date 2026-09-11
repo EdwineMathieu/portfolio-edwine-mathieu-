@@ -68,6 +68,27 @@
     });
   });
 
+  // Expertise pills: reveal them one by one, sweeping up from the
+  // bottom, once the section scrolls into view.
+  var expertisePills = document.querySelector('.expertise-pills');
+  if (expertisePills && 'IntersectionObserver' in window) {
+    var pillEls = Array.prototype.slice.call(expertisePills.querySelectorAll('.pill'));
+    pillEls.forEach(function (pill, i) {
+      pill.style.animationDelay = (i * 90) + 'ms';
+    });
+    var pillsObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    pillsObserver.observe(expertisePills);
+  } else if (expertisePills) {
+    expertisePills.classList.add('is-visible');
+  }
+
   // Project gallery modal: clicking a thumbnail opens the matching case
   // study full-screen; only one is ever visible (is-open) at a time.
   var projectModal = document.getElementById('project-modal');

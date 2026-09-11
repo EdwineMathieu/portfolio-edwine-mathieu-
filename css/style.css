@@ -351,6 +351,20 @@ a.is-copied {
   color: var(--accent);
 }
 
+.expertise-pills .pill {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.expertise-pills.is-visible .pill {
+  animation: pill-sweep-up 0.5s ease forwards;
+}
+
+@keyframes pill-sweep-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Featured projects */
 .featured {
   max-width: 1180px;
