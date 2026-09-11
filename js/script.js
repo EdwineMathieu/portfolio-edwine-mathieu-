@@ -79,6 +79,12 @@
     var items = Array.prototype.slice.call(container.querySelectorAll(itemSelector));
     items.forEach(function (item, i) {
       item.style.animationDelay = (i * staggerMs) + 'ms';
+      // Once the reveal animation finishes, drop it entirely so it stops
+      // holding the transform/opacity and normal hover transitions (e.g.
+      // the project card lift) work again.
+      item.addEventListener('animationend', function () {
+        item.classList.add('reveal-done');
+      });
     });
     var observer = new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (entry) {
@@ -93,6 +99,7 @@
 
   sweepUpReveal(document.querySelector('.expertise-pills'), '.pill', 90);
   sweepUpReveal(document.querySelector('.stats-sweep'), '.stat-card', 120);
+  sweepUpReveal(document.querySelector('.project-gallery'), '.project-card', 70);
 
   // Project gallery modal: clicking a thumbnail opens the matching case
   // study full-screen; only one is ever visible (is-open) at a time.

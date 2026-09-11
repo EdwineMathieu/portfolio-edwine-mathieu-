@@ -654,6 +654,18 @@ a.is-copied {
   padding: 0;
   margin: 0;
   appearance: none;
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.project-gallery.is-visible .project-card {
+  animation: pill-sweep-up 0.5s ease forwards;
+}
+
+.reveal-done {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* Projets — case study modal */
