@@ -135,6 +135,7 @@
   // study full-screen; only one is ever visible (is-open) at a time.
   var projectModal = document.getElementById('project-modal');
   var projectModalClose = projectModal.querySelector('.project-modal-close');
+  var projectModalBackBtn = projectModal.querySelector('.project-modal-back');
   var openCaseStudy = null;
 
   function openProject(id) {
@@ -162,6 +163,7 @@
   });
 
   projectModalClose.addEventListener('click', closeProject);
+  projectModalBackBtn.addEventListener('click', closeProject);
 
   projectModal.addEventListener('click', function (e) {
     if (e.target === projectModal) closeProject();
