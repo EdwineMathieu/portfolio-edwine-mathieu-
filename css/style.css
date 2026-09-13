@@ -57,6 +57,16 @@ body {
   font-size: 19px;
   letter-spacing: -0.02em;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-logo-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: block;
 }
 
 .nav-links {
