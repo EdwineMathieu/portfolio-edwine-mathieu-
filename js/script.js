@@ -799,7 +799,7 @@
 
     'tag-automobile': 'Automotive',
     'cockpit-link': 'View the animated prototype →',
-    'citymoov-link': 'View the animated prototype →',
+    'citymoov-link': "Prototype with Claude Design AI →",
     'citymoov-figma-link': 'View the Figma prototype →',
 
     'eorizon-h0': 'Use case 2: E-Orizon — planning a long-distance EV trip',

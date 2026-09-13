@@ -1191,6 +1191,11 @@ a.is-copied {
   }
 }
 
+.case-wide-viewer-cta {
+  grid-column: 1 / -1;
+  margin-top: 24px;
+}
+
 .tools-section {
   margin-top: 56px;
   padding: 56px 0 0;
