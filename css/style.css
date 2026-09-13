@@ -474,6 +474,10 @@ a.is-copied {
   object-position: center top;
 }
 
+#view-projets .project-thumb .photo.photo-align-top-left {
+  object-position: left top;
+}
+
 .project-body {
   padding: 20px;
 }
