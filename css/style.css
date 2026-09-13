@@ -949,6 +949,10 @@ a.is-copied {
   white-space: pre-line;
 }
 
+.case-block-text + .case-block-text {
+  margin-top: 12px;
+}
+
 .case-stats {
   display: flex;
   gap: 20px;
