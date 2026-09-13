@@ -939,9 +939,19 @@ a.is-copied {
   border-color: var(--accent);
 }
 
+.case-wide-viewer-title {
+  grid-column: 1 / -1;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+  margin: 24px 0 0;
+}
+
 .case-wide-viewer {
   grid-column: 1 / -1;
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .wide-viewer {
