@@ -366,7 +366,13 @@
       if (!img.naturalWidth || !img.naturalHeight) return;
       // Small tolerance so images that are essentially 16:9 (resizing/export
       // rounding) don't get flagged as tall.
-      frame.classList.toggle('is-tall', (img.naturalHeight / img.naturalWidth) > (9 / 16) * 1.02);
+      var isTall = (img.naturalHeight / img.naturalWidth) > (9 / 16) * 1.02;
+      // Some tall images are marked (via data-fit="height" on their
+      // gallery-thumb) to display fully at the viewer's max height instead
+      // of filling the width and scrolling.
+      var fitHeight = isTall && img.dataset.fit === 'height';
+      frame.classList.toggle('is-tall', isTall && !fitHeight);
+      frame.classList.toggle('is-tall-fit', fitHeight);
     }
     img.addEventListener('load', check);
     if (img.complete) check();
@@ -394,6 +400,7 @@
 
     var current = thumbs.findIndex(function (t) { return t.classList.contains('is-active'); });
     if (current === -1) current = 0;
+    carouselImg.dataset.fit = thumbs[current].dataset.fit || '';
     var dots = [];
 
     function showIndex(i) {
@@ -404,6 +411,7 @@
       carouselImg.src = thumb.dataset.src;
       carouselImg.alt = thumb.dataset.alt || '';
       carouselImg.dataset.placeholder = thumb.dataset.alt || '';
+      carouselImg.dataset.fit = thumb.dataset.fit || '';
       dots.forEach(function (d, i2) { d.classList.toggle('is-active', i2 === current); });
       thumb.scrollIntoView({ inline: 'nearest', block: 'nearest' });
     }

@@ -791,6 +791,22 @@ a.is-copied {
   height: auto;
 }
 
+/* Tall images marked data-fit="height": show the whole image at once,
+   scaled to the viewer's max height, instead of filling the width and
+   requiring a vertical scroll. */
+.case-carousel.is-tall-fit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--border-soft);
+}
+
+.case-carousel.is-tall-fit > img.photo {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
 /* Case studies without a carousel: a single photo, sized the same way. */
 .case-image > .photo {
   aspect-ratio: 16 / 9;
