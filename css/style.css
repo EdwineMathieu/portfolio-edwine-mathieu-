@@ -781,24 +781,6 @@ a.is-copied {
   overflow: hidden;
 }
 
-.case-carousel-caption {
-  position: absolute;
-  left: 16px;
-  bottom: 16px;
-  right: 16px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  background: oklch(0 0 0 / 0.6);
-  color: white;
-  font-size: 13px;
-  line-height: 1.4;
-  z-index: 2;
-}
-
-.case-carousel-caption:empty {
-  display: none;
-}
-
 /* Images taller than the 1920x1080 (16:9) ratio: keep the 16:9 window
    but scroll vertically instead of cropping the image. */
 .case-carousel.is-tall {
@@ -1453,6 +1435,32 @@ a.is-copied {
   white-space: nowrap;
 }
 
+.lightbox-caption {
+  position: fixed;
+  left: 50%;
+  bottom: 56px;
+  transform: translateX(-50%);
+  max-width: min(680px, 86vw);
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: oklch(0 0 0 / 0.6);
+  color: white;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  z-index: 1;
+}
+
+.lightbox-caption:empty {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .lightbox-hint { display: none; }
+
+  .lightbox-caption {
+    bottom: 20px;
+    max-width: 92vw;
+    font-size: 13px;
+  }
 }

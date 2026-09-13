@@ -272,6 +272,7 @@
   var lightboxNextBtn = lightbox.querySelector('.lightbox-next');
   var zoomInBtn = lightbox.querySelector('.lightbox-zoom-in');
   var zoomOutBtn = lightbox.querySelector('.lightbox-zoom-out');
+  var lightboxCaption = lightbox.querySelector('.lightbox-caption');
 
   watchTallImage(lightboxViewport, lightboxImg);
 
@@ -304,12 +305,13 @@
   // list/index/onNavigate are optional: pass them when the image belongs to
   // a gallery, so the lightbox can offer prev/next through the same photos
   // (and keep the underlying carousel in sync as it navigates).
-  function openLightbox(src, alt, list, index, onNavigate) {
+  function openLightbox(src, alt, list, index, onNavigate, caption) {
     lightboxList = (list && list.length > 1) ? list : null;
     lightboxIndex = index || 0;
     lightboxOnNavigate = onNavigate || null;
     lightboxImg.src = src;
     lightboxImg.alt = alt || '';
+    if (lightboxCaption) lightboxCaption.textContent = caption || '';
     resetZoom();
     lightboxPrevBtn.hidden = !lightboxList;
     lightboxNextBtn.hidden = !lightboxList;
@@ -324,6 +326,7 @@
     var entry = lightboxList[lightboxIndex];
     lightboxImg.src = entry.src;
     lightboxImg.alt = entry.alt || '';
+    if (lightboxCaption) lightboxCaption.textContent = entry.caption || '';
     resetZoom();
     if (lightboxOnNavigate) lightboxOnNavigate(lightboxIndex);
   }
@@ -333,6 +336,7 @@
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     lightboxImg.src = '';
+    if (lightboxCaption) lightboxCaption.textContent = '';
     lightboxList = null;
     lightboxOnNavigate = null;
   }
@@ -393,7 +397,6 @@
   document.querySelectorAll('.case-image').forEach(function (caseImage) {
     var carousel = caseImage.querySelector('.case-carousel');
     var carouselImg = caseImage.querySelector('.case-carousel img.photo');
-    var carouselCaption = caseImage.querySelector('.case-carousel-caption');
     var thumbs = Array.prototype.slice.call(caseImage.querySelectorAll('.gallery-thumb'));
     if (!carousel || !carouselImg || !thumbs.length) return;
 
@@ -402,7 +405,6 @@
     var current = thumbs.findIndex(function (t) { return t.classList.contains('is-active'); });
     if (current === -1) current = 0;
     carouselImg.dataset.fit = thumbs[current].dataset.fit || '';
-    if (carouselCaption) carouselCaption.textContent = thumbs[current].dataset.caption || '';
     var dots = [];
 
     function showIndex(i) {
@@ -414,7 +416,6 @@
       carouselImg.alt = thumb.dataset.alt || '';
       carouselImg.dataset.placeholder = thumb.dataset.alt || '';
       carouselImg.dataset.fit = thumb.dataset.fit || '';
-      if (carouselCaption) carouselCaption.textContent = thumb.dataset.caption || '';
       dots.forEach(function (d, i2) { d.classList.toggle('is-active', i2 === current); });
       thumb.scrollIntoView({ inline: 'nearest', block: 'nearest' });
     }
@@ -425,8 +426,8 @@
 
     carouselImg.addEventListener('click', function (e) {
       e.stopPropagation();
-      var list = thumbs.map(function (t) { return { src: t.dataset.src, alt: t.dataset.alt }; });
-      openLightbox(carouselImg.currentSrc || carouselImg.src, carouselImg.alt, list, current, showIndex);
+      var list = thumbs.map(function (t) { return { src: t.dataset.src, alt: t.dataset.alt, caption: t.dataset.caption }; });
+      openLightbox(carouselImg.currentSrc || carouselImg.src, carouselImg.alt, list, current, showIndex, thumbs[current].dataset.caption);
     });
 
     var galleryEl = caseImage.querySelector('.case-gallery');
