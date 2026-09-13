@@ -644,7 +644,7 @@
     'gal-automobile-blurb': 'A digital HMI cockpit for an electric vehicle — driver cluster and central screen.',
     'gal-yij-blurb': 'A complete redesign of a youth-focused site, from user research to WordPress development.',
     'gal-cep-blurb': 'A responsive multi-audience site and journey redesign for two institutional organizations.',
-    'gal-luxe-blurb': 'Exploring the visual codes and UX of the luxury sector through Hermès and Versace.',
+    'gal-luxe-blurb': 'Exploring the visual codes and UX of the luxury sector through Hermès.',
 
     'citymoov-tag': 'Mobility · Accessibility',
     'automobile-tag': 'Automotive · Mobility',
@@ -746,7 +746,7 @@
     'tag-responsive': 'Responsive',
 
     'luxe-h1': 'Personal exploration',
-    'luxe-t1': 'Exploring the digital worlds of Hermès and Versace to understand the visual codes and user experience of the luxury and fashion sector — how design elevates brand image while optimizing customer journeys.',
+    'luxe-t1': 'Exploring the digital world of Hermès to understand the visual codes and user experience of the luxury and fashion sector — how design elevates brand image while optimizing customer journeys.',
     'tag-luxe': 'Luxury',
 
     'tools-eyebrow': 'Tools',

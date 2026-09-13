@@ -9,6 +9,6 @@ Le site affiche un placeholder tant que le fichier attendu n'existe pas. Ajoute 
 - [x] `YIJ_Miniature.png` — visuel de l'étude de cas Yvelines Info Jeunes (page Projets)
 - [x] `citymoov-miniature.png` — visuel de l'étude de cas City Moov (page Projets)
 - [x] `cep-idf.png` — visuel de l'étude de cas CEP Paritaire IDF & Crésus IDF (page Projets)
-- [x] `hermes-page.png` — visuel de l'étude de cas Hermès & Versace (page Projets)
+- [x] `hermes-page.png` — visuel de l'étude de cas Hermès (page Projets)
 - [x] `agent-ia-openline.png` — visuel de l'étude de cas Agent conversationnel IA — EBP Open Line (page Projets)
 
