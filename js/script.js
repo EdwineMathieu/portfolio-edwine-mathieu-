@@ -5,7 +5,19 @@
 
   function showView(name, anchorId) {
     views.forEach(function (view) {
-      view.classList.toggle('is-active', view.dataset.viewPanel === name);
+      var isNowActive = view.dataset.viewPanel === name;
+      view.classList.toggle('is-active', isNowActive);
+      if (isNowActive) {
+        // A sweep-reveal container inside this view may have started out
+        // hidden (display: none), which the IntersectionObserver can miss
+        // when the view later becomes visible. Re-check its geometry now;
+        // reading getBoundingClientRect() right after the class toggle
+        // forces the browser to lay out synchronously, so this sees the
+        // up-to-date (now visible) geometry without waiting on rAF.
+        view.querySelectorAll('.expertise-pills, .stats-sweep, .project-gallery').forEach(function (el) {
+          if (el.__sweepCheck) el.__sweepCheck();
+        });
+      }
     });
     if (cvCursorSticker && name !== 'cv') {
       cvCursorSticker.classList.remove('is-active');
@@ -123,8 +135,21 @@
           obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
     observer.observe(container);
+
+    // The container can start out inside a hidden `.view` (display: none),
+    // so it has no geometry when first observed and the transition to
+    // visible later doesn't reliably re-fire the observer. showView() calls
+    // this once its view becomes active, as a manual fallback check.
+    container.__sweepCheck = function () {
+      if (container.classList.contains('is-visible')) return;
+      var rect = container.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        container.classList.add('is-visible');
+        observer.unobserve(container);
+      }
+    };
   }
 
   sweepUpReveal(document.querySelector('.expertise-pills'), '.pill', 90);
