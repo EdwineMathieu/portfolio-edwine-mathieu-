@@ -946,6 +946,7 @@ a.is-copied {
   font-weight: 700;
   color: var(--text-main);
   letter-spacing: -0.01em;
+  text-align: center;
   margin: 24px 0 0;
 }
 
