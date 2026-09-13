@@ -792,7 +792,11 @@
     'pill-mobilite': 'Mobility',
 
     'auto-h1': 'Vision',
-    'auto-t1': "A Product Designer specialized in UX/UI, I've worked on a range of digital products and now focus on automotive experiences — connected services, in-vehicle interfaces, and mobility products. My approach: understanding how companies are tackling UX in the software-defined vehicle era, and connecting with the teams facing these challenges.",
+    'auto-t1': "A Product Designer specialized in UX/UI, I design digital experiences with a particular interest in automotive and new mobility.",
+    'auto-t1b': "I'm interested in the transformation of the vehicle into a software-defined platform: in-vehicle interfaces, connected services, e-mobility, and new forms of interaction between humans, the vehicle, and its environment.",
+    'auto-t1c': "In the age of agentic AI, I want to explore a central question: how do you design automotive experiences that are intelligent, contextual, and personalized — without sacrificing the user's understanding, control, and trust?",
+    'auto-t1d': "Through my cockpit HMI and EV charging projects, I experiment with these new use cases and think through experience continuity between the vehicle, the smartphone, and mobility services.",
+    'auto-t1e': "I'm now looking to bring this approach to teams shaping the next generation of automotive and mobility experiences.",
     'auto-h2': 'Use case 1: Cockpit EV — driver cluster &amp; central screen',
     'auto-t2': 'An animated HMI prototype for an electric vehicle: driver cluster and central screen designed as two distinct information planes, with Eco / Comfort / Sport drive modes, navigation, energy and charging management, climate, and media.',
     'auto-h3': 'Hierarchy — one layer of information per plane',
