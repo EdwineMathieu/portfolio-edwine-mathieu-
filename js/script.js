@@ -643,7 +643,6 @@
     'agentia-t5b': 'This project deepened my understanding of AI\'s implications at every level, and pushed me to question and rethink the way I work: what is the user trying to do? How can AI help them? How is our product evolving with AI, how is the UX designer\'s craft evolving with it, and how do we meet these new challenges to keep the experience smooth, competitive, and compelling? How do we adapt to this new paradigm?',
     'agentia-s1': 'clients surveyed (quant.)',
     'agentia-s2': 'companies interviewed',
-    'agentia-s3': 'support tickets post-launch',
 
     'tag-ia': 'AI',
     'tag-coord': 'Cross-functional coordination',
