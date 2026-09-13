@@ -769,6 +769,22 @@ a.is-copied {
   display: grid;
 }
 
+/* Case studies with full-width content below the image/text pair (a
+   separator, a wide viewer, a video) need that pair isolated in its own
+   grid: otherwise the sticky .case-image's containing block is the whole
+   .case-study (all rows), so it keeps sticking over that content instead
+   of releasing once the image/text row ends. */
+.case-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.case-study.is-open:has(.case-columns) {
+  display: block;
+}
+
 .case-image {
   position: sticky;
   top: 100px;
@@ -1169,6 +1185,7 @@ a.is-copied {
   .experience-item { grid-template-columns: 1fr; gap: 12px; }
   .cv-columns { grid-template-columns: 1fr; gap: 32px; }
   .case-study { grid-template-columns: 1fr; gap: 24px; }
+  .case-columns { grid-template-columns: 1fr; gap: 24px; }
   .case-image { position: static; }
   .project-gallery { grid-template-columns: 1fr 1fr; }
   .project-modal-inner { padding: 76px 24px 64px; }

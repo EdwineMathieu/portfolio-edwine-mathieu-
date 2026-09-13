@@ -1,4 +1,15 @@
 (function () {
+  // Always reload onto the top of the home page: without this, the browser
+  // restores whatever scroll position was last recorded (possibly deep into
+  // a different view) before this script gets a chance to pick the active
+  // view, so a refresh could visibly land mid-page.
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  if (!window.location.hash) {
+    window.scrollTo(0, 0);
+  }
+
   var navItems = document.querySelectorAll('.nav-item');
   var views = document.querySelectorAll('.view');
   var cvCursorSticker = document.getElementById('cv-cursor-sticker');
