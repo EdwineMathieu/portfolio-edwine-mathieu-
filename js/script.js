@@ -233,13 +233,20 @@
   });
 
   // Use-case images (Cockpit EV, E-Orizon): clicking the photo opens the
-  // same prototype as the button that follows it in the section.
+  // same prototype as the button that follows it in the section. Use-case
+  // images with no such button (a plain illustration) open the lightbox
+  // instead, like any other case-study photo.
   document.querySelectorAll('.usecase-image').forEach(function (img) {
     var link = img.nextElementSibling;
-    if (!link || !link.classList.contains('prototype-link')) return;
-    img.addEventListener('click', function () {
-      openPrototype(link.getAttribute('href'));
-    });
+    if (link && link.classList.contains('prototype-link')) {
+      img.addEventListener('click', function () {
+        openPrototype(link.getAttribute('href'));
+      });
+    } else {
+      img.addEventListener('click', function () {
+        openLightbox(img.currentSrc || img.src, img.alt);
+      });
+    }
   });
 
   prototypeModalClose.addEventListener('click', closePrototype);
