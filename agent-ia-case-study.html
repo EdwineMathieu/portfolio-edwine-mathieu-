@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agent conversationnel IA — Étude de cas</title>
+<title>Assistant IA EBP — Étude de cas</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +45,7 @@
   .subtitle { font-size: 19px; color: var(--text-muted); margin: 0 0 20px; }
   .meta-line { font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 8px; }
   .facts-line { font-size: 14px; color: var(--text-faint); margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
-  .mini-carousel { position: relative; margin: 0 0 40px; }
+  .mini-carousel { position: relative; margin: 0 0 48px; }
   .mini-carousel-viewport { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #fff; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
   .mini-carousel-img { display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
   .mini-carousel-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 6px rgba(0,0,0,.12); }
@@ -66,16 +66,26 @@
   .lightbox-zoom { position: fixed; bottom: 20px; right: 24px; display: flex; gap: 8px; }
   .lightbox-zoom-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: oklch(1 0 0 / 0.12); color: white; font-size: 20px; font-weight: 600; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .lightbox-zoom-btn:hover { background: oklch(1 0 0 / 0.22); }
-  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; margin: 32px 0 12px; }
-  .case-block:first-of-type h2 { margin-top: 0; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; margin: 56px 0 16px; }
+  section:first-of-type h2 { margin-top: 0; }
+  h3 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-main); margin: 28px 0 10px; }
   p { margin: 0 0 16px; font-size: 15.5px; color: var(--text-body); }
-  .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 40px; }
-  .stat-box { background: white; border: 1px solid var(--border-light); border-radius: 14px; padding: 20px 16px; text-align: center; }
-  .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
-  .stat-label { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
-  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; }
+  ul.bullets { margin: 0 0 16px; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 8px; }
+  ul.bullets li { font-size: 15.5px; color: var(--text-body); }
+  .flow-line { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-border); border-radius: 12px; padding: 14px 18px; margin: 0 0 20px; line-height: 1.6; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
   .pill { font-size: 13px; font-weight: 500; color: var(--text-main); background: white; border: 1px solid var(--border-light); border-radius: 100px; padding: 6px 14px; }
-  .back-to-top { position: fixed; bottom: 24px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+  .quote-shift { margin: 24px 0 28px; padding: 20px 24px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 12px 12px 0; }
+  .quote-shift .quote-label { font-size: 13px; color: var(--text-faint); margin-bottom: 6px; }
+  .quote-shift blockquote { margin: 0 0 14px; font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-muted); font-style: italic; }
+  .quote-shift blockquote:last-of-type { margin-bottom: 0; color: var(--text-main); }
+  .impact-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0 28px; }
+  .impact-stat { background: white; border: 1px solid var(--border-light); border-radius: 14px; padding: 20px 16px; text-align: center; }
+  .impact-stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .impact-stat-label { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+  .divider { border: none; border-top: 1px solid var(--border-light); margin: 48px 0; }
+  .closing p:last-child { margin-bottom: 0; }
+  .back-to-top { position: fixed; bottom: 24px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,.12); transition: opacity .15s ease, background .15s ease; }
   .back-to-top:hover { background: oklch(0.94 0.008 90); }
   .back-to-top[hidden] { display: none; }
   @media (max-width: 640px) {
@@ -84,7 +94,7 @@
     .site-nav-item { padding: 7px 10px; font-size: 13px; }
     .wrap { padding: 40px 20px 96px; }
     h1 { font-size: 30px; }
-    .stats-row { grid-template-columns: 1fr; }
+    .impact-stats { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
@@ -103,10 +113,12 @@
 </header>
 
 <div class="wrap">
+
   <div class="eyebrow" data-i18n="cs-eyebrow">Étude de cas</div>
-  <h1 data-i18n="cs-h1">Agent conversationnel IA — EBP Open Line</h1>
-  <div class="meta-line" data-i18n="cs-meta">IA · Design Leadership · 2025–2026</div>
-  <div class="facts-line" data-i18n="cs-facts">37 clients interrogés (quanti) · 14 entreprises interviewées</div>
+  <h1>Assistant IA EBP</h1>
+  <p class="subtitle">Concevoir une nouvelle relation entre l'utilisateur et son logiciel grâce à l'IA</p>
+  <div class="meta-line">Product Designer · 2025–2026</div>
+  <div class="facts-line">Projet 0→1 · Discovery → conception → lancement · 80 utilisateurs actifs en 20 jours</div>
 
   <div class="mini-carousel" id="gal">
     <div class="mini-carousel-viewport">
@@ -124,39 +136,353 @@
     </div>
   </div>
 
-  <div class="stats-row">
-    <div class="stat-box"><div class="stat-value">37</div><div class="stat-label" data-i18n="cs-s1">clients interrogés (quanti)</div></div>
-    <div class="stat-box"><div class="stat-value">14</div><div class="stat-label" data-i18n="cs-s2">entreprises interviewées</div></div>
-  </div>
+  <section>
+    <h2>Le contexte</h2>
+    <p>En 2026, EBP a lancé un projet stratégique autour de l'intelligence artificielle : intégrer un assistant conversationnel directement dans ses logiciels de gestion.</p>
+    <p>Le premier terrain d'expérimentation a été EBP Open Line Gestion Commerciale, une solution historique de facturation et de gestion destinée notamment aux commerçants.</p>
+    <p>L'ambition était plus large que l'ajout d'un simple chatbot.</p>
+    <p>Open Line est une gamme fonctionnellement riche, mais construite sur des technologies historiques qui peuvent rendre certains parcours complexes et limiter l'autonomie des utilisateurs.</p>
+    <p>Dans le même temps, les attentes évoluent.</p>
+    <p>Les utilisateurs souhaitent pouvoir prendre davantage en main leur logiciel par eux-mêmes, alors que le modèle historique d'EBP repose notamment sur la formation et l'accompagnement par les revendeurs.</p>
+    <p>L'IA ouvre donc une nouvelle possibilité :</p>
+    <div class="quote-shift">
+      <blockquote>Et si le logiciel pouvait lui-même accompagner l'utilisateur, comprendre son contexte et l'aider à accomplir certaines tâches ?</blockquote>
+    </div>
+    <p>L'objectif était d'expérimenter cette nouvelle relation avec le logiciel, de répondre aux nouvelles attentes du marché et de tirer des enseignements permettant ensuite d'étendre l'IA à l'ensemble de la gamme EBP.</p>
+  </section>
 
-  <div class="case-block">
-    <h2 data-i18n="cs-h1-1">Contexte</h2>
-    <p data-i18n="cs-t1">Intégration d'un agent conversationnel dans la suite EBP Open Line (Comptabilité, Bâtiment, Gestion commerciale), en binôme avec une autre Product Designer et l'équipe IA (Product Owner, développeurs).</p>
-  </div>
-  <div class="case-block">
-    <h2 data-i18n="cs-h1-2">Cadrage amont</h2>
-    <p data-i18n="cs-t2">En amont, j'ai intégré un groupe de travail Cegid dédié à l'IA : observation et collecte des besoins utilisateurs sur les logiciels du groupe, analyse des bonnes pratiques IA, formalisées dans un article partagé à l'ensemble du groupe Cegid. Cette étape m'a permis d'appréhender les usages de l'IA à travers différents logiciels avant de cadrer le projet Open Line.</p>
-  </div>
-  <div class="case-block">
-    <h2 data-i18n="cs-h1-3">Pilotage de la recherche utilisateurs</h2>
-    <p data-i18n="cs-t3">Missionnée sur les produits Open Line, j'ai coordonné PM, marketing, commerce et pôle data pour identifier les besoins et définir l'offre. J'ai conçu la grille d'interview à partir des réflexions de l'équipe pluridisciplinaire (PM, PO, PMM, Marketing), puis mené l'ensemble des entretiens, enregistrés dans le respect de l'anonymat des utilisateurs. Les vidéos ont été analysées avec Dovetail, dont les fonctionnalités IA ont permis de catégoriser les verbatims et de générer des synthèses par thématique, accélérant le traitement et la restitution de l'étude — rédigée sur Notion puis présentée aux parties prenantes. Elle a révélé une adoption contrastée de l'IA : certains utilisateurs restaient sceptiques par crainte pour leurs données personnelles, tandis que d'autres, déjà avancés dans l'usage d'écosystèmes IA, la jugeaient indispensable pour gagner en visibilité, fluidifier leurs process et faciliter leur prise de décision, avec parfois des attentes précises sur les fonctionnalités souhaitées dans les logiciels EBP.</p>
-  </div>
-  <div class="case-block">
-    <h2 data-i18n="cs-h1-4">Portée de la recherche</h2>
-    <p data-i18n="cs-t4">37 clients EBP interrogés sur leur rapport à l'IA via une enquête quantitative menée avec le pôle data (janvier 2026). 14 entreprises clientes EBP (TPE/PME, de 1 à plus de 50 salariés) interviewées entre le 10 et le 31 mars 2026, sur les produits Comptabilité, Gestion commerciale, Méca et Bâtiment.</p>
-  </div>
-  <div class="case-block">
-    <h2 data-i18n="cs-h1-5">Résultats &amp; suivi</h2>
-    <p data-i18n="cs-t5">L'équipe a développé un tableau de bord interne pour analyser l'utilisation des prompts et des tokens, identifier les sujets récurrents et suivre la fréquence d'utilisation du chatbot. Encore en amélioration continue, cet outil permet déjà de tirer des enseignements précieux sur l'usage réel de l'assistant.</p>
-    <p data-i18n="cs-t5b">Ce projet m'a permis de mieux comprendre les enjeux de l'IA à différents niveaux, et m'a amenée à interroger et repenser ma façon de travailler : que veut faire l'utilisateur ? Comment l'IA peut l'aider ? Comment notre produit évolue avec l'IA, comment notre métier d'UX designer évolue avec elle, et comment répondre à ces nouveaux enjeux pour garantir une expérience fluide, compétitive et attractive ? Comment nous adapter à ce nouveau paradigme ?</p>
-  </div>
+  <section>
+    <h2>Un changement de paradigme</h2>
+    <p>Le projet soulevait une question plus profonde que « comment intégrer un chatbot ? ».</p>
+    <p>Nous devions comprendre comment l'IA pouvait réellement augmenter la valeur du logiciel.</p>
+    <p>Plusieurs opportunités ont émergé :</p>
+    <ul class="bullets">
+      <li>contourner certaines difficultés liées à la navigation et aux parcours historiques ;</li>
+      <li>permettre à l'utilisateur d'interroger simplement ses données ;</li>
+      <li>faciliter l'analyse de son activité ;</li>
+      <li>automatiser certaines tâches récurrentes ;</li>
+      <li>identifier des anomalies ou des événements importants ;</li>
+      <li>proposer des alertes et des prévisions ;</li>
+      <li>progressivement déléguer certaines tâches à l'IA.</li>
+    </ul>
+    <p>À terme, l'ambition était de passer d'une IA qui répond à une IA qui peut également agir, tout en conservant un niveau de contrôle adapté à l'utilisateur.</p>
+  </section>
 
-  <div class="pill-row">
-    <span class="pill" data-i18n="cs-tag1">IA</span>
-    <span class="pill">UX Research</span>
-    <span class="pill">Leadership</span>
-    <span class="pill" data-i18n="cs-tag2">Coordination transverse</span>
-  </div>
+  <section>
+    <h2>Mon rôle</h2>
+    <p>Je suis arrivée dès le lancement du projet et ai participé au kick-off avec les différentes parties prenantes : PM, PO, PMM, marketing, commerce, développeurs et membres de la direction.</p>
+    <p>Avec une autre Product Designer, nous étions initialement responsables de l'ensemble du design de l'expérience IA :</p>
+    <div class="flow-line">Discovery → recherche utilisateur → conception UX/UI → prototypage → livraison → design review → itérations</div>
+    <p>L'équipe IA était composée d'un Product Manager, d'un PMM, d'un Product Lead, d'un Project Manager et de trois développeurs.</p>
+    <p>Je travaillais principalement avec le Product Lead et les développeurs pour transformer les opportunités identifiées en expériences réalisables.</p>
+    <p>Après la restitution de la discovery, ma collègue a rejoint un autre projet et j'ai repris 100 % de la responsabilité UX/UI de l'assistant.</p>
+  </section>
+
+  <section>
+    <h2>01 — Arriver avec un premier bagage sur l'IA</h2>
+    <p>Avant même le lancement du projet EBP, j'avais rejoint fin 2025 un groupe de travail UX de Cegid consacré à l'intégration de l'IA dans les logiciels.</p>
+    <p>Le groupe réunissait des équipes ayant déjà expérimenté l'IA et travaillait à la production d'un livrable partagé au sein du groupe Cegid.</p>
+    <p>J'ai participé aux ateliers et à la structuration des enseignements autour :</p>
+    <ul class="bullets">
+      <li>des usages de l'IA dans les logiciels ;</li>
+      <li>des impacts sur les utilisateurs ;</li>
+      <li>des nouvelles interactions ;</li>
+      <li>des problématiques de confiance ;</li>
+      <li>des limites de l'IA ;</li>
+      <li>et des conséquences pour les autres métiers de l'entreprise.</li>
+    </ul>
+    <p>Cette expérience m'a permis d'arriver sur le projet EBP avec une première compréhension de l'état de l'art et des enjeux spécifiques à l'intégration de l'IA dans un logiciel professionnel.</p>
+    <p>Elle m'a également permis d'identifier une première conviction :</p>
+    <div class="quote-shift">
+      <blockquote>L'enjeu n'est pas simplement de rendre l'IA accessible. Il faut créer les conditions pour que l'utilisateur puisse lui faire confiance.</blockquote>
+    </div>
+  </section>
+
+  <section>
+    <h2>02 — Comprendre le rapport des utilisateurs à l'IA</h2>
+    <p>En janvier 2026, le marketing et le pôle Data ont lancé une étude quantitative auprès de la base clients EBP.</p>
+    <p>L'objectif était de comprendre :</p>
+    <ul class="bullets">
+      <li>le niveau d'adoption de l'IA ;</li>
+      <li>les usages professionnels existants ;</li>
+      <li>les attentes ;</li>
+      <li>les craintes ;</li>
+      <li>et l'intérêt pour une IA intégrée directement dans les logiciels EBP.</li>
+    </ul>
+    <p>Nous avons obtenu 141 réponses, dont :</p>
+    <ul class="bullets">
+      <li>104 utilisateurs de l'IA ;</li>
+      <li>37 volontaires souhaitant participer à la suite de l'étude ;</li>
+      <li>parmi eux, 29 utilisaient déjà l'IA dans leur activité professionnelle.</li>
+    </ul>
+    <p>Une étude complémentaire a également été menée auprès des revendeurs.</p>
+
+    <h3>Passer du quantitatif au qualitatif</h3>
+    <p>Parmi les 37 volontaires, 14 ont participé à des interviews.</p>
+    <p>Nous avons volontairement recherché des profils différents, utilisant plusieurs produits EBP :</p>
+    <div class="pill-row">
+      <span class="pill">Comptabilité</span>
+      <span class="pill">Gestion Commerciale</span>
+      <span class="pill">Mécanique</span>
+      <span class="pill">Bâtiment</span>
+    </div>
+    <p>Avec ma collègue, nous avons construit la grille d'entretien puis l'avons validée avec l'équipe.</p>
+    <p>Entre février et mars 2026, nous avons réalisé les interviews accompagnées de consultants métier afin de confronter les attentes des utilisateurs aux réalités de leurs métiers.</p>
+
+    <h3>Accélérer l'analyse grâce à l'IA</h3>
+    <p>Nous avons traité les interviews dans Dovetail.</p>
+    <p>L'outil nous a permis de transcrire les entretiens, de catégoriser les verbatims et d'utiliser ses fonctionnalités d'IA pour accélérer l'analyse et identifier les récurrences dans les besoins exprimés.</p>
+    <p>Nous avons ensuite structuré les résultats dans Notion et présenté la synthèse aux parties prenantes fin avril.</p>
+    <p>Cette expérience était intéressante à double titre : nous étudiions l'impact de l'IA sur les utilisateurs tout en utilisant nous-mêmes l'IA pour accélérer notre propre processus de recherche UX.</p>
+  </section>
+
+  <section>
+    <h2>03 — Concevoir une IA digne de confiance</h2>
+    <p>La recherche a rapidement fait ressortir un enjeu majeur :</p>
+    <p><strong>La confiance.</strong></p>
+    <p>Pour des professionnels qui utilisent EBP pour gérer leurs données commerciales et financières, l'IA ne pouvait pas être perçue comme une boîte noire.</p>
+    <p>Les utilisateurs voulaient notamment savoir que leurs données et celles de leurs clients seraient protégées et ne seraient pas utilisées pour entraîner un modèle.</p>
+    <p>Nous avons donc dû réfléchir à la manière dont l'interface pouvait rendre les limites et le fonctionnement de l'IA suffisamment compréhensibles sans surcharger l'expérience.</p>
+    <p>Cela nous a amenés à poser de nombreuses questions de conception :</p>
+    <ul class="bullets">
+      <li>Qu'est-ce que l'IA a le droit de faire ?</li>
+      <li>Qu'est-ce qu'elle ne doit pas faire ?</li>
+      <li>Quand doit-elle demander confirmation ?</li>
+      <li>Que doit-on expliquer à l'utilisateur ?</li>
+      <li>Doit-on afficher tout le raisonnement de l'IA ou uniquement le résultat ?</li>
+      <li>Comment signaler une incertitude ?</li>
+      <li>Comment gérer une erreur ?</li>
+      <li>Faut-il conserver l'historique des prompts ?</li>
+      <li>Comment distinguer une suggestion générée par l'IA d'un élément créé par l'utilisateur ?</li>
+      <li>Comment laisser l'utilisateur reprendre le contrôle ?</li>
+    </ul>
+    <p>Ces questions n'étaient pas uniquement des questions d'interface.</p>
+    <p>Elles ont influencé le fonctionnement même du produit et son architecture fonctionnelle.</p>
+  </section>
+
+  <section>
+    <h2>04 — Concevoir pour l'incertitude</h2>
+    <p>L'une des particularités du design d'un agent IA est que l'on ne conçoit plus seulement des états déterministes.</p>
+    <p>Une interface classique peut généralement prévoir ce qui se passe lorsqu'un utilisateur clique sur un bouton.</p>
+    <p>Avec une IA, le résultat dépend de la demande, du contexte, des données disponibles et de la capacité du modèle à interpréter la situation.</p>
+    <p>Nous avons donc dû concevoir une expérience capable de gérer :</p>
+    <div class="flow-line">génération · attente · succès · erreur · incertitude · feedback · clarification · limitation</div>
+    <p>Nous nous sommes également appuyés sur l'observation des standards émergents des autres assistants IA afin d'identifier les conventions pertinentes, tout en les adaptant aux contraintes et aux usages des logiciels EBP.</p>
+  </section>
+
+  <section>
+    <h2>05 — Comprendre le contexte utilisateur</h2>
+    <p>Un agent intégré dans un logiciel de gestion ne doit pas seulement comprendre une phrase.</p>
+    <p>Il doit comprendre le contexte métier et les données auxquelles il a accès.</p>
+    <p>Imaginons qu'un utilisateur demande :</p>
+    <div class="quote-shift">
+      <blockquote>« Combien ai-je réalisé de chiffre d'affaires avec LCL ? »</blockquote>
+    </div>
+    <p>Si plusieurs entités contenant « LCL » existent dans son logiciel, l'IA doit être capable d'identifier les clients correspondant à la banque LCL et d'exclure, par exemple, une société comme « LCL Motor ».</p>
+    <p>Elle doit donc être capable de :</p>
+    <div class="flow-line">comprendre → désambiguïser → sélectionner → analyser → restituer</div>
+    <p>et idéalement expliquer suffisamment son résultat pour que l'utilisateur puisse lui faire confiance.</p>
+    <p>À terme, cette compréhension du contexte doit permettre d'aller plus loin :</p>
+    <ul class="bullets">
+      <li>analyser les ventes ;</li>
+      <li>analyser les clients ;</li>
+      <li>identifier des tendances ;</li>
+      <li>produire des graphiques ;</li>
+      <li>générer des documents ;</li>
+      <li>proposer des prévisions ;</li>
+      <li>détecter des alertes ;</li>
+      <li>et progressivement agir sur certaines tâches.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>06 — Composer avec un produit historique</h2>
+    <p>Concevoir cette expérience dans Open Line ajoutait une contrainte particulière.</p>
+    <p>Le logiciel repose sur des technologies historiques et certaines évolutions UX/UI sont limitées par le framework existant.</p>
+    <p>Nous avons donc dû constamment arbitrer entre :</p>
+    <div class="flow-line">expérience idéale × faisabilité technique × performance × coût × valeur utilisateur</div>
+    <p>Certaines fonctionnalités ont donné lieu à des discussions importantes.</p>
+    <p>Par exemple, certaines propositions impliquaient un coût élevé en tokens, tandis que d'autres nécessitaient d'interroger davantage de données, avec des conséquences potentielles sur les performances et le stockage.</p>
+    <p>Mon rôle consistait alors à comprendre la contrainte technique, à en mesurer les conséquences sur l'expérience et à rechercher avec les développeurs une solution permettant de conserver le maximum de valeur utilisateur.</p>
+    <p>Cette collaboration étroite avec la tech était indispensable pour concevoir une IA réellement intégrable dans le produit.</p>
+  </section>
+
+  <section>
+    <h2>07 — Définir jusqu'où l'IA peut aller</h2>
+    <p>Une autre question structurante concernait le niveau d'autonomie de l'agent.</p>
+    <p>Nous avons volontairement commencé par un périmètre limité.</p>
+
+    <h3>V1 — Comprendre et répondre</h3>
+    <p>La première version permet à l'utilisateur de poser des questions et à l'IA de produire différents types de résultats :</p>
+    <div class="pill-row">
+      <span class="pill">Réponses</span>
+      <span class="pill">Tableaux</span>
+      <span class="pill">Graphiques</span>
+      <span class="pill">PDF</span>
+      <span class="pill">Analyses</span>
+    </div>
+    <p>L'utilisateur conserve la responsabilité de l'interprétation et de l'action.</p>
+
+    <h3>V2 — Agir</h3>
+    <p>La vision à plus long terme est de permettre à l'IA de réaliser certaines tâches à la place de l'utilisateur :</p>
+    <div class="pill-row">
+      <span class="pill">Automatiser</span>
+      <span class="pill">Déléguer</span>
+      <span class="pill">Recommander</span>
+      <span class="pill">Agir</span>
+    </div>
+    <p>Mais cette évolution pose une nouvelle question de design :</p>
+    <div class="quote-shift">
+      <blockquote>Quel niveau de contrôle doit-on laisser à l'utilisateur lorsqu'une IA agit en son nom ?</blockquote>
+    </div>
+    <p>Nous avons donc commencé à réfléchir à différents niveaux de contrôle, de la simple recommandation jusqu'à l'action nécessitant une validation explicite.</p>
+  </section>
+
+  <section>
+    <h2>08 — Tester l'IA dans le monde réel</h2>
+    <p>En parallèle du développement, l'équipe a travaillé avec les revendeurs afin de comprendre l'impact de cette nouvelle technologie sur leur rôle et leur relation avec les clients.</p>
+    <p>Une version Beta a été mise à leur disposition.</p>
+    <p>J'ai contacté l'un des revendeurs afin d'assister à son test et d'enregistrer la session.</p>
+    <p>Cette observation nous a permis de recueillir directement ses interrogations, ses réactions et ses attentes.</p>
+    <p>Cela complétait la vision utilisateur avec celle d'un acteur essentiel de l'écosystème EBP.</p>
+    <p>L'IA ne transformait donc pas uniquement l'expérience utilisateur : elle questionnait également le support, le commerce, le marketing, la formation et le rôle des revendeurs.</p>
+  </section>
+
+  <section>
+    <h2>09 — Concevoir avec une équipe IA</h2>
+    <p>Chaque semaine, nous participions au Weekly de l'équipe IA.</p>
+    <p>Ces sessions permettaient de :</p>
+    <ul class="bullets">
+      <li>suivre les avancées techniques ;</li>
+      <li>présenter les fonctionnalités conçues ;</li>
+      <li>brainstormer sur les problématiques émergentes ;</li>
+      <li>confronter les idées aux contraintes techniques ;</li>
+      <li>décider des priorités ;</li>
+      <li>et itérer rapidement.</li>
+    </ul>
+    <p>Après le départ de ma collègue Product Designer, j'ai pris la responsabilité complète du design du projet.</p>
+    <p>Cette autonomie m'a amenée à devenir l'interlocutrice UX/UI principale du projet et à travailler directement avec le Product Lead et les développeurs sur les décisions d'expérience.</p>
+  </section>
+
+  <section>
+    <h2>10 — Lancer et observer</h2>
+    <p>En juillet 2026, l'assistant IA a été lancé auprès des clients EBP Open Line Gestion Commerciale.</p>
+    <p>Plutôt que d'attendre plusieurs mois avant d'évaluer son intérêt, l'équipe a immédiatement mis en place une démarche d'observabilité.</p>
+    <p>Un tableau de bord interne permet de suivre l'utilisation de l'assistant et d'alimenter les décisions produit.</p>
+
+    <h3>Les premiers signaux</h3>
+    <p>En seulement 20 jours :</p>
+    <div class="flow-line">80 utilisateurs actifs · près de 400 prompts</div>
+    <p>L'analyse des intentions montre notamment que l'analyse des clients et des ventes fait partie des principaux usages.</p>
+    <p>Mais les feedbacks révèlent également un usage intéressant et moins attendu : certains utilisateurs demandent à l'IA comment réaliser une action dans le logiciel.</p>
+    <p>Ce comportement confirme une hypothèse importante du projet : l'IA peut progressivement devenir une nouvelle porte d'entrée dans le logiciel, en réduisant la difficulté liée à la navigation et à la richesse fonctionnelle d'Open Line.</p>
+  </section>
+
+  <section>
+    <h2>11 — Construire une boucle d'amélioration</h2>
+    <p>Nous avons également intégré un mécanisme de feedback directement dans l'expérience.</p>
+    <p>Après une réponse, l'utilisateur peut indiquer si celle-ci lui a été utile ou non.</p>
+    <p>En cas d'insatisfaction, une boîte de dialogue lui permet de préciser ce qui n'a pas fonctionné.</p>
+    <p>Cette boucle crée progressivement une nouvelle source de données UX :</p>
+    <div class="flow-line">Prompt → réponse → comportement → satisfaction → feedback → amélioration</div>
+    <p>L'objectif est désormais de croiser ces données avec l'observation des usages afin de comprendre :</p>
+    <ul class="bullets">
+      <li>les intentions les plus fréquentes ;</li>
+      <li>les demandes auxquelles l'IA répond bien ;</li>
+      <li>les situations d'échec ;</li>
+      <li>les besoins émergents ;</li>
+      <li>et les opportunités d'amélioration du produit.</li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <h2 style="margin-top:0">Mon apport en tant que Product Designer</h2>
+    <p>Ce projet m'a permis de mobiliser plusieurs compétences développées au cours de mes expériences précédentes.</p>
+    <p>Mes trois années sur un logiciel de facturation m'ont notamment donné une connaissance concrète des usages, des contraintes et des problématiques rencontrées par les utilisateurs EBP.</p>
+    <p>J'ai également pu m'appuyer sur mon expérience d'accompagnement d'équipes : animation d'ateliers, production de livrables, facilitation et capacité à faire converger des expertises différentes.</p>
+    <p>Mais ce projet m'a surtout amenée à développer une nouvelle dimension de ma pratique.</p>
+    <p>J'ai dû apprendre à concevoir dans un environnement où :</p>
+    <ul class="bullets">
+      <li>le résultat n'est pas toujours prédictible ;</li>
+      <li>les patterns UX sont encore en construction ;</li>
+      <li>les contraintes techniques évoluent rapidement ;</li>
+      <li>la confiance devient une composante centrale de l'expérience ;</li>
+      <li>et certaines décisions UX ont des conséquences sur le fonctionnement même de l'IA.</li>
+    </ul>
+    <p>J'ai également développé une posture proactive en allant chercher l'information au-delà de mon périmètre : auprès du support technique, des développeurs, des métiers, des revendeurs et des équipes ayant déjà expérimenté l'IA.</p>
+  </section>
+
+  <section>
+    <h2>Ce que l'IA change dans ma façon de concevoir</h2>
+    <p>Ce projet m'a amenée à remettre en question ma propre pratique de Product Designer.</p>
+    <p>Avec une interface classique, je cherche principalement à comprendre :</p>
+    <div class="quote-shift">
+      <blockquote>Que veut faire l'utilisateur et comment puis-je lui permettre de le faire simplement ?</blockquote>
+      <div class="quote-label">Avec une IA, une nouvelle question apparaît :</div>
+      <blockquote>Que veut faire l'utilisateur, que peut comprendre l'IA, que peut-elle réellement faire et quel niveau de contrôle devons-nous conserver ?</blockquote>
+    </div>
+    <p>Le rôle du Product Designer évolue alors.</p>
+    <p>Il ne s'agit plus seulement de concevoir des interfaces, mais également de concevoir :</p>
+    <div class="flow-line">la relation entre l'utilisateur et l'intelligence du produit</div>
+    <p>Cela implique de penser la confiance, la transparence, les limites, les erreurs, les niveaux d'autonomie, le feedback et l'observabilité.</p>
+  </section>
+
+  <section>
+    <h2>Et maintenant ?</h2>
+    <p>Le lancement de la V1 constitue une première étape.</p>
+    <p>Mon travail porte désormais sur l'amélioration continue de l'expérience IA, dans le logiciel mais également au-delà de l'interface conversationnelle.</p>
+    <p>Je souhaite notamment approfondir une approche data-driven, exploiter davantage les données d'observabilité et personnaliser le tableau de bord interne afin d'en faire un véritable outil d'aide à la décision UX et produit.</p>
+    <p>À plus long terme, l'enjeu sera d'accompagner l'évolution de l'assistant :</p>
+    <div class="flow-line">Répondre → Comprendre → Recommander → Automatiser → Agir</div>
+    <p>tout en maintenant un principe essentiel :</p>
+    <div class="quote-shift">
+      <blockquote>Plus l'IA devient autonome, plus l'expérience doit rendre le contrôle, les intentions et les conséquences compréhensibles pour l'utilisateur.</blockquote>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <h2 style="margin-top:0">Les premiers résultats</h2>
+    <div class="impact-stats">
+      <div class="impact-stat">
+        <div class="impact-stat-value">141</div>
+        <div class="impact-stat-label">réponses à l'étude quantitative</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-stat-value">14</div>
+        <div class="impact-stat-label">utilisateurs interviewés</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-stat-value">30+</div>
+        <div class="impact-stat-label">cas d'usage et besoins identifiés à approfondir</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-stat-value">80</div>
+        <div class="impact-stat-label">utilisateurs actifs dans les 20 premiers jours</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-stat-value">~400</div>
+        <div class="impact-stat-label">prompts en 20 jours</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-stat-value">Juillet 2026</div>
+        <div class="impact-stat-label">lancement auprès des clients Open Line Gestion Commerciale</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="closing">
+    <h2 style="margin-top:0">Ce projet représente une nouvelle étape dans ma pratique</h2>
+    <p>Après avoir conçu pendant trois ans une nouvelle expérience SaaS de facturation de zéro avec Hubbix Bâtiment, ce projet m'a permis d'explorer une nouvelle frontière du Product Design : concevoir l'expérience d'un produit augmenté par l'IA.</p>
+    <p>J'y ai développé une capacité à naviguer dans l'incertitude, à travailler au contact direct des enjeux techniques et business, à questionner les limites de l'IA et à concevoir les conditions nécessaires à son adoption.</p>
+    <p>Plus qu'une nouvelle fonctionnalité, l'IA représente ici une opportunité de repenser la manière dont l'utilisateur interagit avec son logiciel.</p>
+    <p>Et c'est précisément cette transformation que je souhaite continuer à explorer en tant que Product Designer.</p>
+  </section>
 
   <div class="page-footer">
     <div class="footer-links">
@@ -168,6 +494,7 @@
       <a href="https://behance.net/edmat" target="_blank" rel="noopener">Behance</a>
     </div>
   </div>
+
 </div>
 
 <div class="lightbox" id="lightbox" aria-hidden="true">
@@ -252,25 +579,7 @@
     'nav-home': 'Home',
     'nav-cv': 'Resume',
     'nav-projects': 'Projects',
-    'cs-eyebrow': 'Case study',
-    'cs-h1': 'AI Conversational Agent — EBP Open Line',
-    'cs-meta': 'AI · Design Leadership · 2025–2026',
-    'cs-facts': '37 customers surveyed (quant) · 14 companies interviewed',
-    'cs-s1': 'customers surveyed (quant)',
-    'cs-s2': 'companies interviewed',
-    'cs-h1-1': 'Context',
-    'cs-t1': 'Integration of a conversational agent into the EBP Open Line suite (Accounting, Construction, Sales Management), paired with another Product Designer and the AI team (Product Owner, developers).',
-    'cs-h1-2': 'Upstream framing',
-    'cs-t2': "Upfront, I joined a Cegid working group dedicated to AI: observing and gathering user needs across the group's software, analyzing AI best practices, and formalizing them in an article shared with the whole Cegid group. This step let me understand AI usage across different products before framing the Open Line project.",
-    'cs-h1-3': 'Leading user research',
-    'cs-t3': "Assigned to the Open Line products, I coordinated PM, marketing, sales and the data team to identify needs and define the offering. I designed the interview guide from the cross-functional team's input (PM, PO, PMM, Marketing), then led all the interviews, recorded with user anonymity respected. The videos were analyzed with Dovetail, whose AI features helped categorize verbatims and generate summaries by theme, speeding up processing and reporting of the study — written up in Notion and presented to stakeholders. It revealed mixed AI adoption: some users remained skeptical, worried about their personal data, while others, already advanced in using AI ecosystems, saw it as essential for gaining visibility, streamlining their processes and supporting decision-making, sometimes with precise expectations for features in EBP software.",
-    'cs-h1-4': 'Scope of the research',
-    'cs-t4': '37 EBP customers surveyed on their relationship with AI through a quantitative study run with the data team (January 2026). 14 EBP client companies (SMEs, from 1 to over 50 employees) interviewed between March 10 and 31, 2026, across the Accounting, Sales Management, Méca and Construction products.',
-    'cs-h1-5': 'Results &amp; follow-up',
-    'cs-t5': "The team built an internal dashboard to analyze prompt and token usage, identify recurring topics and track how often the chatbot is used. Still under continuous improvement, this tool already provides valuable insight into how the assistant is really used.",
-    'cs-t5b': "This project helped me better understand the challenges of AI at different levels, and led me to question and rethink how I work: what does the user want to do? How can AI help them? How does our product evolve with AI, how does the UX designer's job evolve with it, and how do we address these new challenges while keeping the experience smooth, competitive and appealing? How do we adapt to this new paradigm?",
-    'cs-tag1': 'AI',
-    'cs-tag2': 'Cross-functional coordination'
+    'cs-eyebrow': 'Case study'
   };
   (function () {
     var LANG_KEY = 'site-lang';
