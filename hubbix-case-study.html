@@ -68,6 +68,58 @@
     padding-bottom: 40px;
     border-bottom: 1px solid var(--border-light);
   }
+  .wide-viewer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1920 / 1080;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--border-light);
+    margin-bottom: 48px;
+  }
+  .wide-viewer-stage {
+    position: absolute;
+    inset: 0;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .wide-viewer-stage img {
+    display: block;
+    width: 100%;
+    height: auto;
+    flex: 0 0 auto;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .wide-viewer-zoom {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+  }
+  .wide-viewer-zoom-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border-light);
+    background: white;
+    color: var(--text-main);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 6px rgba(0,0,0,.12);
+  }
+  .wide-viewer-zoom-btn:hover {
+    background: oklch(0.94 0.008 90);
+  }
   h2 {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 22px;
@@ -243,6 +295,16 @@
   <p class="subtitle">Concevoir de zéro une nouvelle expérience SaaS pour les professionnels du bâtiment</p>
   <div class="meta-line">Product Designer · 2022–2025</div>
   <div class="facts-line">13 personnes dans l'équipe · 2 ans de discovery au lancement · 30 Early Adopters · ~50 écrans conçus en responsive</div>
+
+  <div class="wide-viewer">
+    <div class="wide-viewer-stage">
+      <img id="hubbix-viewer-img" src="images/hubbix-hero.png" alt="EBP Hubbix Bâtiment — aperçu du produit">
+    </div>
+    <div class="wide-viewer-zoom">
+      <button type="button" class="wide-viewer-zoom-btn" id="hubbix-zoom-out" aria-label="Dézoomer">−</button>
+      <button type="button" class="wide-viewer-zoom-btn" id="hubbix-zoom-in" aria-label="Zoomer">+</button>
+    </div>
+  </div>
 
   <section>
     <h2>Le défi</h2>
@@ -515,6 +577,28 @@
   </section>
 
 </div>
+
+<script>
+  (function () {
+    var img = document.getElementById('hubbix-viewer-img');
+    var zoomInBtn = document.getElementById('hubbix-zoom-in');
+    var zoomOutBtn = document.getElementById('hubbix-zoom-out');
+    var stage = img.parentElement;
+    var zoom = 1;
+    function applyZoom() {
+      img.style.width = (zoom * 100) + '%';
+    }
+    zoomInBtn.addEventListener('click', function () {
+      zoom = Math.min(4, zoom + 0.5);
+      applyZoom();
+    });
+    zoomOutBtn.addEventListener('click', function () {
+      zoom = Math.max(1, zoom - 0.5);
+      applyZoom();
+      if (zoom === 1) stage.scrollLeft = 0;
+    });
+  })();
+</script>
 
 <script>
   // Embedded in the portfolio's own prototype-viewer iframe: that overlay
