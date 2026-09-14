@@ -1222,6 +1222,15 @@ a.is-copied {
   border-radius: 14px;
 }
 
+.case-wide-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 24px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
 .case-figma-embed {
   grid-column: 1 / -1;
   margin-top: 24px;

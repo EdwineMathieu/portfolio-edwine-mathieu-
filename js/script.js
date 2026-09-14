@@ -409,6 +409,15 @@
     });
   });
 
+  // Standalone full-width images placed directly in a case study (outside
+  // any gallery or use-case section): click opens the lightbox too.
+  document.querySelectorAll('.case-wide-image').forEach(function (img) {
+    img.addEventListener('click', function (e) {
+      e.stopPropagation();
+      openLightbox(img.currentSrc || img.src, img.alt);
+    });
+  });
+
   // Case image galleries: clicking a thumbnail (or the prev/next arrows,
   // added automatically when there's more than one photo) swaps the
   // carousel's photo.
