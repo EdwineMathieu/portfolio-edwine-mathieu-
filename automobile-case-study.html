@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automobile & Mobilité — Étude de cas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: oklch(0.5 0.13 258); --accent-soft: oklch(0.95 0.008 90); --accent-border: oklch(0.85 0.03 258); --bg-app: oklch(0.985 0.004 90); --text-main: oklch(0.22 0.01 260); --text-body: oklch(0.3 0.01 260); --text-muted: oklch(0.45 0.01 260); --text-faint: oklch(0.5 0.01 260); --border-soft: oklch(0.92 0.005 90); --border-light: oklch(0.9 0.005 90); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg-app); color: var(--text-body); line-height: 1.65; }
+  .site-nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 20px 56px; background: oklch(0.985 0.004 90 / 0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-light); }
+  .back-pill { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; color: var(--text-main); text-decoration: none; }
+  .back-pill:hover { color: var(--accent); }
+  .site-nav-links { display: flex; align-items: center; gap: 8px; }
+  .site-nav-item { font-family: inherit; padding: 8px 16px; border-radius: 7px; font-size: 14px; font-weight: 600; color: var(--text-muted); text-decoration: none; transition: background .15s ease; }
+  .site-nav-item:hover { background: oklch(0.94 0.008 90); }
+  .lang-switch { display: flex; gap: 2px; margin-left: 8px; padding: 3px; background: oklch(0.94 0.008 90); border-radius: 8px; }
+  .lang-btn { font-family: inherit; padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; color: var(--text-muted); background: transparent; border: none; }
+  .lang-btn:hover { color: var(--text-main); }
+  .lang-btn.is-active { background: white; color: var(--text-main); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 96px; }
+  .page-footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .page-footer .footer-links { display: flex; gap: 24px; font-size: 13px; color: var(--text-faint); }
+  .page-footer .footer-links a { color: inherit; text-decoration: none; }
+  .page-footer .footer-links a:hover { color: var(--accent); }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-main); margin: 0 0 12px; line-height: 1.1; }
+  .meta-line { font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
+  .hero-photo { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 16px; border: 1px solid var(--border-light); margin-bottom: 40px; cursor: zoom-in; }
+  .lightbox { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; background: oklch(0.15 0.005 260 / 0.92); opacity: 0; visibility: hidden; transition: opacity .2s ease; }
+  .lightbox.is-open { opacity: 1; visibility: visible; }
+  .lightbox-viewport { max-width: 92vw; max-height: 92vh; overflow: auto; }
+  .lightbox-img { display: block; max-width: 92vw; max-height: 92vh; width: auto; height: auto; object-fit: contain; transition: width .2s ease; user-select: none; -webkit-user-drag: none; }
+  .lightbox-close { position: fixed; top: 20px; right: 24px; width: 44px; height: 44px; border-radius: 50%; border: none; background: oklch(1 0 0 / 0.12); color: white; font-size: 24px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .lightbox-close:hover { background: oklch(1 0 0 / 0.22); }
+  .lightbox-zoom { position: fixed; bottom: 20px; right: 24px; display: flex; gap: 8px; }
+  .lightbox-zoom-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: oklch(1 0 0 / 0.12); color: white; font-size: 20px; font-weight: 600; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .lightbox-zoom-btn:hover { background: oklch(1 0 0 / 0.22); }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; margin: 0 0 12px; }
+  p { margin: 0 0 16px; font-size: 15.5px; color: var(--text-body); }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; }
+  .pill { font-size: 13px; font-weight: 500; color: var(--text-main); background: white; border: 1px solid var(--border-light); border-radius: 100px; padding: 6px 14px; }
+  .divider { border: none; border-top: 1px solid var(--border-light); margin: 40px 0 32px; }
+  .usecases-title { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; margin: 0 0 8px; }
+  .usecase-section { margin-top: 32px; }
+  .usecase-section + .usecase-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border-light); }
+  .usecase-title { font-family: 'Space Grotesk', sans-serif; font-size: 21px; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; margin: 0 0 10px; }
+  .usecase-image { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 16px; margin: 20px 0; cursor: zoom-in; }
+  .usecase-intro-text { padding-top: 4px; }
+  .experience-bullets { margin: 0 0 16px; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 8px; }
+  .experience-bullets li { font-size: 15px; line-height: 1.6; color: var(--text-body); }
+  .btn { padding: 14px 26px; border-radius: 8px; font-weight: 600; font-size: 15px; text-decoration: none; display: inline-block; margin: 4px 0 16px; }
+  .btn-primary { background: var(--text-main); color: white; transition: background 0.2s ease; }
+  .btn-primary:hover { background: var(--accent); }
+  .back-to-top { position: fixed; bottom: 24px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+  .back-to-top:hover { background: oklch(0.94 0.008 90); }
+  .back-to-top[hidden] { display: none; }
+  @media (max-width: 640px) { .site-nav { padding: 14px 20px; } .site-nav-links { gap: 2px; } .site-nav-item { padding: 7px 10px; font-size: 13px; } .wrap { padding: 40px 20px 96px; } h1 { font-size: 30px; } }
+</style>
+</head>
+<body>
+<header class="site-nav">
+  <a href="index.html#view-projets" class="back-pill" data-i18n="nav-back">← Retour au portfolio</a>
+  <nav class="site-nav-links" aria-label="Navigation principale">
+    <a class="site-nav-item" href="index.html" data-i18n="nav-home">Accueil</a>
+    <a class="site-nav-item" href="index.html#view-cv" data-i18n="nav-cv">CV</a>
+    <a class="site-nav-item" href="index.html#view-projets" data-i18n="nav-projects">Projets</a>
+    <div class="lang-switch" role="group" aria-label="Langue / Language">
+      <button type="button" class="lang-btn is-active" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow" data-i18n="cs-eyebrow">Étude de cas</div>
+  <h1 data-i18n="cs-h1">Automobile &amp; Mobilité</h1>
+  <div class="meta-line" data-i18n="cs-meta">Automobile · Mobilité · 2026</div>
+
+  <img class="hero-photo" id="hero-photo" src="images/automobile-mobilite.png" alt="Automobile &amp; Mobilité — mobilité connectée et durable">
+
+  <h2 data-i18n="auto-h1">Vision</h2>
+  <p data-i18n="auto-t1">Product Designer spécialisée en UX/UI, je conçois des expériences digitales avec un intérêt particulier pour l'automobile et les nouvelles mobilités.</p>
+  <p data-i18n="auto-t1b">Je m'intéresse à la transformation du véhicule en plateforme software-defined : interfaces embarquées, services connectés, électromobilité et nouvelles formes d'interaction entre l'humain, le véhicule et son environnement.</p>
+  <p data-i18n="auto-t1c">À l'ère de l'IA agentique, je souhaite explorer une question centrale : comment concevoir des expériences automobiles qui soient à la fois intelligentes, contextuelles et personnalisées — sans sacrifier la compréhension, le contrôle et la confiance de l'utilisateur ?</p>
+  <p data-i18n="auto-t1d">À travers mes projets d'IHM cockpit et de recharge pour véhicule électrique, je cherche à expérimenter ces nouveaux usages et à réfléchir à la continuité de l'expérience entre véhicule, smartphone et services de mobilité.</p>
+  <p data-i18n="auto-t1e">Je souhaite aujourd'hui mettre cette approche au service d'équipes qui imaginent les prochaines générations d'expériences automobiles et de mobilité.</p>
+
+  <hr class="divider">
+
+  <div class="usecases-title" data-i18n="auto-usecases-title">Exploration de l'expérience de conduite à l'ère du software-defined vehicle</div>
+
+  <div class="usecase-section">
+    <div class="usecase-title" data-i18n="auto-h2">Cas d'usage 1 : Cockpit EV — écran conducteur &amp; écran central</div>
+    <img class="usecase-image" id="usecase-img-1" src="images/cockpit-ev-screenshot.png" alt="Cockpit EV — écran conducteur &amp; écran central">
+    <a href="cockpit-ev.html" class="btn btn-primary" data-i18n="cockpit-link">Voir le prototype animé →</a>
+    <p class="usecase-intro-text" data-i18n="auto-t2">Prototype animé d'interface HMI pour véhicule électrique : écran de gauche conducteur et écran central conçus comme deux plans d'information distincts, avec modes de conduite Éco / Confort / Sport, navigation, gestion de l'énergie et de la recharge, climatisation et média.</p>
+
+    <h2 data-i18n="auto-h3">Hiérarchie — une information par plan</h2>
+    <p data-i18n="auto-t3">L'écran de gauche ne porte que la conduite : vitesse, voie, énergie. Tout le reste vit sur l'écran central. Les 2px de règle séparent les plans sans ajouter d'ornement.</p>
+
+    <h2 data-i18n="auto-h4">Couleur — le vert ne décore jamais</h2>
+    <p data-i18n="auto-t4">L'accent (vert Clean-Tech, cohérent avec le réseau Eleckar d'E-Orizon) est réservé au mode actif, à l'itinéraire et aux alertes. Les modes se distinguent par la typographie et la densité, pas par un habillage coloré.</p>
+
+    <h2 data-i18n="auto-h5">Grille — six tuiles, jamais plus</h2>
+    <p data-i18n="auto-t5">La personnalisation se fait dans une grille 3×2 fermée : l'utilisateur choisit le contenu, le système garde le rythme et les cibles tactiles.</p>
+
+    <h2 data-i18n="auto-h6">Énergie — le chiffre utile, pas le chiffre brut</h2>
+    <p data-i18n="auto-t6">L'autonomie est exprimée en kilomètres et en état de charge à l'arrivée. La consommation instantanée reste secondaire, en histogramme.</p>
+  </div>
+
+  <div class="usecase-section">
+    <div class="usecase-title" data-i18n="eorizon-h0">Concevoir une expérience de recharge de véhicules électriques sans faille</div>
+    <p data-i18n="eorizon-questions-intro">Ce projet m'a permis de me poser des questions telles que :</p>
+    <ul class="experience-bullets">
+      <li data-i18n="eorizon-q1">Comment réduire l'anxiété liée à l'autonomie ?</li>
+      <li data-i18n="eorizon-q2">Comment rendre la recharge prévisible ?</li>
+      <li data-i18n="eorizon-q3">Comment connecter l'expérience mobile à l'expérience embarquée ?</li>
+      <li data-i18n="eorizon-q4">Comment anticiper les besoins du conducteur ?</li>
+    </ul>
+    <img class="usecase-image" id="usecase-img-2" src="images/eorizon-screenshot.png" alt="E-Orizon — accueil">
+    <a href="e-orizon.html" class="btn btn-primary" data-i18n="eorizon-link">Voir le prototype E-Orizon →</a>
+    <p class="usecase-intro-text" data-i18n="eorizon-t0">Prototype mobile d'application de mobilité électrique : de la préparation d'un trajet longue distance jusqu'à l'arrivée, en tenant compte de la batterie, du réseau d'abonnement, des bornes disponibles sur l'itinéraire et du budget de recharge — 7 écrans, d'un aller simple Paris → Arcachon.</p>
+
+    <h2 data-i18n="eorizon-h1">Réseau abonné, priorité visible</h2>
+    <p data-i18n="eorizon-t1">Le réseau d'abonnement (Eleckar) est mis en avant sur le trajet et sur la carte, avec le tarif abonné distingué du tarif public — l'utilisateur voit immédiatement où il paie moins.</p>
+
+    <h2 data-i18n="eorizon-h2">Le budget suit tout le trajet</h2>
+    <p data-i18n="eorizon-t2">Un montant estimé au départ, mis à jour en temps réel pendant la conduite, confronté au coût réel à l'arrivée — jamais une surprise.</p>
+
+    <h2 data-i18n="eorizon-h3">Recalcul continu, jamais figé</h2>
+    <p data-i18n="eorizon-t3">Consommation réelle, vent, température et disponibilité des bornes recalculent l'itinéraire en continu ; un retard de plus de 20 minutes reporte automatiquement la réservation de borne.</p>
+
+    <h2 data-i18n="eorizon-h4">Comparer avant de s'arrêter</h2>
+    <p data-i18n="eorizon-t4">Avant chaque arrêt, les fournisseurs alternatifs sont comparés au coût total du détour, pas seulement au prix au kWh.</p>
+  </div>
+
+  <div class="pill-row">
+    <span class="pill">UX/UI</span>
+    <span class="pill" data-i18n="tag-automobile">Automobile</span>
+    <span class="pill">HMI</span>
+    <span class="pill" data-i18n="pill-mobilite">Mobilité</span>
+    <span class="pill" data-i18n="pill-prototyping">Prototypage</span>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-links"><a href="mailto:edwmathieu@gmail.com">edwmathieu@gmail.com</a><a href="tel:+33760206796">+33 7 60 20 67 96</a></div>
+    <div class="footer-links"><a href="https://linkedin.com/in/edwine-mathieu-ux-ui-designer" target="_blank" rel="noopener">LinkedIn</a><a href="https://behance.net/edmat" target="_blank" rel="noopener">Behance</a></div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button type="button" class="lightbox-close" aria-label="Fermer">&times;</button>
+  <div class="lightbox-viewport"><img class="lightbox-img" id="lightbox-img" src="" alt=""></div>
+  <div class="lightbox-zoom">
+    <button type="button" class="lightbox-zoom-btn" id="lightbox-zoom-out" aria-label="Dézoomer">−</button>
+    <button type="button" class="lightbox-zoom-btn" id="lightbox-zoom-in" aria-label="Zoomer">+</button>
+  </div>
+</div>
+
+<button type="button" class="back-to-top" id="back-to-top" aria-label="Retour en haut" hidden>↑</button>
+
+<script>
+  (function () {
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var closeBtn = lightbox.querySelector('.lightbox-close');
+    var zoomInBtn = document.getElementById('lightbox-zoom-in');
+    var zoomOutBtn = document.getElementById('lightbox-zoom-out');
+    var zoom = 1;
+    function applyZoom() { lightboxImg.style.width = zoom === 1 ? 'auto' : (zoom * 92) + 'vw'; }
+    function openLightbox(src, alt) {
+      lightboxImg.src = src; lightboxImg.alt = alt || ''; zoom = 1; applyZoom();
+      lightbox.classList.add('is-open'); lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = ''; lightboxImg.src = '';
+    }
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function (e) { if (e.target === lightbox || e.target.classList.contains('lightbox-viewport')) closeLightbox(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox(); });
+    zoomInBtn.addEventListener('click', function () { zoom = Math.min(4, zoom + 0.5); applyZoom(); });
+    zoomOutBtn.addEventListener('click', function () { zoom = Math.max(1, zoom - 0.5); applyZoom(); });
+    document.getElementById('hero-photo').addEventListener('click', function () { openLightbox(this.src, this.alt); });
+    document.getElementById('usecase-img-1').addEventListener('click', function () { openLightbox(this.src, this.alt); });
+    document.getElementById('usecase-img-2').addEventListener('click', function () { openLightbox(this.src, this.alt); });
+
+    var backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () { backToTop.hidden = window.scrollY < 600; });
+    backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  })();
+</script>
+
+<script>
+  var TRANSLATIONS_EN = {
+    'nav-back': '← Back to portfolio', 'nav-home': 'Home', 'nav-cv': 'Resume', 'nav-projects': 'Projects',
+    'cs-eyebrow': 'Case study',
+    'cs-h1': 'Automotive &amp; Mobility',
+    'cs-meta': 'Automotive · Mobility · 2026',
+    'auto-h1': 'Vision',
+    'auto-t1': "A Product Designer specialized in UX/UI, I design digital experiences with a particular interest in automotive and new mobility.",
+    'auto-t1b': "I'm interested in the transformation of the vehicle into a software-defined platform: in-vehicle interfaces, connected services, e-mobility, and new forms of interaction between humans, the vehicle, and its environment.",
+    'auto-t1c': "In the age of agentic AI, I want to explore a central question: how do you design automotive experiences that are intelligent, contextual, and personalized — without sacrificing the user's understanding, control, and trust?",
+    'auto-t1d': "Through my cockpit HMI and EV charging projects, I experiment with these new use cases and think through experience continuity between the vehicle, the smartphone, and mobility services.",
+    'auto-t1e': "I'm now looking to bring this approach to teams shaping the next generation of automotive and mobility experiences.",
+    'auto-usecases-title': 'Exploring the driving experience in the software-defined vehicle era',
+    'auto-h2': 'Use case 1: Cockpit EV — driver cluster &amp; central screen',
+    'auto-t2': 'An animated HMI prototype for an electric vehicle: left driver screen and central screen designed as two distinct information planes, with Eco / Comfort / Sport drive modes, navigation, energy and charging management, climate, and media.',
+    'auto-h3': 'Hierarchy — one layer of information per plane',
+    'auto-t3': 'The left screen carries driving only: speed, lane, energy. Everything else lives on the central screen. A 2px rule separates the planes without adding ornament.',
+    'auto-h4': 'Color — green never decorates',
+    'auto-t4': "The accent (Clean-Tech green, consistent with E-Orizon's Eleckar network) is reserved for the active mode, the route, and alerts. Modes are distinguished by typography and density, not by color dressing.",
+    'auto-h5': 'Grid — six tiles, never more',
+    'auto-t5': 'Customization happens within a closed 3×2 grid: the user picks the content, the system keeps the rhythm and the touch targets.',
+    'auto-h6': 'Energy — the useful number, not the raw one',
+    'auto-t6': 'Range is expressed in kilometers and state of charge on arrival. Instant consumption stays secondary, shown as a histogram.',
+    'tag-automobile': 'Automotive',
+    'cockpit-link': 'View the animated prototype →',
+    'pill-mobilite': 'Mobility',
+    'pill-prototyping': 'Prototyping',
+    'eorizon-h0': 'Designing a seamless electric vehicle charging experience',
+    'eorizon-questions-intro': 'This project led me to ask questions such as:',
+    'eorizon-q1': 'How to reduce range anxiety?',
+    'eorizon-q2': 'How to make charging predictable?',
+    'eorizon-q3': 'How to connect the mobile experience to the in-vehicle experience?',
+    'eorizon-q4': "How to anticipate the driver's needs?",
+    'eorizon-t0': "A mobile app prototype for electric mobility: from planning a long-distance trip to arrival, accounting for battery, subscription network, chargers available along the route, and charging budget — 7 screens, for a one-way Paris → Arcachon trip.",
+    'eorizon-h1': 'Subscription network, visible priority',
+    'eorizon-t1': "The subscription network (Eleckar) is highlighted along the route and on the map, with the subscriber rate set apart from the public rate — the user sees at a glance where they pay less.",
+    'eorizon-h2': 'The budget follows the whole trip',
+    'eorizon-t2': 'An estimated amount at departure, updated live while driving, checked against the actual cost on arrival — never a surprise.',
+    'eorizon-h3': 'Continuous recalculation, never frozen',
+    'eorizon-t3': "Actual consumption, wind, temperature, and charger availability recalculate the route continuously; a delay of more than 20 minutes automatically pushes back the charger reservation.",
+    'eorizon-h4': 'Compare before you stop',
+    'eorizon-t4': "Before each stop, alternative providers are compared by total cost of the detour, not just the price per kWh.",
+    'eorizon-link': 'View the E-Orizon prototype →'
+  };
+  (function () {
+    var LANG_KEY = 'site-lang';
+    var i18nEls = document.querySelectorAll('[data-i18n]');
+    var frContent = new Map();
+    i18nEls.forEach(function (el) { frContent.set(el, el.innerHTML); });
+    var langButtons = document.querySelectorAll('.lang-btn');
+    function applyLanguage(lang) {
+      i18nEls.forEach(function (el) {
+        var key = el.dataset.i18n;
+        el.innerHTML = (lang === 'en' && TRANSLATIONS_EN[key]) ? TRANSLATIONS_EN[key] : frContent.get(el);
+      });
+      document.documentElement.lang = lang;
+      langButtons.forEach(function (btn) {
+        var isActive = btn.dataset.lang === lang;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
+      });
+      try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    }
+    langButtons.forEach(function (btn) { btn.addEventListener('click', function () { applyLanguage(btn.dataset.lang); }); });
+    var savedLang = 'fr';
+    try { savedLang = localStorage.getItem(LANG_KEY) || 'fr'; } catch (e) {}
+    if (savedLang === 'en') applyLanguage('en');
+  })();
+</script>
+</body>
+</html>

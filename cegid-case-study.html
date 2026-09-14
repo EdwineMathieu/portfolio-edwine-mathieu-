@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cegid — Étude de cas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: oklch(0.5 0.13 258); --accent-soft: oklch(0.95 0.008 90); --accent-border: oklch(0.85 0.03 258); --bg-app: oklch(0.985 0.004 90); --text-main: oklch(0.22 0.01 260); --text-body: oklch(0.3 0.01 260); --text-muted: oklch(0.45 0.01 260); --text-faint: oklch(0.5 0.01 260); --border-soft: oklch(0.92 0.005 90); --border-light: oklch(0.9 0.005 90); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg-app); color: var(--text-body); line-height: 1.65; }
+  .site-nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 20px 56px; background: oklch(0.985 0.004 90 / 0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-light); }
+  .back-pill { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; color: var(--text-main); text-decoration: none; }
+  .back-pill:hover { color: var(--accent); }
+  .site-nav-links { display: flex; align-items: center; gap: 8px; }
+  .site-nav-item { font-family: inherit; padding: 8px 16px; border-radius: 7px; font-size: 14px; font-weight: 600; color: var(--text-muted); text-decoration: none; transition: background .15s ease; }
+  .site-nav-item:hover { background: oklch(0.94 0.008 90); }
+  .lang-switch { display: flex; gap: 2px; margin-left: 8px; padding: 3px; background: oklch(0.94 0.008 90); border-radius: 8px; }
+  .lang-btn { font-family: inherit; padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; color: var(--text-muted); background: transparent; border: none; }
+  .lang-btn:hover { color: var(--text-main); }
+  .lang-btn.is-active { background: white; color: var(--text-main); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 96px; }
+  .page-footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .page-footer .footer-links { display: flex; gap: 24px; font-size: 13px; color: var(--text-faint); }
+  .page-footer .footer-links a { color: inherit; text-decoration: none; }
+  .page-footer .footer-links a:hover { color: var(--accent); }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-main); margin: 0 0 12px; line-height: 1.1; }
+  .meta-line { font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
+  .mini-carousel { position: relative; margin: 0 0 40px; }
+  .mini-carousel-viewport { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #fff; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .mini-carousel-img { display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+  .mini-carousel-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 6px rgba(0,0,0,.12); }
+  .mini-carousel-nav:hover { background: oklch(0.94 0.008 90); }
+  .mini-carousel-prev { left: 14px; }
+  .mini-carousel-next { right: 14px; }
+  .mini-carousel-dots { display: flex; justify-content: center; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .mini-carousel-dot { width: 6px; height: 6px; padding: 0; border: none; border-radius: 50%; background: var(--border-light); cursor: pointer; }
+  .mini-carousel-dot.is-active { background: var(--accent); transform: scale(1.4); }
+  .lightbox { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; background: oklch(0.15 0.005 260 / 0.92); opacity: 0; visibility: hidden; transition: opacity .2s ease; }
+  .lightbox.is-open { opacity: 1; visibility: visible; }
+  .lightbox-viewport { max-width: 92vw; max-height: 92vh; overflow: auto; }
+  .lightbox-img { display: block; max-width: 92vw; max-height: 92vh; width: auto; height: auto; object-fit: contain; transition: width .2s ease; user-select: none; -webkit-user-drag: none; }
+  .lightbox-close { position: fixed; top: 20px; right: 24px; width: 44px; height: 44px; border-radius: 50%; border: none; background: oklch(1 0 0 / 0.12); color: white; font-size: 24px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .lightbox-close:hover { background: oklch(1 0 0 / 0.22); }
+  .lightbox-zoom { position: fixed; bottom: 20px; right: 24px; display: flex; gap: 8px; }
+  .lightbox-zoom-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: oklch(1 0 0 / 0.12); color: white; font-size: 20px; font-weight: 600; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .lightbox-zoom-btn:hover { background: oklch(1 0 0 / 0.22); }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; margin: 32px 0 12px; }
+  .case-block:first-of-type h2 { margin-top: 0; }
+  p { margin: 0 0 16px; font-size: 15.5px; color: var(--text-body); }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; }
+  .pill { font-size: 13px; font-weight: 500; color: var(--text-main); background: white; border: 1px solid var(--border-light); border-radius: 100px; padding: 6px 14px; }
+  .back-to-top { position: fixed; bottom: 24px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+  .back-to-top:hover { background: oklch(0.94 0.008 90); }
+  .back-to-top[hidden] { display: none; }
+  @media (max-width: 640px) { .site-nav { padding: 14px 20px; } .site-nav-links { gap: 2px; } .site-nav-item { padding: 7px 10px; font-size: 13px; } .wrap { padding: 40px 20px 96px; } h1 { font-size: 30px; } }
+</style>
+</head>
+<body>
+<header class="site-nav">
+  <a href="index.html#view-projets" class="back-pill" data-i18n="nav-back">← Retour au portfolio</a>
+  <nav class="site-nav-links" aria-label="Navigation principale">
+    <a class="site-nav-item" href="index.html" data-i18n="nav-home">Accueil</a>
+    <a class="site-nav-item" href="index.html#view-cv" data-i18n="nav-cv">CV</a>
+    <a class="site-nav-item" href="index.html#view-projets" data-i18n="nav-projects">Projets</a>
+    <div class="lang-switch" role="group" aria-label="Langue / Language">
+      <button type="button" class="lang-btn is-active" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="eyebrow" data-i18n="cs-eyebrow">Étude de cas</div>
+  <h1 data-i18n="cs-h1">Cegid — Refonte de la marque &amp; Design System</h1>
+  <div class="meta-line" data-i18n="cs-meta">Design System · Brand · 2025</div>
+
+  <div class="mini-carousel" id="gal">
+    <div class="mini-carousel-viewport"><img class="mini-carousel-img" id="gal-img" src="images/cegid-hero.jpg" alt="Cegid — Brand Redesign 2026"></div>
+    <button type="button" class="mini-carousel-nav mini-carousel-prev" aria-label="Image précédente">‹</button>
+    <button type="button" class="mini-carousel-nav mini-carousel-next" aria-label="Image suivante">›</button>
+    <div class="mini-carousel-dots"></div>
+    <div class="mini-carousel-data" hidden>
+      <button type="button" data-src="images/cegid-hero.jpg" data-alt="Cegid — Brand Redesign 2026"></button>
+      <button type="button" data-src="images/cegid-dashboard.png" data-alt="Cegid — moodboard &amp; prototypes"></button>
+      <button type="button" data-src="images/cegid-pitch-inspiration.png" data-alt="Cegid — inspiration et points clés"></button>
+      <button type="button" data-src="images/cegid-moodboard.png" data-alt="Cegid — moodboard de la marque"></button>
+      <button type="button" data-src="images/cegid-attrakdiff-resultats.png" data-alt="Cegid — résultats AttrakDiff"></button>
+      <button type="button" data-src="images/cegid-appreciation-detaillee.png" data-alt="Cegid — appréciation détaillée des éléments"></button>
+      <button type="button" data-src="images/cegid-appreciation-globale.png" data-alt="Cegid — appréciation globale de l'interface"></button>
+      <button type="button" data-src="images/cegid-hrconnect-login.png" data-alt="Cegid HR Connect — écran de connexion"></button>
+      <button type="button" data-src="images/cegid-hrconnect-dashboard.png" data-alt="Cegid HR Connect — tableau de bord"></button>
+      <button type="button" data-src="images/cegid-hrconnect-assistant-ia.png" data-alt="Cegid HR Connect — assistant IA"></button>
+      <button type="button" data-src="images/cegid-hrconnect-absences.png" data-alt="Cegid HR Connect — gestion des absences"></button>
+    </div>
+  </div>
+
+  <div class="case-block">
+    <h2 data-i18n="cs-h1-1">Démarche</h2>
+    <p data-i18n="cs-t1">5 groupes de designers ont proposé un prototype incarnant la nouvelle marque Cegid. Après veille et conception, les 5 prototypes finaux ont été testés auprès de 100 testeurs avec l'aide d'un paneliste.</p>
+  </div>
+  <div class="case-block">
+    <h2 data-i18n="cs-h1-2">Résultats</h2>
+    <p data-i18n="cs-t2">Comparaison des projets selon des critères établis (couleur, ergonomie...) pour identifier points de friction et éléments attractifs, et orienter les décisions de design à l'échelle du groupe.</p>
+  </div>
+
+  <div class="pill-row">
+    <span class="pill">Design System</span>
+    <span class="pill">Brand</span>
+    <span class="pill">Data-Driven</span>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-links"><a href="mailto:edwmathieu@gmail.com">edwmathieu@gmail.com</a><a href="tel:+33760206796">+33 7 60 20 67 96</a></div>
+    <div class="footer-links"><a href="https://linkedin.com/in/edwine-mathieu-ux-ui-designer" target="_blank" rel="noopener">LinkedIn</a><a href="https://behance.net/edmat" target="_blank" rel="noopener">Behance</a></div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button type="button" class="lightbox-close" aria-label="Fermer">&times;</button>
+  <div class="lightbox-viewport"><img class="lightbox-img" id="lightbox-img" src="" alt=""></div>
+  <div class="lightbox-zoom">
+    <button type="button" class="lightbox-zoom-btn" id="lightbox-zoom-out" aria-label="Dézoomer">−</button>
+    <button type="button" class="lightbox-zoom-btn" id="lightbox-zoom-in" aria-label="Zoomer">+</button>
+  </div>
+</div>
+
+<button type="button" class="back-to-top" id="back-to-top" aria-label="Retour en haut" hidden>↑</button>
+
+<script>
+  (function () {
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var closeBtn = lightbox.querySelector('.lightbox-close');
+    var zoomInBtn = document.getElementById('lightbox-zoom-in');
+    var zoomOutBtn = document.getElementById('lightbox-zoom-out');
+    var zoom = 1;
+    function applyZoom() { lightboxImg.style.width = zoom === 1 ? 'auto' : (zoom * 92) + 'vw'; }
+    function openLightbox(src, alt) {
+      lightboxImg.src = src; lightboxImg.alt = alt || ''; zoom = 1; applyZoom();
+      lightbox.classList.add('is-open'); lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = ''; lightboxImg.src = '';
+    }
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function (e) { if (e.target === lightbox || e.target.classList.contains('lightbox-viewport')) closeLightbox(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox(); });
+    zoomInBtn.addEventListener('click', function () { zoom = Math.min(4, zoom + 0.5); applyZoom(); });
+    zoomOutBtn.addEventListener('click', function () { zoom = Math.max(1, zoom - 0.5); applyZoom(); });
+
+    document.querySelectorAll('.mini-carousel').forEach(function (carousel) {
+      var img = carousel.querySelector('.mini-carousel-img');
+      var items = Array.prototype.slice.call(carousel.querySelectorAll('.mini-carousel-data button'));
+      var dotsWrap = carousel.querySelector('.mini-carousel-dots');
+      var prevBtn = carousel.querySelector('.mini-carousel-prev');
+      var nextBtn = carousel.querySelector('.mini-carousel-next');
+      var current = 0;
+      var dots = items.map(function (item, i) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'mini-carousel-dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Photo ' + (i + 1) + ' sur ' + items.length);
+        dot.addEventListener('click', function () { showIndex(i); });
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+      function showIndex(i) {
+        current = (i + items.length) % items.length;
+        var item = items[current];
+        img.src = item.dataset.src; img.alt = item.dataset.alt || '';
+        dots.forEach(function (d, i2) { d.classList.toggle('is-active', i2 === current); });
+      }
+      prevBtn.addEventListener('click', function () { showIndex(current - 1); });
+      nextBtn.addEventListener('click', function () { showIndex(current + 1); });
+      img.addEventListener('click', function () { openLightbox(img.src, img.alt); });
+    });
+
+    var backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () { backToTop.hidden = window.scrollY < 600; });
+    backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  })();
+</script>
+
+<script>
+  var TRANSLATIONS_EN = {
+    'nav-back': '← Back to portfolio', 'nav-home': 'Home', 'nav-cv': 'Resume', 'nav-projects': 'Projects',
+    'cs-eyebrow': 'Case study',
+    'cs-h1': 'Cegid — Brand Redesign &amp; Design System',
+    'cs-meta': 'Design System · Brand · 2025',
+    'cs-h1-1': 'Approach',
+    'cs-t1': 'Five designer groups each proposed a prototype embodying the new Cegid brand. After research and design, the five final prototypes were tested with 100 testers with the help of an external panel provider.',
+    'cs-h1-2': 'Results',
+    'cs-t2': 'Compared the projects against established criteria (color, usability...) to identify friction points and appealing elements, and to steer design decisions group-wide.'
+  };
+  (function () {
+    var LANG_KEY = 'site-lang';
+    var i18nEls = document.querySelectorAll('[data-i18n]');
+    var frContent = new Map();
+    i18nEls.forEach(function (el) { frContent.set(el, el.innerHTML); });
+    var langButtons = document.querySelectorAll('.lang-btn');
+    function applyLanguage(lang) {
+      i18nEls.forEach(function (el) {
+        var key = el.dataset.i18n;
+        el.innerHTML = (lang === 'en' && TRANSLATIONS_EN[key]) ? TRANSLATIONS_EN[key] : frContent.get(el);
+      });
+      document.documentElement.lang = lang;
+      langButtons.forEach(function (btn) {
+        var isActive = btn.dataset.lang === lang;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
+      });
+      try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    }
+    langButtons.forEach(function (btn) { btn.addEventListener('click', function () { applyLanguage(btn.dataset.lang); }); });
+    var savedLang = 'fr';
+    try { savedLang = localStorage.getItem(LANG_KEY) || 'fr'; } catch (e) {}
+    if (savedLang === 'en') applyLanguage('en');
+  })();
+</script>
+</body>
+</html>
