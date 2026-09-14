@@ -175,6 +175,12 @@
   var openCaseStudy = null;
 
   function openProject(id) {
+    // Hubbix Bâtiment has its own full case-study page instead of the
+    // shared modal: skip straight to it rather than opening the modal.
+    if (id === 'cs-hubbix') {
+      window.location.href = 'hubbix-case-study.html';
+      return;
+    }
     var el = document.getElementById(id);
     if (!el) return;
     if (openCaseStudy) openCaseStudy.classList.remove('is-open');
