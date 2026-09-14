@@ -463,6 +463,21 @@ a.is-copied {
 
 .project-thumb {
   aspect-ratio: 4 / 3;
+  position: relative;
+}
+
+.project-date {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: oklch(0 0 0 / 0.55);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  z-index: 1;
 }
 
 #view-projets .project-thumb .photo,
@@ -1058,6 +1073,13 @@ a.is-copied {
   letter-spacing: -0.01em;
 }
 
+.case-date {
+  font-size: 14px;
+  font-weight: 500;
+  color: oklch(0.5 0.01 260);
+  margin: -12px 0 20px;
+}
+
 .case-block {
   margin-bottom: 20px;
 }
@@ -1067,6 +1089,17 @@ a.is-copied {
   font-weight: 600;
   color: oklch(0.32 0.01 260);
   margin-bottom: 6px;
+}
+
+.case-usecases-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+  margin: 32px 0 8px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-light);
 }
 
 .case-usecase-title {

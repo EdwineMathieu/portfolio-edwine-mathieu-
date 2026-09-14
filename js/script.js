@@ -797,6 +797,7 @@
     'auto-t1c': "In the age of agentic AI, I want to explore a central question: how do you design automotive experiences that are intelligent, contextual, and personalized — without sacrificing the user's understanding, control, and trust?",
     'auto-t1d': "Through my cockpit HMI and EV charging projects, I experiment with these new use cases and think through experience continuity between the vehicle, the smartphone, and mobility services.",
     'auto-t1e': "I'm now looking to bring this approach to teams shaping the next generation of automotive and mobility experiences.",
+    'auto-usecases-title': 'Exploring the driving experience in the software-defined vehicle era',
     'auto-h2': 'Use case 1: Cockpit EV — driver cluster &amp; central screen',
     'auto-t2': 'An animated HMI prototype for an electric vehicle: driver cluster and central screen designed as two distinct information planes, with Eco / Comfort / Sport drive modes, navigation, energy and charging management, climate, and media.',
     'auto-h3': 'Hierarchy — one layer of information per plane',
@@ -813,7 +814,7 @@
     'citymoov-link': "Prototype with Claude Design AI →",
     'citymoov-figma-link': 'View the Figma prototype →',
 
-    'eorizon-h0': 'Use case 2: E-Orizon — planning a long-distance EV trip',
+    'eorizon-h0': 'Designing a seamless electric vehicle charging experience',
     'eorizon-t0': "A mobile app prototype for electric mobility: from planning a long-distance trip to arrival, accounting for battery, subscription network, chargers available along the route, and charging budget — 7 screens, for a one-way Paris → Arcachon trip.",
     'eorizon-h1': 'Subscription network, visible priority',
     'eorizon-t1': "The subscription network (Eleckar) is highlighted along the route and on the map, with the subscriber rate set apart from the public rate — the user sees at a glance where they pay less.",
