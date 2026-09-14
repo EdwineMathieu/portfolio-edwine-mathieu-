@@ -777,6 +777,7 @@
     'hubbix-s2': 'average time / invoice',
     'hubbix-s3': 'user tests',
     'hubbix-intro': "Product Designer on a 0→1 project: from discovery to launch, then continuous improvement of a business SaaS for construction-sector SMEs. Owning the full UX/UI scope, I defined the UX strategy, led user research, designed ~50 responsive screens, ran testing and the Early Adopters program, supported 13 people through delivery, and progressively introduced a data-driven UX approach.",
+    'hubbix-case-study-link': 'Read the full case study →',
 
     'tag-agilite': 'Agility',
 
