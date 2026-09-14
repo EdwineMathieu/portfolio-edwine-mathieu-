@@ -78,6 +78,71 @@
     margin-bottom: 48px;
     cursor: zoom-in;
   }
+  .mini-carousel {
+    position: relative;
+    margin: 24px 0 16px;
+  }
+  .mini-carousel-viewport {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #fff;
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mini-carousel-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: zoom-in;
+  }
+  .mini-carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border-light);
+    background: white;
+    color: var(--text-main);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 6px rgba(0,0,0,.12);
+  }
+  .mini-carousel-nav:hover {
+    background: oklch(0.94 0.008 90);
+  }
+  .mini-carousel-prev { left: 14px; }
+  .mini-carousel-next { right: 14px; }
+  .mini-carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .mini-carousel-dot {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--border-light);
+    cursor: pointer;
+  }
+  .mini-carousel-dot.is-active {
+    background: var(--accent);
+    transform: scale(1.4);
+  }
   .lightbox {
     position: fixed;
     inset: 0;
@@ -375,9 +440,9 @@
 
   <section>
     <h2>01 — Comprendre avant de concevoir</h2>
-    <p>Nous avons commencé par une phase de discovery de près de deux ans, destinée à construire le produit progressivement avant son lancement.</p>
+    <p>J'ai commencé par une phase de discovery de près de deux ans, destinée à construire le produit progressivement avant son lancement.</p>
     <p>Accompagnée au début par le Lead Designer, j'ai contribué à définir la stratégie UX et à mettre en place une démarche inspirée du Design Thinking.</p>
-    <p>Nous avons cherché à comprendre :</p>
+    <p>J'ai cherché à comprendre :</p>
     <ul class="bullets">
       <li>les besoins des professionnels du bâtiment ;</li>
       <li>leurs habitudes de travail ;</li>
@@ -387,7 +452,7 @@
       <li>et les attentes vis-à-vis d'un logiciel SaaS moderne.</li>
     </ul>
     <p>J'ai mené des interviews utilisateurs auprès d'un paneliste et de clients internes EBP.</p>
-    <p>Nous avons ensuite utilisé différents outils de recherche et de cadrage :</p>
+    <p>J'ai ensuite utilisé différents outils de recherche et de cadrage :</p>
     <div class="pill-row">
       <span class="pill">Personas</span>
       <span class="pill">Empathy Maps</span>
@@ -399,6 +464,20 @@
     </div>
     <p>Ces ateliers réunissaient des profils très différents : produit, développement, qualité, marketing, commerce et expertise métier.</p>
     <p>L'enjeu était autant de comprendre les utilisateurs que de faire converger l'équipe autour d'une compréhension commune du problème.</p>
+
+    <div class="mini-carousel" id="research-carousel">
+      <div class="mini-carousel-viewport">
+        <img class="mini-carousel-img" id="research-carousel-img" src="images/hubbix-itw-batiment.png" alt="Hubbix Bâtiment — cible des interviews">
+      </div>
+      <button type="button" class="mini-carousel-nav mini-carousel-prev" aria-label="Image précédente">‹</button>
+      <button type="button" class="mini-carousel-nav mini-carousel-next" aria-label="Image suivante">›</button>
+      <div class="mini-carousel-dots"></div>
+      <div class="mini-carousel-data" hidden>
+        <button type="button" data-src="images/hubbix-itw-batiment.png" data-alt="Hubbix Bâtiment — cible des interviews"></button>
+        <button type="button" data-src="images/hubbix-enquete-qualitative.png" data-alt="Hubbix Bâtiment — résultats de l'enquête qualitative"></button>
+        <button type="button" data-src="images/hubbix-journey-map-carousel.png" data-alt="Hubbix Bâtiment — persona journey map"></button>
+      </div>
+    </div>
   </section>
 
   <section>
@@ -630,9 +709,9 @@
       lightboxImg.style.width = zoom === 1 ? 'auto' : (zoom * 92) + 'vw';
     }
 
-    function openLightbox() {
-      lightboxImg.src = heroPhoto.src;
-      lightboxImg.alt = heroPhoto.alt;
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
       zoom = 1;
       applyZoom();
       lightbox.classList.add('is-open');
@@ -647,7 +726,9 @@
       lightboxImg.src = '';
     }
 
-    heroPhoto.addEventListener('click', openLightbox);
+    heroPhoto.addEventListener('click', function () {
+      openLightbox(heroPhoto.src, heroPhoto.alt);
+    });
     closeBtn.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', function (e) {
       if (e.target === lightbox || e.target.classList.contains('lightbox-viewport')) closeLightbox();
@@ -662,6 +743,39 @@
     zoomOutBtn.addEventListener('click', function () {
       zoom = Math.max(1, zoom - 0.5);
       applyZoom();
+    });
+
+    document.querySelectorAll('.mini-carousel').forEach(function (carousel) {
+      var img = carousel.querySelector('.mini-carousel-img');
+      var items = Array.prototype.slice.call(carousel.querySelectorAll('.mini-carousel-data button'));
+      var dotsWrap = carousel.querySelector('.mini-carousel-dots');
+      var prevBtn = carousel.querySelector('.mini-carousel-prev');
+      var nextBtn = carousel.querySelector('.mini-carousel-next');
+      var current = 0;
+
+      var dots = items.map(function (item, i) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'mini-carousel-dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Photo ' + (i + 1) + ' sur ' + items.length);
+        dot.addEventListener('click', function () { showIndex(i); });
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+
+      function showIndex(i) {
+        current = (i + items.length) % items.length;
+        var item = items[current];
+        img.src = item.dataset.src;
+        img.alt = item.dataset.alt || '';
+        dots.forEach(function (d, i2) { d.classList.toggle('is-active', i2 === current); });
+      }
+
+      prevBtn.addEventListener('click', function () { showIndex(current - 1); });
+      nextBtn.addEventListener('click', function () { showIndex(current + 1); });
+      img.addEventListener('click', function () {
+        openLightbox(img.src, img.alt);
+      });
     });
   })();
 </script>
