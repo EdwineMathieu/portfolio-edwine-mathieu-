@@ -50,6 +50,8 @@
   .mini-carousel-nav:hover { background: oklch(0.94 0.008 90); }
   .mini-carousel-prev { left: 14px; }
   .mini-carousel-next { right: 14px; }
+  .mini-carousel-caption { font-size: 13px; color: var(--text-faint); text-align: center; margin-top: 12px; line-height: 1.5; }
+  .mini-carousel-caption:empty { display: none; }
   .mini-carousel-dots { display: flex; justify-content: center; gap: 6px; margin-top: 12px; }
   .mini-carousel-dot { width: 6px; height: 6px; padding: 0; border: none; border-radius: 50%; background: var(--border-light); cursor: pointer; }
   .mini-carousel-dot.is-active { background: var(--accent); transform: scale(1.4); }
@@ -86,7 +88,7 @@
 </head>
 <body>
 <header class="site-nav">
-  <a href="index.html#view-projets" class="back-pill" data-i18n="nav-back">← Retour au portfolio</a>
+  <a href="index.html#view-projets" class="back-pill" data-i18n="nav-back">← Retour à la page projets</a>
   <nav class="site-nav-links" aria-label="Navigation principale">
     <a class="site-nav-item" href="index.html" data-i18n="nav-home">Accueil</a>
     <a class="site-nav-item" href="index.html#view-cv" data-i18n="nav-cv">CV</a>
@@ -110,12 +112,13 @@
     </div>
     <button type="button" class="mini-carousel-nav mini-carousel-prev" aria-label="Image précédente">‹</button>
     <button type="button" class="mini-carousel-nav mini-carousel-next" aria-label="Image suivante">›</button>
+    <div class="mini-carousel-caption" id="gal-caption"></div>
     <div class="mini-carousel-dots"></div>
     <div class="mini-carousel-data" hidden>
       <button type="button" data-src="images/agent-ia-hero.png" data-alt="Assistant IA — un assistant conversationnel au cœur de vos logiciels EBP Open Line"></button>
-      <button type="button" data-src="images/agent-ia-openline.png" data-alt="Assistant IA — EBP Open Line"></button>
-      <button type="button" data-src="images/agent-ia-figma.png" data-alt="Assistant IA — maquette Figma"></button>
-      <button type="button" data-src="images/agent-ia-mobile.png" data-alt="Assistant IA — tableau et répartition public/privé"></button>
+      <button type="button" data-src="images/agent-ia-openline.png" data-alt="Assistant IA — EBP Open Line" data-caption="Capture d'écran du chatbot intégrée au logiciel de gestion commerciale EBP version Plus Elite. - juillet 2026"></button>
+      <button type="button" data-src="images/agent-ia-figma.png" data-alt="Assistant IA — maquette Figma" data-caption="Espace de travail partagé sur Figma où nous avons conçu les différents composants de l'agent IA EBP."></button>
+      <button type="button" data-src="images/agent-ia-mobile.png" data-alt="Assistant IA — tableau et répartition public/privé" data-caption="Capture du chatbot IA replié en panneau latéral droit."></button>
     </div>
   </div>
 
@@ -207,6 +210,7 @@
 
     document.querySelectorAll('.mini-carousel').forEach(function (carousel) {
       var img = carousel.querySelector('.mini-carousel-img');
+      var caption = carousel.querySelector('.mini-carousel-caption');
       var items = Array.prototype.slice.call(carousel.querySelectorAll('.mini-carousel-data button'));
       var dotsWrap = carousel.querySelector('.mini-carousel-dots');
       var prevBtn = carousel.querySelector('.mini-carousel-prev');
@@ -225,8 +229,10 @@
         current = (i + items.length) % items.length;
         var item = items[current];
         img.src = item.dataset.src; img.alt = item.dataset.alt || '';
+        if (caption) caption.textContent = item.dataset.caption || '';
         dots.forEach(function (d, i2) { d.classList.toggle('is-active', i2 === current); });
       }
+      if (caption) caption.textContent = items[0] ? (items[0].dataset.caption || '') : '';
       prevBtn.addEventListener('click', function () { showIndex(current - 1); });
       nextBtn.addEventListener('click', function () { showIndex(current + 1); });
       img.addEventListener('click', function () { openLightbox(img.src, img.alt); });
