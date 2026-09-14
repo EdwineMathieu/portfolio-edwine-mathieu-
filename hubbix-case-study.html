@@ -68,46 +68,82 @@
     padding-bottom: 40px;
     border-bottom: 1px solid var(--border-light);
   }
-  .wide-viewer {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1920 / 1080;
-    border-radius: 16px;
-    overflow: hidden;
-    background: #fff;
-    border: 1px solid var(--border-light);
-    margin-bottom: 48px;
-  }
-  .wide-viewer-stage {
-    position: absolute;
-    inset: 0;
-    overflow: auto;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  .wide-viewer-stage img {
+  .hero-photo {
     display: block;
     width: 100%;
+    aspect-ratio: 1920 / 1080;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid var(--border-light);
+    margin-bottom: 48px;
+    cursor: zoom-in;
+  }
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: oklch(0.15 0.005 260 / 0.92);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease;
+  }
+  .lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .lightbox-viewport {
+    max-width: 92vw;
+    max-height: 92vh;
+    overflow: auto;
+  }
+  .lightbox-img {
+    display: block;
+    max-width: 92vw;
+    max-height: 92vh;
+    width: auto;
     height: auto;
-    flex: 0 0 auto;
+    object-fit: contain;
+    transition: width .2s ease;
     user-select: none;
     -webkit-user-drag: none;
   }
-  .wide-viewer-zoom {
-    position: absolute;
+  .lightbox-close {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: oklch(1 0 0 / 0.12);
+    color: white;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox-close:hover {
+    background: oklch(1 0 0 / 0.22);
+  }
+  .lightbox-zoom {
+    position: fixed;
     bottom: 20px;
-    right: 20px;
+    right: 24px;
     display: flex;
     gap: 8px;
   }
-  .wide-viewer-zoom-btn {
+  .lightbox-zoom-btn {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid var(--border-light);
-    background: white;
-    color: var(--text-main);
+    border: none;
+    background: oklch(1 0 0 / 0.12);
+    color: white;
     font-size: 20px;
     font-weight: 600;
     line-height: 1;
@@ -115,10 +151,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 1px 6px rgba(0,0,0,.12);
   }
-  .wide-viewer-zoom-btn:hover {
-    background: oklch(0.94 0.008 90);
+  .lightbox-zoom-btn:hover {
+    background: oklch(1 0 0 / 0.22);
   }
   h2 {
     font-family: 'Space Grotesk', sans-serif;
@@ -296,15 +331,7 @@
   <div class="meta-line">Product Designer · 2022–2025</div>
   <div class="facts-line">13 personnes dans l'équipe · 2 ans de discovery au lancement · 30 Early Adopters · ~50 écrans conçus en responsive</div>
 
-  <div class="wide-viewer">
-    <div class="wide-viewer-stage">
-      <img id="hubbix-viewer-img" src="images/hubbix-hero.png" alt="EBP Hubbix Bâtiment — aperçu du produit">
-    </div>
-    <div class="wide-viewer-zoom">
-      <button type="button" class="wide-viewer-zoom-btn" id="hubbix-zoom-out" aria-label="Dézoomer">−</button>
-      <button type="button" class="wide-viewer-zoom-btn" id="hubbix-zoom-in" aria-label="Zoomer">+</button>
-    </div>
-  </div>
+  <img class="hero-photo" id="hubbix-hero-photo" src="images/hubbix-hero.png" alt="EBP Hubbix Bâtiment — aperçu du produit">
 
   <section>
     <h2>Le défi</h2>
@@ -578,16 +605,56 @@
 
 </div>
 
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button type="button" class="lightbox-close" aria-label="Fermer">&times;</button>
+  <div class="lightbox-viewport">
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
+  <div class="lightbox-zoom">
+    <button type="button" class="lightbox-zoom-btn" id="lightbox-zoom-out" aria-label="Dézoomer">−</button>
+    <button type="button" class="lightbox-zoom-btn" id="lightbox-zoom-in" aria-label="Zoomer">+</button>
+  </div>
+</div>
+
 <script>
   (function () {
-    var img = document.getElementById('hubbix-viewer-img');
-    var zoomInBtn = document.getElementById('hubbix-zoom-in');
-    var zoomOutBtn = document.getElementById('hubbix-zoom-out');
-    var stage = img.parentElement;
+    var heroPhoto = document.getElementById('hubbix-hero-photo');
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var closeBtn = lightbox.querySelector('.lightbox-close');
+    var zoomInBtn = document.getElementById('lightbox-zoom-in');
+    var zoomOutBtn = document.getElementById('lightbox-zoom-out');
     var zoom = 1;
+
     function applyZoom() {
-      img.style.width = (zoom * 100) + '%';
+      lightboxImg.style.width = zoom === 1 ? 'auto' : (zoom * 92) + 'vw';
     }
+
+    function openLightbox() {
+      lightboxImg.src = heroPhoto.src;
+      lightboxImg.alt = heroPhoto.alt;
+      zoom = 1;
+      applyZoom();
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lightboxImg.src = '';
+    }
+
+    heroPhoto.addEventListener('click', openLightbox);
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-viewport')) closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
     zoomInBtn.addEventListener('click', function () {
       zoom = Math.min(4, zoom + 0.5);
       applyZoom();
@@ -595,7 +662,6 @@
     zoomOutBtn.addEventListener('click', function () {
       zoom = Math.max(1, zoom - 0.5);
       applyZoom();
-      if (zoom === 1) stage.scrollLeft = 0;
     });
   })();
 </script>
