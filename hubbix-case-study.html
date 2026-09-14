@@ -28,10 +28,100 @@
     color: var(--text-body);
     line-height: 1.65;
   }
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 56px;
+    background: oklch(0.985 0.004 90 / 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .back-pill {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+    text-decoration: none;
+  }
+  .back-pill:hover {
+    color: var(--accent);
+  }
+  .site-nav-links {
+    display: flex;
+    gap: 8px;
+  }
+  .site-nav-item {
+    font-family: inherit;
+    padding: 8px 16px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: background .15s ease;
+  }
+  .site-nav-item:hover {
+    background: oklch(0.94 0.008 90);
+  }
+  .lang-switch {
+    display: flex;
+    gap: 2px;
+    margin-left: 8px;
+    padding: 3px;
+    background: oklch(0.94 0.008 90);
+    border-radius: 8px;
+  }
+  .lang-btn {
+    font-family: inherit;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+  }
+  .lang-btn:hover {
+    color: var(--text-main);
+  }
+  .lang-btn.is-active {
+    background: white;
+    color: var(--text-main);
+    box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  }
   .wrap {
     max-width: 720px;
     margin: 0 auto;
-    padding: 64px 24px 140px;
+    padding: 48px 24px 96px;
+  }
+  .page-footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .page-footer .footer-links {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+  .page-footer .footer-links a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .page-footer .footer-links a:hover {
+    color: var(--accent);
   }
   .eyebrow {
     font-size: 13px;
@@ -362,25 +452,36 @@
   .closing p:last-child {
     margin-bottom: 0;
   }
-  .back-link {
+  .back-to-top {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
+    bottom: 24px;
+    right: 24px;
     z-index: 100;
-    background: var(--text-main);
-    color: white;
-    font: 600 12px/1 'IBM Plex Sans', sans-serif;
-    letter-spacing: 0.02em;
-    padding: 10px 16px;
-    border-radius: 999px;
-    text-decoration: none;
-    box-shadow: 0 2px 10px rgba(0,0,0,.18);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-light);
+    background: white;
+    color: var(--text-main);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,.12);
+    transition: opacity .15s ease, background .15s ease;
   }
-  .back-link:hover {
-    background: oklch(0.32 0.01 260);
+  .back-to-top:hover {
+    background: oklch(0.94 0.008 90);
+  }
+  .back-to-top[hidden] {
+    display: none;
   }
   @media (max-width: 640px) {
-    .wrap { padding: 48px 20px 120px; }
+    .site-nav { padding: 14px 20px; }
+    .site-nav-links { gap: 2px; }
+    .site-nav-item { padding: 7px 10px; font-size: 13px; }
+    .wrap { padding: 40px 20px 96px; }
     h1 { font-size: 30px; }
     .qa-grid { grid-template-columns: 1fr; }
     .impact-stats { grid-template-columns: 1fr 1fr; }
@@ -388,82 +489,95 @@
 </style>
 </head>
 <body>
+<header class="site-nav">
+  <a href="index.html#view-projets" class="back-pill" data-i18n="nav-back">← Retour au portfolio</a>
+  <nav class="site-nav-links" aria-label="Navigation principale">
+    <a class="site-nav-item" href="index.html" data-i18n="nav-home">Accueil</a>
+    <a class="site-nav-item" href="index.html#view-cv" data-i18n="nav-cv">CV</a>
+    <a class="site-nav-item" href="index.html#view-projets" data-i18n="nav-projects">Projets</a>
+    <div class="lang-switch" role="group" aria-label="Langue / Language">
+      <button type="button" class="lang-btn is-active" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
 <div class="wrap">
 
-  <div class="eyebrow">Étude de cas</div>
-  <h1>Hubbix Bâtiment</h1>
-  <p class="subtitle">Concevoir de zéro une nouvelle expérience SaaS pour les professionnels du bâtiment</p>
-  <div class="meta-line">Product Designer · 2022–2025</div>
-  <div class="facts-line">13 personnes dans l'équipe · 2 ans de discovery au lancement · 30 Early Adopters · ~50 écrans conçus en responsive</div>
+  <div class="eyebrow" data-i18n="hs-eyebrow">Étude de cas</div>
+  <h1 data-i18n="hs-h1">Hubbix Bâtiment</h1>
+  <p class="subtitle" data-i18n="hs-subtitle">Concevoir de zéro une nouvelle expérience SaaS pour les professionnels du bâtiment</p>
+  <div class="meta-line" data-i18n="hs-meta">Product Designer · 2022–2025</div>
+  <div class="facts-line" data-i18n="hs-facts">13 personnes dans l'équipe · 2 ans de discovery au lancement · 30 Early Adopters · ~50 écrans conçus en responsive</div>
 
   <img class="hero-photo" id="hubbix-hero-photo" src="images/hubbix-hero.png" alt="EBP Hubbix Bâtiment — aperçu du produit">
 
   <section>
-    <h2>Le défi</h2>
-    <p>En 2022, nous avons lancé un projet ambitieux : construire de zéro une nouvelle solution SaaS dédiée aux TPE et PME du bâtiment.</p>
-    <p>L'objectif était de proposer une alternative moderne à une solution historique, Open Line, disponible en on-premise et dont l'expérience devenait progressivement moins adaptée aux attentes des utilisateurs.</p>
-    <p>Le nouveau produit devait être :</p>
+    <h2 data-i18n="hs-challenge-h2">Le défi</h2>
+    <p data-i18n="hs-challenge-p1">En 2022, nous avons lancé un projet ambitieux : construire de zéro une nouvelle solution SaaS dédiée aux TPE et PME du bâtiment.</p>
+    <p data-i18n="hs-challenge-p2">L'objectif était de proposer une alternative moderne à une solution historique, Open Line, disponible en on-premise et dont l'expérience devenait progressivement moins adaptée aux attentes des utilisateurs.</p>
+    <p data-i18n="hs-challenge-p3">Le nouveau produit devait être :</p>
     <ul class="bullets">
-      <li>accessible sur desktop et mobile ;</li>
-      <li>simple à prendre en main ;</li>
-      <li>suffisamment puissant pour répondre aux spécificités métier du bâtiment ;</li>
-      <li>conforme aux contraintes fiscales et réglementaires françaises ;</li>
-      <li>et suffisamment attractif pour accompagner l'acquisition de nouveaux clients.</li>
+      <li data-i18n="hs-challenge-li1">accessible sur desktop et mobile ;</li>
+      <li data-i18n="hs-challenge-li2">simple à prendre en main ;</li>
+      <li data-i18n="hs-challenge-li3">suffisamment puissant pour répondre aux spécificités métier du bâtiment ;</li>
+      <li data-i18n="hs-challenge-li4">conforme aux contraintes fiscales et réglementaires françaises ;</li>
+      <li data-i18n="hs-challenge-li5">et suffisamment attractif pour accompagner l'acquisition de nouveaux clients.</li>
     </ul>
-    <p>Le défi était donc de réussir à simplifier une activité complexe sans simplifier à l'excès le métier.</p>
+    <p data-i18n="hs-challenge-p4">Le défi était donc de réussir à simplifier une activité complexe sans simplifier à l'excès le métier.</p>
   </section>
 
   <section>
-    <h2>Mon rôle</h2>
-    <p>J'étais responsable de l'ensemble du périmètre UX/UI de Hubbix Bâtiment.</p>
-    <p>J'ai rapidement gagné en autonomie et pris en charge la démarche UX de bout en bout :</p>
-    <div class="flow-line">Discovery → recherche utilisateur → stratégie UX → conception → prototypage → tests → delivery → mesure → amélioration continue</div>
-    <p>Je travaillais au sein d'une équipe de 13 personnes :</p>
+    <h2 data-i18n="hs-role-h2">Mon rôle</h2>
+    <p data-i18n="hs-role-p1">J'étais responsable de l'ensemble du périmètre UX/UI de Hubbix Bâtiment.</p>
+    <p data-i18n="hs-role-p2">J'ai rapidement gagné en autonomie et pris en charge la démarche UX de bout en bout :</p>
+    <div class="flow-line" data-i18n="hs-role-flow">Discovery → recherche utilisateur → stratégie UX → conception → prototypage → tests → delivery → mesure → amélioration continue</div>
+    <p data-i18n="hs-role-p3">Je travaillais au sein d'une équipe de 13 personnes :</p>
     <div class="pill-row">
-      <span class="pill">1 PO</span>
-      <span class="pill">1 chargé de projet</span>
-      <span class="pill">3 consultants métier</span>
-      <span class="pill">4 développeurs</span>
-      <span class="pill">4 testeurs qualité</span>
+      <span class="pill" data-i18n="hs-role-pill1">1 PO</span>
+      <span class="pill" data-i18n="hs-role-pill2">1 chargé de projet</span>
+      <span class="pill" data-i18n="hs-role-pill3">3 consultants métier</span>
+      <span class="pill" data-i18n="hs-role-pill4">4 développeurs</span>
+      <span class="pill" data-i18n="hs-role-pill5">4 testeurs qualité</span>
     </div>
-    <p>Mon rôle ne se limitait pas à concevoir les interfaces. Je devais également :</p>
+    <p data-i18n="hs-role-p4">Mon rôle ne se limitait pas à concevoir les interfaces. Je devais également :</p>
     <ul class="bullets">
-      <li>définir les méthodes et ateliers UX adaptés aux problématiques rencontrées ;</li>
-      <li>faire émerger une vision commune avec les différentes expertises ;</li>
-      <li>défendre les décisions de design ;</li>
-      <li>arbitrer entre besoins utilisateurs, contraintes métier et faisabilité technique ;</li>
-      <li>accompagner l'équipe pendant le développement ;</li>
-      <li>garantir la cohérence de l'expérience ;</li>
-      <li>puis mettre en place une démarche d'amélioration continue après le lancement.</li>
+      <li data-i18n="hs-role-li1">définir les méthodes et ateliers UX adaptés aux problématiques rencontrées ;</li>
+      <li data-i18n="hs-role-li2">faire émerger une vision commune avec les différentes expertises ;</li>
+      <li data-i18n="hs-role-li3">défendre les décisions de design ;</li>
+      <li data-i18n="hs-role-li4">arbitrer entre besoins utilisateurs, contraintes métier et faisabilité technique ;</li>
+      <li data-i18n="hs-role-li5">accompagner l'équipe pendant le développement ;</li>
+      <li data-i18n="hs-role-li6">garantir la cohérence de l'expérience ;</li>
+      <li data-i18n="hs-role-li7">puis mettre en place une démarche d'amélioration continue après le lancement.</li>
     </ul>
   </section>
 
   <section>
-    <h2>01 — Comprendre avant de concevoir</h2>
-    <p>J'ai commencé par une phase de discovery de près de deux ans, destinée à construire le produit progressivement avant son lancement.</p>
-    <p>Accompagnée au début par le Lead Designer, j'ai contribué à définir la stratégie UX et à mettre en place une démarche inspirée du Design Thinking.</p>
-    <p>J'ai cherché à comprendre :</p>
+    <h2 data-i18n="hs-s1-h2">01 — Comprendre avant de concevoir</h2>
+    <p data-i18n="hs-s1-p1">J'ai commencé par une phase de discovery de près de deux ans, destinée à construire le produit progressivement avant son lancement.</p>
+    <p data-i18n="hs-s1-p2">Accompagnée au début par le Lead Designer, j'ai contribué à définir la stratégie UX et à mettre en place une démarche inspirée du Design Thinking.</p>
+    <p data-i18n="hs-s1-p3">J'ai cherché à comprendre :</p>
     <ul class="bullets">
-      <li>les besoins des professionnels du bâtiment ;</li>
-      <li>leurs habitudes de travail ;</li>
-      <li>leurs contraintes ;</li>
-      <li>les difficultés rencontrées avec les outils existants ;</li>
-      <li>les opportunités de simplification ;</li>
-      <li>et les attentes vis-à-vis d'un logiciel SaaS moderne.</li>
+      <li data-i18n="hs-s1-li1">les besoins des professionnels du bâtiment ;</li>
+      <li data-i18n="hs-s1-li2">leurs habitudes de travail ;</li>
+      <li data-i18n="hs-s1-li3">leurs contraintes ;</li>
+      <li data-i18n="hs-s1-li4">les difficultés rencontrées avec les outils existants ;</li>
+      <li data-i18n="hs-s1-li5">les opportunités de simplification ;</li>
+      <li data-i18n="hs-s1-li6">et les attentes vis-à-vis d'un logiciel SaaS moderne.</li>
     </ul>
-    <p>J'ai mené des interviews utilisateurs auprès d'un paneliste et de clients internes EBP.</p>
-    <p>J'ai ensuite utilisé différents outils de recherche et de cadrage :</p>
+    <p data-i18n="hs-s1-p4">J'ai mené des interviews utilisateurs auprès d'un paneliste et de clients internes EBP.</p>
+    <p data-i18n="hs-s1-p5">J'ai ensuite utilisé différents outils de recherche et de cadrage :</p>
     <div class="pill-row">
-      <span class="pill">Personas</span>
-      <span class="pill">Empathy Maps</span>
-      <span class="pill">Journey Maps</span>
-      <span class="pill">Ateliers de co-conception</span>
-      <span class="pill">Brainstorming</span>
-      <span class="pill">Card sorting</span>
-      <span class="pill">Tests utilisateurs</span>
+      <span class="pill" data-i18n="hs-s1-pill1">Personas</span>
+      <span class="pill" data-i18n="hs-s1-pill2">Empathy Maps</span>
+      <span class="pill" data-i18n="hs-s1-pill3">Journey Maps</span>
+      <span class="pill" data-i18n="hs-s1-pill4">Ateliers de co-conception</span>
+      <span class="pill" data-i18n="hs-s1-pill5">Brainstorming</span>
+      <span class="pill" data-i18n="hs-s1-pill6">Card sorting</span>
+      <span class="pill" data-i18n="hs-s1-pill7">Tests utilisateurs</span>
     </div>
-    <p>Ces ateliers réunissaient des profils très différents : produit, développement, qualité, marketing, commerce et expertise métier.</p>
-    <p>L'enjeu était autant de comprendre les utilisateurs que de faire converger l'équipe autour d'une compréhension commune du problème.</p>
+    <p data-i18n="hs-s1-p6">Ces ateliers réunissaient des profils très différents : produit, développement, qualité, marketing, commerce et expertise métier.</p>
+    <p data-i18n="hs-s1-p7">L'enjeu était autant de comprendre les utilisateurs que de faire converger l'équipe autour d'une compréhension commune du problème.</p>
 
     <div class="mini-carousel" id="research-carousel">
       <div class="mini-carousel-viewport">
@@ -481,206 +595,217 @@
   </section>
 
   <section>
-    <h2>02 — Remettre en question les solutions existantes</h2>
+    <h2 data-i18n="hs-s2-h2">02 — Remettre en question les solutions existantes</h2>
 
-    <h3>Repenser l'édition des devis et des factures</h3>
-    <p>L'un des sujets les plus structurants du projet a été la conception de l'éditeur de devis et de factures.</p>
-    <p>Au départ, l'idée naturelle était de reprendre la grille utilisée par la solution de gestion commerciale existante.</p>
-    <p>Mais en analysant son fonctionnement, j'ai identifié un problème : la grille était puissante, mais complexe à utiliser et peu adaptée à l'expérience que nous voulions proposer aux utilisateurs du bâtiment.</p>
-    <p>J'ai donc décidé de challenger cette approche. J'ai étudié les solutions concurrentes, analysé leurs choix d'interface et construit une proposition différente.</p>
+    <h3 data-i18n="hs-s2-h3a">Repenser l'édition des devis et des factures</h3>
+    <p data-i18n="hs-s2-p1">L'un des sujets les plus structurants du projet a été la conception de l'éditeur de devis et de factures.</p>
+    <p data-i18n="hs-s2-p2">Au départ, l'idée naturelle était de reprendre la grille utilisée par la solution de gestion commerciale existante.</p>
+    <p data-i18n="hs-s2-p3">Mais en analysant son fonctionnement, j'ai identifié un problème : la grille était puissante, mais complexe à utiliser et peu adaptée à l'expérience que nous voulions proposer aux utilisateurs du bâtiment.</p>
+    <p data-i18n="hs-s2-p4">J'ai donc décidé de challenger cette approche. J'ai étudié les solutions concurrentes, analysé leurs choix d'interface et construit une proposition différente.</p>
 
-    <h3>Défendre une direction UX face à l'existant</h3>
-    <p>Cette décision n'a pas été simple.</p>
-    <p>Il fallait convaincre mon manager (Lead Designer) et des équipes de gestion commerciale, alors que leur solution existante constituait une référence interne.</p>
-    <p>Le choix de ne pas reprendre leur grille a également créé des tensions avec l'UX Designer en charge de cette équipe.</p>
-    <p>J'ai néanmoins défendu ma proposition en m'appuyant sur :</p>
-    <div class="flow-line">les besoins utilisateurs → l'analyse concurrentielle → les problématiques d'usage → les objectifs du nouveau produit</div>
-    <p>Cette expérience m'a appris qu'être Product Designer implique parfois de challenger l'existant, même lorsque celui-ci est devenu une référence dans l'organisation.</p>
+    <h3 data-i18n="hs-s2-h3b">Défendre une direction UX face à l'existant</h3>
+    <p data-i18n="hs-s2-p5">Cette décision n'a pas été simple.</p>
+    <p data-i18n="hs-s2-p6">Il fallait convaincre mon manager (Lead Designer) et des équipes de gestion commerciale, alors que leur solution existante constituait une référence interne.</p>
+    <p data-i18n="hs-s2-p7">Le choix de ne pas reprendre leur grille a également créé des tensions avec l'UX Designer en charge de cette équipe.</p>
+    <p data-i18n="hs-s2-p8">J'ai néanmoins défendu ma proposition en m'appuyant sur :</p>
+    <div class="flow-line" data-i18n="hs-s2-flow">les besoins utilisateurs → l'analyse concurrentielle → les problématiques d'usage → les objectifs du nouveau produit</div>
+    <p data-i18n="hs-s2-p9">Cette expérience m'a appris qu'être Product Designer implique parfois de challenger l'existant, même lorsque celui-ci est devenu une référence dans l'organisation.</p>
 
-    <h3>Une nouvelle façon d'éditer un document commercial</h3>
-    <p>Nous avons complètement repensé l'interaction avec les devis et factures. L'objectif était de rendre l'édition :</p>
+    <h3 data-i18n="hs-s2-h3c">Une nouvelle façon d'éditer un document commercial</h3>
+    <p data-i18n="hs-s2-p10">Nous avons complètement repensé l'interaction avec les devis et factures. L'objectif était de rendre l'édition :</p>
     <div class="pill-row">
-      <span class="pill">Plus fluide</span>
-      <span class="pill">Plus lisible</span>
-      <span class="pill">Plus flexible</span>
-      <span class="pill">Plus rapide</span>
+      <span class="pill" data-i18n="hs-s2-pill1">Plus fluide</span>
+      <span class="pill" data-i18n="hs-s2-pill2">Plus lisible</span>
+      <span class="pill" data-i18n="hs-s2-pill3">Plus flexible</span>
+      <span class="pill" data-i18n="hs-s2-pill4">Plus rapide</span>
     </div>
 
-    <h3>Optimiser la densité d'information</h3>
-    <p>Nous avons réduit la hauteur des lignes afin de permettre aux utilisateurs d'afficher davantage d'informations simultanément. Nous avons également introduit :</p>
+    <h3 data-i18n="hs-s2-h3d">Optimiser la densité d'information</h3>
+    <p data-i18n="hs-s2-p11">Nous avons réduit la hauteur des lignes afin de permettre aux utilisateurs d'afficher davantage d'informations simultanément. Nous avons également introduit :</p>
     <ul class="bullets">
-      <li>des ellipses pour optimiser l'espace disponible ;</li>
-      <li>des chevrons permettant de développer ou réduire les descriptions ;</li>
-      <li>des codes visuels pour distinguer les différents types d'éléments ;</li>
-      <li>une navigation de cellule en cellule ;</li>
-      <li>une barre de mise en forme pour personnaliser le contenu ;</li>
-      <li>des sections permettant de structurer un devis ;</li>
-      <li>la possibilité de regrouper plusieurs lignes dans une section ;</li>
-      <li>le repli et le dépli des groupes d'éléments.</li>
+      <li data-i18n="hs-s2-li1">des ellipses pour optimiser l'espace disponible ;</li>
+      <li data-i18n="hs-s2-li2">des chevrons permettant de développer ou réduire les descriptions ;</li>
+      <li data-i18n="hs-s2-li3">des codes visuels pour distinguer les différents types d'éléments ;</li>
+      <li data-i18n="hs-s2-li4">une navigation de cellule en cellule ;</li>
+      <li data-i18n="hs-s2-li5">une barre de mise en forme pour personnaliser le contenu ;</li>
+      <li data-i18n="hs-s2-li6">des sections permettant de structurer un devis ;</li>
+      <li data-i18n="hs-s2-li7">la possibilité de regrouper plusieurs lignes dans une section ;</li>
+      <li data-i18n="hs-s2-li8">le repli et le dépli des groupes d'éléments.</li>
     </ul>
-    <p>L'éditeur est ainsi devenu davantage qu'une simple grille de saisie : un véritable espace de construction et de structuration du document commercial.</p>
+    <p data-i18n="hs-s2-p12">L'éditeur est ainsi devenu davantage qu'une simple grille de saisie : un véritable espace de construction et de structuration du document commercial.</p>
 
-    <h3>Concevoir malgré la complexité du système existant</h3>
-    <p>Cette nouvelle interface introduisait des composants très différents de ceux utilisés dans la gestion commerciale existante.</p>
-    <p>Il a donc fallu trouver comment intégrer cette nouvelle expérience au Design System, tout en conservant sa cohérence avec le reste de la gamme Hubbix.</p>
-    <p>Cette étape a demandé beaucoup d'itérations et de discussions avec les équipes. Mais le choix s'est révélé durable.</p>
-    <p>Quelques années plus tard, l'équipe de gestion commerciale s'est fortement inspirée des principes et composants que nous avions introduits pour Hubbix Bâtiment. La direction que nous avions dû défendre est finalement devenue une source d'inspiration pour faire évoluer l'existant.</p>
-    <p>Pour moi, c'est l'un des exemples les plus représentatifs de mon rôle sur ce projet : ne pas simplement appliquer les standards existants, mais être capable de les faire évoluer lorsqu'ils ne répondent plus suffisamment aux besoins.</p>
+    <h3 data-i18n="hs-s2-h3e">Concevoir malgré la complexité du système existant</h3>
+    <p data-i18n="hs-s2-p13">Cette nouvelle interface introduisait des composants très différents de ceux utilisés dans la gestion commerciale existante.</p>
+    <p data-i18n="hs-s2-p14">Il a donc fallu trouver comment intégrer cette nouvelle expérience au Design System, tout en conservant sa cohérence avec le reste de la gamme Hubbix.</p>
+    <p data-i18n="hs-s2-p15">Cette étape a demandé beaucoup d'itérations et de discussions avec les équipes. Mais le choix s'est révélé durable.</p>
+    <p data-i18n="hs-s2-p16">Quelques années plus tard, l'équipe de gestion commerciale s'est fortement inspirée des principes et composants que nous avions introduits pour Hubbix Bâtiment. La direction que nous avions dû défendre est finalement devenue une source d'inspiration pour faire évoluer l'existant.</p>
+    <p data-i18n="hs-s2-p17">Pour moi, c'est l'un des exemples les plus représentatifs de mon rôle sur ce projet : ne pas simplement appliquer les standards existants, mais être capable de les faire évoluer lorsqu'ils ne répondent plus suffisamment aux besoins.</p>
   </section>
 
   <section>
-    <h2>03 — Valider plutôt que supposer</h2>
-    <p>Nous avons rapidement mis les prototypes face aux utilisateurs.</p>
-    <p>J'ai mené plusieurs tests utilisateurs afin de challenger nos principes UX et UI et d'identifier les incompréhensions.</p>
-    <p>Un exemple significatif concerne la création d'une facture.</p>
-    <p>Notre première approche reposait sur un stepper. Les tests ont montré que cette navigation par étapes rendait le processus moins naturel et compliquait la compréhension globale du document.</p>
-    <p>Nous avons donc remis en question le principe. Nous avons remplacé le stepper par un écran unique, organisé autour de composants pouvant être développés ou réduits selon les besoins.</p>
-    <p>Cette approche permettait aux utilisateurs de conserver une vision globale de leur document tout en travaillant facilement sur les différentes sections.</p>
-    <p>Le design n'était donc pas considéré comme une réponse définitive : chaque hypothèse pouvait être remise en question par l'observation des utilisateurs.</p>
+    <h2 data-i18n="hs-s3-h2">03 — Valider plutôt que supposer</h2>
+    <p data-i18n="hs-s3-p1">Nous avons rapidement mis les prototypes face aux utilisateurs.</p>
+    <p data-i18n="hs-s3-p2">J'ai mené plusieurs tests utilisateurs afin de challenger nos principes UX et UI et d'identifier les incompréhensions.</p>
+    <p data-i18n="hs-s3-p3">Un exemple significatif concerne la création d'une facture.</p>
+    <p data-i18n="hs-s3-p4">Notre première approche reposait sur un stepper. Les tests ont montré que cette navigation par étapes rendait le processus moins naturel et compliquait la compréhension globale du document.</p>
+    <p data-i18n="hs-s3-p5">Nous avons donc remis en question le principe. Nous avons remplacé le stepper par un écran unique, organisé autour de composants pouvant être développés ou réduits selon les besoins.</p>
+    <p data-i18n="hs-s3-p6">Cette approche permettait aux utilisateurs de conserver une vision globale de leur document tout en travaillant facilement sur les différentes sections.</p>
+    <p data-i18n="hs-s3-p7">Le design n'était donc pas considéré comme une réponse définitive : chaque hypothèse pouvait être remise en question par l'observation des utilisateurs.</p>
   </section>
 
   <section>
-    <h2>04 — Passer du prototype au produit</h2>
-    <p>Une fois les principes UX validés, j'ai accompagné le développement du produit jusqu'au lancement.</p>
-    <p>J'ai conçu environ 50 écrans en responsive design, couvrant les principaux parcours et fonctionnalités de l'application.</p>
-    <p>Chaque fonctionnalité était conçue en collaboration avec la PO, la PM, les consultants métier et les développeurs.</p>
+    <h2 data-i18n="hs-s4-h2">04 — Passer du prototype au produit</h2>
+    <p data-i18n="hs-s4-p1">Une fois les principes UX validés, j'ai accompagné le développement du produit jusqu'au lancement.</p>
+    <p data-i18n="hs-s4-p2">J'ai conçu environ 50 écrans en responsive design, couvrant les principaux parcours et fonctionnalités de l'application.</p>
+    <p data-i18n="hs-s4-p3">Chaque fonctionnalité était conçue en collaboration avec la PO, la PM, les consultants métier et les développeurs.</p>
 
-    <h3>Faire du design un travail collectif</h3>
-    <p>Chaque semaine, j'animais un point maquettes avec les parties prenantes concernées. L'objectif était de présenter les fonctionnalités à venir suffisamment tôt pour :</p>
+    <h3 data-i18n="hs-s4-h3">Faire du design un travail collectif</h3>
+    <p data-i18n="hs-s4-p4">Chaque semaine, j'animais un point maquettes avec les parties prenantes concernées. L'objectif était de présenter les fonctionnalités à venir suffisamment tôt pour :</p>
     <ul class="bullets">
-      <li>recueillir les contraintes techniques ;</li>
-      <li>vérifier la pertinence métier ;</li>
-      <li>anticiper les problèmes ;</li>
-      <li>challenger les choix UX ;</li>
-      <li>et éviter de découvrir les problèmes au moment du développement.</li>
+      <li data-i18n="hs-s4-li1">recueillir les contraintes techniques ;</li>
+      <li data-i18n="hs-s4-li2">vérifier la pertinence métier ;</li>
+      <li data-i18n="hs-s4-li3">anticiper les problèmes ;</li>
+      <li data-i18n="hs-s4-li4">challenger les choix UX ;</li>
+      <li data-i18n="hs-s4-li5">et éviter de découvrir les problèmes au moment du développement.</li>
     </ul>
-    <p>Tous les quinze jours, une Design Review avec la PO et un développeur permettait de vérifier la cohérence entre les maquettes et le produit développé. Lorsque nécessaire, nous créions des User Stories correctives.</p>
-    <p>Cette organisation m'a permis de maintenir un lien permanent entre intention de design et réalité du produit.</p>
+    <p data-i18n="hs-s4-p5">Tous les quinze jours, une Design Review avec la PO et un développeur permettait de vérifier la cohérence entre les maquettes et le produit développé. Lorsque nécessaire, nous créions des User Stories correctives.</p>
+    <p data-i18n="hs-s4-p6">Cette organisation m'a permis de maintenir un lien permanent entre intention de design et réalité du produit.</p>
   </section>
 
   <section>
-    <h2>05 — Mettre le produit à l'épreuve</h2>
-    <p>Avant le lancement, nous avons organisé un programme Early Adopters de 30 utilisateurs pendant environ un mois et demi.</p>
-    <p>L'objectif était de faire tester le produit en conditions réelles et en autonomie. Nous cherchions à répondre à plusieurs questions :</p>
+    <h2 data-i18n="hs-s5-h2">05 — Mettre le produit à l'épreuve</h2>
+    <p data-i18n="hs-s5-p1">Avant le lancement, nous avons organisé un programme Early Adopters de 30 utilisateurs pendant environ un mois et demi.</p>
+    <p data-i18n="hs-s5-p2">L'objectif était de faire tester le produit en conditions réelles et en autonomie. Nous cherchions à répondre à plusieurs questions :</p>
     <div class="qa-grid">
       <div class="qa-item">
-        <div class="qa-label">Expérience</div>
-        <p>Les utilisateurs comprennent-ils naturellement le produit ?</p>
+        <div class="qa-label" data-i18n="hs-s5-qa1-label">Expérience</div>
+        <p data-i18n="hs-s5-qa1-text">Les utilisateurs comprennent-ils naturellement le produit ?</p>
       </div>
       <div class="qa-item">
-        <div class="qa-label">Fonctionnalités</div>
-        <p>Quelles fonctionnalités essentielles nous manquent-ils ?</p>
+        <div class="qa-label" data-i18n="hs-s5-qa2-label">Fonctionnalités</div>
+        <p data-i18n="hs-s5-qa2-text">Quelles fonctionnalités essentielles nous manquent-ils ?</p>
       </div>
       <div class="qa-item">
-        <div class="qa-label">Priorisation</div>
-        <p>Quelles attentes doivent être traitées en priorité ?</p>
+        <div class="qa-label" data-i18n="hs-s5-qa3-label">Priorisation</div>
+        <p data-i18n="hs-s5-qa3-text">Quelles attentes doivent être traitées en priorité ?</p>
       </div>
       <div class="qa-item">
-        <div class="qa-label">Organisation</div>
-        <p>Sommes-nous capables de déployer, accompagner et supporter correctement le produit ?</p>
+        <div class="qa-label" data-i18n="hs-s5-qa4-label">Organisation</div>
+        <p data-i18n="hs-s5-qa4-text">Sommes-nous capables de déployer, accompagner et supporter correctement le produit ?</p>
       </div>
     </div>
-    <p>Le programme nous a également permis de tester nos propres processus internes :</p>
+    <p data-i18n="hs-s5-p3">Le programme nous a également permis de tester nos propres processus internes :</p>
     <div class="pill-row">
-      <span class="pill">Déploiement</span>
-      <span class="pill">Mise en production</span>
-      <span class="pill">Support</span>
-      <span class="pill">Assistance</span>
-      <span class="pill">Run</span>
-      <span class="pill">Argumentaire commercial</span>
-      <span class="pill">Discours marketing</span>
+      <span class="pill" data-i18n="hs-s5-pill1">Déploiement</span>
+      <span class="pill" data-i18n="hs-s5-pill2">Mise en production</span>
+      <span class="pill" data-i18n="hs-s5-pill3">Support</span>
+      <span class="pill" data-i18n="hs-s5-pill4">Assistance</span>
+      <span class="pill" data-i18n="hs-s5-pill5">Run</span>
+      <span class="pill" data-i18n="hs-s5-pill6">Argumentaire commercial</span>
+      <span class="pill" data-i18n="hs-s5-pill7">Discours marketing</span>
     </div>
-    <p>Les retours des Early Adopters ont directement influencé la roadmap. Certaines fonctionnalités ont notamment été repriorisées, comme les relances par e-mail et l'intégration des factures de situation.</p>
+    <p data-i18n="hs-s5-p4">Les retours des Early Adopters ont directement influencé la roadmap. Certaines fonctionnalités ont notamment été repriorisées, comme les relances par e-mail et l'intégration des factures de situation.</p>
   </section>
 
   <section>
-    <h2>06 — Passer du lancement à l'amélioration continue</h2>
-    <p>Après le lancement, mon rôle a progressivement évolué.</p>
-    <p>Le produit étant désormais bien avancé, j'ai réduit le temps consacré à la conception UI pour me concentrer davantage sur l'observation des usages.</p>
-    <p>J'ai notamment utilisé Microsoft Clarity, puis exploré Heap, afin de comprendre comment les utilisateurs utilisaient réellement le produit.</p>
-    <p>Cette approche m'a permis d'identifier de nouveaux pain points et de proposer des améliorations basées sur les comportements observés.</p>
-    <p>Nous avons progressivement constaté une baisse des tickets support, signe que certaines améliorations contribuaient à rendre le produit plus compréhensible et plus autonome.</p>
-    <p>Cette étape a marqué une évolution importante dans ma pratique : passer d'une UX principalement fondée sur la recherche et les tests à une approche combinant données qualitatives et données comportementales.</p>
+    <h2 data-i18n="hs-s6-h2">06 — Passer du lancement à l'amélioration continue</h2>
+    <p data-i18n="hs-s6-p1">Après le lancement, mon rôle a progressivement évolué.</p>
+    <p data-i18n="hs-s6-p2">Le produit étant désormais bien avancé, j'ai réduit le temps consacré à la conception UI pour me concentrer davantage sur l'observation des usages.</p>
+    <p data-i18n="hs-s6-p3">J'ai notamment utilisé Microsoft Clarity, puis exploré Heap, afin de comprendre comment les utilisateurs utilisaient réellement le produit.</p>
+    <p data-i18n="hs-s6-p4">Cette approche m'a permis d'identifier de nouveaux pain points et de proposer des améliorations basées sur les comportements observés.</p>
+    <p data-i18n="hs-s6-p5">Nous avons progressivement constaté une baisse des tickets support, signe que certaines améliorations contribuaient à rendre le produit plus compréhensible et plus autonome.</p>
+    <p data-i18n="hs-s6-p6">Cette étape a marqué une évolution importante dans ma pratique : passer d'une UX principalement fondée sur la recherche et les tests à une approche combinant données qualitatives et données comportementales.</p>
   </section>
 
   <section>
-    <h2>07 — Faire évoluer la culture UX</h2>
-    <p>L'utilisation des données m'a également amenée à élargir ma réflexion au-delà de Hubbix Bâtiment.</p>
-    <p>J'ai beaucoup milité pour développer des pratiques d'observation au sein de l'équipe design et pour faciliter l'accès aux données produit.</p>
-    <p>J'ai commencé à réfléchir à une stratégie permettant de croiser les données provenant de plusieurs équipes :</p>
+    <h2 data-i18n="hs-s7-h2">07 — Faire évoluer la culture UX</h2>
+    <p data-i18n="hs-s7-p1">L'utilisation des données m'a également amenée à élargir ma réflexion au-delà de Hubbix Bâtiment.</p>
+    <p data-i18n="hs-s7-p2">J'ai beaucoup milité pour développer des pratiques d'observation au sein de l'équipe design et pour faciliter l'accès aux données produit.</p>
+    <p data-i18n="hs-s7-p3">J'ai commencé à réfléchir à une stratégie permettant de croiser les données provenant de plusieurs équipes :</p>
     <div class="pill-row">
-      <span class="pill">Produit</span>
-      <span class="pill">Support</span>
-      <span class="pill">Commerce</span>
-      <span class="pill">Data</span>
+      <span class="pill" data-i18n="hs-s7-pill1">Produit</span>
+      <span class="pill" data-i18n="hs-s7-pill2">Support</span>
+      <span class="pill" data-i18n="hs-s7-pill3">Commerce</span>
+      <span class="pill" data-i18n="hs-s7-pill4">Data</span>
     </div>
-    <p>L'objectif était de mieux comprendre nos clients en combinant leurs comportements, leurs demandes et leurs interactions avec EBP.</p>
-    <p>J'ai également exploré de nouveaux outils d'analyse et les possibilités offertes par l'IA pour accélérer l'analyse des données et enrichir la pratique UX.</p>
+    <p data-i18n="hs-s7-p4">L'objectif était de mieux comprendre nos clients en combinant leurs comportements, leurs demandes et leurs interactions avec EBP.</p>
+    <p data-i18n="hs-s7-p5">J'ai également exploré de nouveaux outils d'analyse et les possibilités offertes par l'IA pour accélérer l'analyse des données et enrichir la pratique UX.</p>
   </section>
 
   <section>
-    <h2>08 — Développer une vision produit</h2>
-    <p>Après plusieurs années immergée dans le marché du bâtiment, j'ai progressivement développé une connaissance fine :</p>
+    <h2 data-i18n="hs-s8-h2">08 — Développer une vision produit</h2>
+    <p data-i18n="hs-s8-p1">Après plusieurs années immergée dans le marché du bâtiment, j'ai progressivement développé une connaissance fine :</p>
     <ul class="bullets">
-      <li>des utilisateurs ;</li>
-      <li>des pratiques des artisans ;</li>
-      <li>des contraintes métier ;</li>
-      <li>des exigences réglementaires ;</li>
-      <li>de l'écosystème logiciel ;</li>
-      <li>et des évolutions du marché.</li>
+      <li data-i18n="hs-s8-li1">des utilisateurs ;</li>
+      <li data-i18n="hs-s8-li2">des pratiques des artisans ;</li>
+      <li data-i18n="hs-s8-li3">des contraintes métier ;</li>
+      <li data-i18n="hs-s8-li4">des exigences réglementaires ;</li>
+      <li data-i18n="hs-s8-li5">de l'écosystème logiciel ;</li>
+      <li data-i18n="hs-s8-li6">et des évolutions du marché.</li>
     </ul>
-    <p>Cette connaissance m'a permis de prendre davantage de recul et de contribuer à une réflexion plus long terme sur le produit.</p>
-    <p>J'ai notamment commencé à anticiper l'impact de nouvelles technologies comme le machine learning et l'IA sur les usages et sur l'expérience utilisateur.</p>
-    <p>Mon rôle est ainsi progressivement passé de :</p>
+    <p data-i18n="hs-s8-p2">Cette connaissance m'a permis de prendre davantage de recul et de contribuer à une réflexion plus long terme sur le produit.</p>
+    <p data-i18n="hs-s8-p3">J'ai notamment commencé à anticiper l'impact de nouvelles technologies comme le machine learning et l'IA sur les usages et sur l'expérience utilisateur.</p>
+    <p data-i18n="hs-s8-p4">Mon rôle est ainsi progressivement passé de :</p>
     <div class="quote-shift">
-      <blockquote>« Comment concevoir cette fonctionnalité ? »</blockquote>
-      <div class="quote-label">à</div>
-      <blockquote>« Quel problème devons-nous résoudre, pourquoi, et comment faire évoluer le produit dans la durée ? »</blockquote>
+      <blockquote data-i18n="hs-s8-quote1">« Comment concevoir cette fonctionnalité ? »</blockquote>
+      <div class="quote-label" data-i18n="hs-s8-quote-label">à</div>
+      <blockquote data-i18n="hs-s8-quote2">« Quel problème devons-nous résoudre, pourquoi, et comment faire évoluer le produit dans la durée ? »</blockquote>
     </div>
   </section>
 
   <hr class="divider">
 
   <section>
-    <h2 style="margin-top:0">Impact</h2>
-    <p>En deux ans, nous sommes passés de la discovery au lancement d'un nouveau produit SaaS.</p>
+    <h2 style="margin-top:0" data-i18n="hs-impact-h2">Impact</h2>
+    <p data-i18n="hs-impact-p1">En deux ans, nous sommes passés de la discovery au lancement d'un nouveau produit SaaS.</p>
     <div class="impact-stats">
       <div class="impact-stat">
         <div class="impact-stat-value">13</div>
-        <div class="impact-stat-label">personnes dans l'équipe produit</div>
+        <div class="impact-stat-label" data-i18n="hs-impact-stat1">personnes dans l'équipe produit</div>
       </div>
       <div class="impact-stat">
         <div class="impact-stat-value">30</div>
-        <div class="impact-stat-label">Early Adopters mobilisés avant lancement</div>
+        <div class="impact-stat-label" data-i18n="hs-impact-stat2">Early Adopters mobilisés avant lancement</div>
       </div>
       <div class="impact-stat">
         <div class="impact-stat-value">~50</div>
-        <div class="impact-stat-label">écrans conçus en responsive</div>
+        <div class="impact-stat-label" data-i18n="hs-impact-stat3">écrans conçus en responsive</div>
       </div>
       <div class="impact-stat">
-        <div class="impact-stat-value">2 ans</div>
-        <div class="impact-stat-label">de la discovery au lancement</div>
+        <div class="impact-stat-value" data-i18n="hs-impact-stat4-value">2 ans</div>
+        <div class="impact-stat-label" data-i18n="hs-impact-stat4">de la discovery au lancement</div>
       </div>
       <div class="impact-stat">
         <div class="impact-stat-value">0 → 1</div>
-        <div class="impact-stat-label">un produit entièrement conçu pour les TPE/PME du bâtiment</div>
+        <div class="impact-stat-label" data-i18n="hs-impact-stat5">un produit entièrement conçu pour les TPE/PME du bâtiment</div>
       </div>
     </div>
-    <p>Au-delà de ces chiffres, le projet a permis de construire une expérience plus simple et plus accessible pour les professionnels du bâtiment, tout en conservant la profondeur nécessaire à leurs usages métier.</p>
-    <p>L'un des signaux les plus intéressants a été la baisse progressive des tickets support après les améliorations du produit.</p>
-    <p>Et surtout, certains choix de conception initialement controversés ont ensuite inspiré l'évolution d'autres produits de la gamme.</p>
+    <p data-i18n="hs-impact-p2">Au-delà de ces chiffres, le projet a permis de construire une expérience plus simple et plus accessible pour les professionnels du bâtiment, tout en conservant la profondeur nécessaire à leurs usages métier.</p>
+    <p data-i18n="hs-impact-p3">L'un des signaux les plus intéressants a été la baisse progressive des tickets support après les améliorations du produit.</p>
+    <p data-i18n="hs-impact-p4">Et surtout, certains choix de conception initialement controversés ont ensuite inspiré l'évolution d'autres produits de la gamme.</p>
   </section>
 
   <hr class="divider">
 
   <section class="closing">
-    <h2 style="margin-top:0">Ce que ce projet représente dans mon parcours</h2>
-    <p>Hubbix Bâtiment a été bien plus qu'un projet de conception d'interface.</p>
-    <p>Il m'a permis de développer une posture de Product Designer autonome, capable d'intervenir sur l'ensemble du cycle de vie d'un produit :</p>
-    <div class="flow-line">Comprendre → Cadrer → Concevoir → Convaincre → Tester → Livrer → Mesurer → Améliorer</div>
-    <p>J'y ai appris à défendre une vision sans perdre la capacité d'écoute, à challenger l'existant sans ignorer les contraintes de l'organisation, et surtout à considérer le design comme un outil de décision produit, et pas uniquement comme une étape de conception.</p>
-    <p>C'est cette évolution — de l'UX/UI vers une approche plus stratégique, collaborative et data-driven — qui représente pour moi la dimension la plus importante de cette expérience.</p>
+    <h2 style="margin-top:0" data-i18n="hs-closing-h2">Ce que ce projet représente dans mon parcours</h2>
+    <p data-i18n="hs-closing-p1">Hubbix Bâtiment a été bien plus qu'un projet de conception d'interface.</p>
+    <p data-i18n="hs-closing-p2">Il m'a permis de développer une posture de Product Designer autonome, capable d'intervenir sur l'ensemble du cycle de vie d'un produit :</p>
+    <div class="flow-line" data-i18n="hs-closing-flow">Comprendre → Cadrer → Concevoir → Convaincre → Tester → Livrer → Mesurer → Améliorer</div>
+    <p data-i18n="hs-closing-p3">J'y ai appris à défendre une vision sans perdre la capacité d'écoute, à challenger l'existant sans ignorer les contraintes de l'organisation, et surtout à considérer le design comme un outil de décision produit, et pas uniquement comme une étape de conception.</p>
+    <p data-i18n="hs-closing-p4">C'est cette évolution — de l'UX/UI vers une approche plus stratégique, collaborative et data-driven — qui représente pour moi la dimension la plus importante de cette expérience.</p>
   </section>
+
+  <div class="page-footer">
+    <div class="footer-links">
+      <a href="mailto:edwmathieu@gmail.com">edwmathieu@gmail.com</a>
+      <a href="tel:+33760206796">+33 7 60 20 67 96</a>
+    </div>
+    <div class="footer-links">
+      <a href="https://linkedin.com/in/edwine-mathieu-ux-ui-designer" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://behance.net/edmat" target="_blank" rel="noopener">Behance</a>
+    </div>
+  </div>
 
 </div>
 
@@ -694,6 +819,8 @@
     <button type="button" class="lightbox-zoom-btn" id="lightbox-zoom-in" aria-label="Zoomer">+</button>
   </div>
 </div>
+
+<button type="button" class="back-to-top" id="back-to-top" aria-label="Retour en haut" hidden>↑</button>
 
 <script>
   (function () {
@@ -781,15 +908,251 @@
 </script>
 
 <script>
-  // Embedded in the portfolio's own prototype-viewer iframe: that overlay
-  // already has its own "Retour au portfolio" button, so skip this one.
-  if (window.self === window.top) {
-    var backLink = document.createElement('a');
-    backLink.className = 'back-link';
-    backLink.href = 'index.html#view-projets';
-    backLink.textContent = '← Retour au portfolio';
-    document.body.appendChild(backLink);
-  }
+  (function () {
+    var backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      backToTop.hidden = window.scrollY < 600;
+    });
+    backToTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+</script>
+
+<script>
+  var TRANSLATIONS_EN = {
+    'nav-back': '← Back to portfolio',
+    'nav-home': 'Home',
+    'nav-cv': 'Resume',
+    'nav-projects': 'Projects',
+
+    'hs-eyebrow': 'Case study',
+    'hs-h1': 'Hubbix Bâtiment',
+    'hs-subtitle': 'Designing a brand-new SaaS experience for construction professionals, from scratch',
+    'hs-meta': 'Product Designer · 2022–2025',
+    'hs-facts': '13 people on the team · 2 years from discovery to launch · 30 Early Adopters · ~50 screens designed responsively',
+
+    'hs-challenge-h2': 'The challenge',
+    'hs-challenge-p1': 'In 2022, we launched an ambitious project: building a brand-new SaaS solution for construction-sector small and micro businesses, from the ground up.',
+    'hs-challenge-p2': 'The goal was to offer a modern alternative to a legacy solution, Open Line, an on-premise product whose experience was becoming progressively less suited to user expectations.',
+    'hs-challenge-p3': 'The new product had to be:',
+    'hs-challenge-li1': 'accessible on desktop and mobile;',
+    'hs-challenge-li2': 'easy to pick up;',
+    'hs-challenge-li3': 'powerful enough to meet the specific needs of the construction trade;',
+    'hs-challenge-li4': 'compliant with French tax and regulatory requirements;',
+    'hs-challenge-li5': 'and appealing enough to support new customer acquisition.',
+    'hs-challenge-p4': 'The challenge, then, was to simplify a complex activity without oversimplifying the trade itself.',
+
+    'hs-role-h2': 'My role',
+    'hs-role-p1': 'I was responsible for the entire UX/UI scope of Hubbix Bâtiment.',
+    'hs-role-p2': 'I quickly gained autonomy and took ownership of the end-to-end UX process:',
+    'hs-role-flow': 'Discovery → user research → UX strategy → design → prototyping → testing → delivery → measurement → continuous improvement',
+    'hs-role-p3': 'I worked within a team of 13 people:',
+    'hs-role-pill1': '1 PO',
+    'hs-role-pill2': '1 project manager',
+    'hs-role-pill3': '3 business consultants',
+    'hs-role-pill4': '4 developers',
+    'hs-role-pill5': '4 QA testers',
+    'hs-role-p4': "My role wasn't limited to designing interfaces. I also had to:",
+    'hs-role-li1': 'define UX methods and workshops suited to the problems at hand;',
+    'hs-role-li2': 'build a shared vision across different areas of expertise;',
+    'hs-role-li3': 'defend design decisions;',
+    'hs-role-li4': 'arbitrate between user needs, business constraints and technical feasibility;',
+    'hs-role-li5': 'support the team during development;',
+    'hs-role-li6': 'guarantee the consistency of the experience;',
+    'hs-role-li7': 'then set up a continuous improvement process after launch.',
+
+    'hs-s1-h2': '01 — Understanding before designing',
+    'hs-s1-p1': 'I started with a discovery phase lasting nearly two years, meant to build the product progressively ahead of its launch.',
+    'hs-s1-p2': 'Supported at first by the Lead Designer, I helped define the UX strategy and set up an approach inspired by Design Thinking.',
+    'hs-s1-p3': 'I sought to understand:',
+    'hs-s1-li1': 'the needs of construction professionals;',
+    'hs-s1-li2': 'their working habits;',
+    'hs-s1-li3': 'their constraints;',
+    'hs-s1-li4': 'the difficulties encountered with existing tools;',
+    'hs-s1-li5': 'opportunities for simplification;',
+    'hs-s1-li6': 'and expectations toward a modern SaaS product.',
+    'hs-s1-p4': 'I conducted user interviews with an external panel provider and with internal EBP clients.',
+    'hs-s1-p5': 'I then used a range of research and framing tools:',
+    'hs-s1-pill1': 'Personas',
+    'hs-s1-pill2': 'Empathy Maps',
+    'hs-s1-pill3': 'Journey Maps',
+    'hs-s1-pill4': 'Co-design workshops',
+    'hs-s1-pill5': 'Brainstorming',
+    'hs-s1-pill6': 'Card sorting',
+    'hs-s1-pill7': 'User testing',
+    'hs-s1-p6': 'These workshops brought together very different profiles: product, development, QA, marketing, sales and business expertise.',
+    'hs-s1-p7': 'The challenge was as much about understanding users as it was about getting the team to converge on a shared understanding of the problem.',
+
+    'hs-s2-h2': '02 — Challenging existing solutions',
+    'hs-s2-h3a': 'Rethinking how quotes and invoices are edited',
+    'hs-s2-p1': 'One of the most defining topics of the project was designing the quote and invoice editor.',
+    'hs-s2-p2': 'At first, the natural idea was to reuse the grid used by the existing sales management solution.',
+    'hs-s2-p3': 'But after analyzing how it worked, I identified a problem: the grid was powerful, but complex to use and poorly suited to the experience we wanted to offer construction users.',
+    'hs-s2-p4': 'So I decided to challenge that approach. I studied competing solutions, analyzed their interface choices and built a different proposal.',
+    'hs-s2-h3b': 'Defending a UX direction against the status quo',
+    'hs-s2-p5': "That decision wasn't easy.",
+    'hs-s2-p6': 'I had to convince my manager (Lead Designer) and the sales management teams, whose existing solution was an internal reference.',
+    'hs-s2-p7': 'The choice not to reuse their grid also created tension with the UX Designer in charge of that team.',
+    'hs-s2-p8': 'I nonetheless defended my proposal by building on:',
+    'hs-s2-flow': "user needs → competitive analysis → usage issues → the new product's objectives",
+    'hs-s2-p9': 'This experience taught me that being a Product Designer sometimes means challenging the status quo, even when it has become a reference within the organization.',
+    'hs-s2-h3c': 'A new way to edit a business document',
+    'hs-s2-p10': 'We completely rethought the interaction with quotes and invoices. The goal was to make editing:',
+    'hs-s2-pill1': 'Smoother',
+    'hs-s2-pill2': 'More readable',
+    'hs-s2-pill3': 'More flexible',
+    'hs-s2-pill4': 'Faster',
+    'hs-s2-h3d': 'Optimizing information density',
+    'hs-s2-p11': 'We reduced row height so users could see more information at once. We also introduced:',
+    'hs-s2-li1': 'ellipses to make the most of available space;',
+    'hs-s2-li2': 'chevrons to expand or collapse descriptions;',
+    'hs-s2-li3': 'visual codes to distinguish different types of elements;',
+    'hs-s2-li4': 'cell-by-cell navigation;',
+    'hs-s2-li5': 'a formatting toolbar to customize content;',
+    'hs-s2-li6': 'sections to structure a quote;',
+    'hs-s2-li7': 'the ability to group several rows within a section;',
+    'hs-s2-li8': 'collapsing and expanding groups of elements.',
+    'hs-s2-p12': 'The editor thus became more than a simple input grid: a genuine space for building and structuring business documents.',
+    'hs-s2-h3e': 'Designing despite the complexity of the existing system',
+    'hs-s2-p13': 'This new interface introduced components very different from those used in the existing sales management tool.',
+    'hs-s2-p14': "We therefore had to figure out how to integrate this new experience into the Design System, while keeping it consistent with the rest of the Hubbix range.",
+    'hs-s2-p15': 'This step required a lot of iteration and discussion with the teams. But the choice proved durable.',
+    'hs-s2-p16': "A few years later, the sales management team drew heavily on the principles and components we had introduced for Hubbix Bâtiment. The direction we'd had to defend eventually became a source of inspiration for evolving the existing product.",
+    'hs-s2-p17': 'To me, this is one of the most representative examples of my role on this project: not just applying existing standards, but being able to evolve them when they no longer meet the need.',
+
+    'hs-s3-h2': '03 — Validating rather than assuming',
+    'hs-s3-p1': 'We quickly put prototypes in front of users.',
+    'hs-s3-p2': 'I ran several user tests to challenge our UX and UI principles and identify points of confusion.',
+    'hs-s3-p3': 'One notable example concerns invoice creation.',
+    'hs-s3-p4': 'Our first approach relied on a stepper. Testing showed that this step-by-step navigation made the process feel less natural and made it harder to understand the document as a whole.',
+    'hs-s3-p5': 'So we questioned the principle itself. We replaced the stepper with a single screen, organized around components that could be expanded or collapsed as needed.',
+    'hs-s3-p6': 'This approach let users keep an overall view of their document while easily working on its different sections.',
+    'hs-s3-p7': "Design wasn't treated as a final answer: every hypothesis could be challenged by observing users.",
+
+    'hs-s4-h2': '04 — Moving from prototype to product',
+    'hs-s4-p1': 'Once the UX principles were validated, I supported the product through to launch.',
+    'hs-s4-p2': "I designed around 50 responsive screens, covering the application's main journeys and features.",
+    'hs-s4-p3': 'Each feature was designed in collaboration with the PO, the PM, business consultants and developers.',
+    'hs-s4-h3': 'Making design a collective effort',
+    'hs-s4-p4': 'Every week, I ran a design review with the relevant stakeholders. The goal was to present upcoming features early enough to:',
+    'hs-s4-li1': 'gather technical constraints;',
+    'hs-s4-li2': 'check business relevance;',
+    'hs-s4-li3': 'anticipate problems;',
+    'hs-s4-li4': 'challenge UX choices;',
+    'hs-s4-li5': 'and avoid discovering issues once development had started.',
+    'hs-s4-p5': 'Every two weeks, a design review with the PO and a developer checked consistency between the mockups and the product being built. When needed, we created corrective user stories.',
+    'hs-s4-p6': 'This organization let me maintain a constant link between design intent and product reality.',
+
+    'hs-s5-h2': "05 — Putting the product to the test",
+    'hs-s5-p1': 'Before launch, we ran an Early Adopters program with 30 users over about a month and a half.',
+    'hs-s5-p2': 'The goal was to have the product tested under real conditions, independently. We were looking to answer several questions:',
+    'hs-s5-qa1-label': 'Experience',
+    'hs-s5-qa1-text': 'Do users naturally understand the product?',
+    'hs-s5-qa2-label': 'Features',
+    'hs-s5-qa2-text': 'What essential features are we missing?',
+    'hs-s5-qa3-label': 'Prioritization',
+    'hs-s5-qa3-text': 'Which needs should be addressed first?',
+    'hs-s5-qa4-label': 'Organization',
+    'hs-s5-qa4-text': 'Are we able to properly roll out, support and assist the product?',
+    'hs-s5-p3': 'The program also let us test our own internal processes:',
+    'hs-s5-pill1': 'Rollout',
+    'hs-s5-pill2': 'Going live',
+    'hs-s5-pill3': 'Support',
+    'hs-s5-pill4': 'Assistance',
+    'hs-s5-pill5': 'Run',
+    'hs-s5-pill6': 'Sales pitch',
+    'hs-s5-pill7': 'Marketing messaging',
+    'hs-s5-p4': 'Early Adopter feedback directly shaped the roadmap. Some features were notably reprioritized, such as email reminders and the integration of progress invoices.',
+
+    'hs-s6-h2': '06 — Moving from launch to continuous improvement',
+    'hs-s6-p1': 'After launch, my role gradually evolved.',
+    'hs-s6-p2': 'With the product now well established, I spent less time on UI design and focused more on observing usage.',
+    'hs-s6-p3': 'I notably used Microsoft Clarity, then explored Heap, to understand how users were really using the product.',
+    'hs-s6-p4': 'This approach let me identify new pain points and propose improvements based on observed behavior.',
+    'hs-s6-p5': 'We gradually saw a drop in support tickets, a sign that certain improvements were making the product more understandable and self-sufficient.',
+    'hs-s6-p6': 'This stage marked an important shift in my practice: moving from UX mainly grounded in research and testing to an approach combining qualitative and behavioral data.',
+
+    'hs-s7-h2': '07 — Evolving the UX culture',
+    'hs-s7-p1': 'Using data also led me to broaden my thinking beyond Hubbix Bâtiment.',
+    'hs-s7-p2': 'I advocated a lot for developing observation practices within the design team and for making product data more accessible.',
+    'hs-s7-p3': 'I began thinking about a strategy to cross-reference data coming from several teams:',
+    'hs-s7-pill1': 'Product',
+    'hs-s7-pill2': 'Support',
+    'hs-s7-pill3': 'Sales',
+    'hs-s7-pill4': 'Data',
+    'hs-s7-p4': 'The goal was to better understand our customers by combining their behavior, their requests and their interactions with EBP.',
+    'hs-s7-p5': 'I also explored new analytics tools and the possibilities offered by AI to speed up data analysis and enrich UX practice.',
+
+    'hs-s8-h2': '08 — Developing a product vision',
+    'hs-s8-p1': 'After several years immersed in the construction market, I progressively built a deep understanding of:',
+    'hs-s8-li1': 'users;',
+    'hs-s8-li2': "tradespeople's practices;",
+    'hs-s8-li3': 'business constraints;',
+    'hs-s8-li4': 'regulatory requirements;',
+    'hs-s8-li5': 'the software ecosystem;',
+    'hs-s8-li6': 'and market developments.',
+    'hs-s8-p2': 'This knowledge let me step back further and contribute to longer-term thinking about the product.',
+    'hs-s8-p3': 'I notably started anticipating the impact of new technologies such as machine learning and AI on usage and on the user experience.',
+    'hs-s8-p4': 'My role thus gradually shifted from:',
+    'hs-s8-quote1': '"How should we design this feature?"',
+    'hs-s8-quote-label': 'to',
+    'hs-s8-quote2': '"What problem do we need to solve, why, and how do we evolve the product over time?"',
+
+    'hs-impact-h2': 'Impact',
+    'hs-impact-p1': 'In two years, we went from discovery to launching a new SaaS product.',
+    'hs-impact-stat1': 'people on the product team',
+    'hs-impact-stat2': 'Early Adopters mobilized before launch',
+    'hs-impact-stat3': 'screens designed responsively',
+    'hs-impact-stat4-value': '2 years',
+    'hs-impact-stat4': 'from discovery to launch',
+    'hs-impact-stat5': 'a product designed entirely for construction SMEs',
+    'hs-impact-p2': "Beyond these numbers, the project helped build an experience that's simpler and more accessible for construction professionals, while keeping the depth their work requires.",
+    'hs-impact-p3': 'One of the most interesting signals was the gradual drop in support tickets following product improvements.',
+    'hs-impact-p4': 'And above all, some design choices that were initially controversial later inspired the evolution of other products in the range.',
+
+    'hs-closing-h2': 'What this project represents in my career',
+    'hs-closing-p1': 'Hubbix Bâtiment was much more than an interface design project.',
+    'hs-closing-p2': "It let me develop as an autonomous Product Designer, capable of working across a product's entire lifecycle:",
+    'hs-closing-flow': 'Understand → Frame → Design → Convince → Test → Deliver → Measure → Improve',
+    'hs-closing-p3': "I learned to defend a vision without losing the ability to listen, to challenge the status quo without ignoring the organization's constraints, and above all to see design as a product decision-making tool, not just a design step.",
+    'hs-closing-p4': "It's this evolution — from UX/UI toward a more strategic, collaborative and data-driven approach — that represents, to me, the most important dimension of this experience."
+  };
+
+  (function () {
+    var LANG_KEY = 'site-lang';
+    var i18nEls = document.querySelectorAll('[data-i18n]');
+    var frContent = new Map();
+    i18nEls.forEach(function (el) {
+      frContent.set(el, el.innerHTML);
+    });
+    var langButtons = document.querySelectorAll('.lang-btn');
+
+    function applyLanguage(lang) {
+      i18nEls.forEach(function (el) {
+        var key = el.dataset.i18n;
+        var value = (lang === 'en' && TRANSLATIONS_EN[key]) ? TRANSLATIONS_EN[key] : frContent.get(el);
+        el.innerHTML = value;
+      });
+      document.documentElement.lang = lang;
+      langButtons.forEach(function (btn) {
+        var isActive = btn.dataset.lang === lang;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
+      });
+      try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    }
+
+    langButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyLanguage(btn.dataset.lang);
+      });
+    });
+
+    var savedLang = 'fr';
+    try { savedLang = localStorage.getItem(LANG_KEY) || 'fr'; } catch (e) {}
+    if (savedLang === 'en') applyLanguage('en');
+  })();
 </script>
 </body>
 </html>
