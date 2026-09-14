@@ -824,6 +824,11 @@
     'citymoov-figma-link': 'View the Figma prototype →',
 
     'eorizon-h0': 'Designing a seamless electric vehicle charging experience',
+    'eorizon-questions-intro': 'This project led me to ask questions such as:',
+    'eorizon-q1': 'How to reduce range anxiety?',
+    'eorizon-q2': 'How to make charging predictable?',
+    'eorizon-q3': 'How to connect the mobile experience to the in-vehicle experience?',
+    'eorizon-q4': "How to anticipate the driver's needs?",
     'eorizon-t0': "A mobile app prototype for electric mobility: from planning a long-distance trip to arrival, accounting for battery, subscription network, chargers available along the route, and charging budget — 7 screens, for a one-way Paris → Arcachon trip.",
     'eorizon-h1': 'Subscription network, visible priority',
     'eorizon-t1': "The subscription network (Eleckar) is highlighted along the route and on the map, with the subscriber rate set apart from the public rate — the user sees at a glance where they pay less.",

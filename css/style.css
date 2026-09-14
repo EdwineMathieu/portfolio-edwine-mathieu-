@@ -653,6 +653,10 @@ a.is-copied {
   gap: 8px;
 }
 
+.case-block-text + .experience-bullets {
+  margin-top: 8px;
+}
+
 .experience-bullets li {
   font-size: 15px;
   line-height: 1.6;
