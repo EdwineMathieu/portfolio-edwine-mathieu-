@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EBP Open Line — Étude de cas</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: oklch(0.5 0.13 258);
+    --accent-soft: oklch(0.95 0.008 90);
+    --accent-border: oklch(0.85 0.03 258);
+    --bg-app: oklch(0.985 0.004 90);
+    --text-main: oklch(0.22 0.01 260);
+    --text-body: oklch(0.3 0.01 260);
+    --text-muted: oklch(0.45 0.01 260);
+    --text-faint: oklch(0.5 0.01 260);
+    --border-soft: oklch(0.92 0.005 90);
+    --border-light: oklch(0.9 0.005 90);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg-app); color: var(--text-body); line-height: 1.65; }
+  .site-nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 20px 56px; background: oklch(0.985 0.004 90 / 0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-light); }
+  .back-pill { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; color: var(--text-main); text-decoration: none; }
+  .back-pill:hover { color: var(--accent); }
+  .site-nav-links { display: flex; align-items: center; gap: 8px; }
+  .site-nav-item { font-family: inherit; padding: 8px 16px; border-radius: 7px; font-size: 14px; font-weight: 600; color: var(--text-muted); text-decoration: none; transition: background .15s ease; }
+  .site-nav-item:hover { background: oklch(0.94 0.008 90); }
+  .lang-switch { display: flex; gap: 2px; margin-left: 8px; padding: 3px; background: oklch(0.94 0.008 90); border-radius: 8px; }
+  .lang-btn { font-family: inherit; padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; color: var(--text-muted); background: transparent; border: none; }
+  .lang-btn:hover { color: var(--text-main); }
+  .lang-btn.is-active { background: white; color: var(--text-main); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 96px; }
+  .page-footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .page-footer .footer-links { display: flex; gap: 24px; font-size: 13px; color: var(--text-faint); }
+  .page-footer .footer-links a { color: inherit; text-decoration: none; }
+  .page-footer .footer-links a:hover { color: var(--accent); }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -0.01em; color: var(--text-main); margin: 0 0 12px; line-height: 1.1; }
+  .subtitle { font-size: 19px; color: var(--text-muted); margin: 0 0 8px; }
+  .subtitle-secondary { font-size: 15px; color: var(--text-faint); margin: 0 0 20px; }
+  .meta-line { font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 8px; }
+  .facts-line { font-size: 14px; color: var(--text-faint); margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
+  .hero-photo { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 16px; border: 1px solid var(--border-light); margin-bottom: 48px; cursor: zoom-in; }
+  .mini-carousel { position: relative; margin: 24px 0 16px; }
+  .mini-carousel-viewport { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #fff; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .mini-carousel-img { display: block; width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
+  .mini-carousel-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 6px rgba(0,0,0,.12); }
+  .mini-carousel-nav:hover { background: oklch(0.94 0.008 90); }
+  .mini-carousel-prev { left: 14px; }
+  .mini-carousel-next { right: 14px; }
+  .mini-carousel-caption { font-size: 13px; color: var(--text-faint); text-align: center; margin-top: 12px; line-height: 1.5; }
+  .mini-carousel-caption:empty { display: none; }
+  .mini-carousel-dots { display: flex; justify-content: center; gap: 6px; margin-top: 12px; }
+  .mini-carousel-dot { width: 6px; height: 6px; padding: 0; border: none; border-radius: 50%; background: var(--border-light); cursor: pointer; }
+  .mini-carousel-dot.is-active { background: var(--accent); transform: scale(1.4); }
+  .lightbox { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; background: oklch(0.15 0.005 260 / 0.92); opacity: 0; visibility: hidden; transition: opacity .2s ease; }
+  .lightbox.is-open { opacity: 1; visibility: visible; }
+  .lightbox-viewport { max-width: 92vw; max-height: 92vh; overflow: auto; }
+  .lightbox-img { display: block; max-width: 92vw; max-height: 92vh; width: auto; height: auto; object-fit: contain; transition: width .2s ease; user-select: none; -webkit-user-drag: none; }
+  .lightbox-close { position: fixed; top: 20px; right: 24px; width: 44px; height: 44px; border-radius: 50%; border: none; background: oklch(1 0 0 / 0.12); color: white; font-size: 24px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .lightbox-close:hover { background: oklch(1 0 0 / 0.22); }
+  .lightbox-zoom { position: fixed; bottom: 20px; right: 24px; display: flex; gap: 8px; }
+  .lightbox-zoom-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: oklch(1 0 0 / 0.12); color: white; font-size: 20px; font-weight: 600; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .lightbox-zoom-btn:hover { background: oklch(1 0 0 / 0.22); }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; margin: 56px 0 16px; }
+  section:first-of-type h2 { margin-top: 0; }
+  h3 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-main); margin: 28px 0 10px; }
+  p { margin: 0 0 16px; font-size: 15.5px; color: var(--text-body); }
+  ul.bullets { margin: 0 0 16px; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 8px; }
+  ul.bullets li { font-size: 15.5px; color: var(--text-body); }
+  .flow-line { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-border); border-radius: 12px; padding: 14px 18px; margin: 0 0 20px; line-height: 1.6; }
+  .flow-line.is-vertical { text-align: center; line-height: 2.1; }
+  .flow-line .arrow { display: block; opacity: .55; font-weight: 400; font-family: 'IBM Plex Sans', sans-serif; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+  .pill { font-size: 13px; font-weight: 500; color: var(--text-main); background: white; border: 1px solid var(--border-light); border-radius: 100px; padding: 6px 14px; }
+  .qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0 24px; }
+  .qa-item { background: white; border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 18px; }
+  .qa-item .qa-label { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .qa-item p { margin: 0; font-size: 14.5px; }
+  .quote-shift { margin: 24px 0 28px; padding: 20px 24px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 12px 12px 0; }
+  .quote-shift .quote-label { font-size: 13px; color: var(--text-faint); margin-bottom: 6px; }
+  .quote-shift blockquote { margin: 0 0 14px; font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-muted); font-style: italic; }
+  .quote-shift blockquote:last-of-type { margin-bottom: 0; color: var(--text-main); }
+  .specs-table { border: 1px solid var(--border-light); border-radius: 14px; overflow: hidden; margin: 20px 0 28px; }
+  .specs-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 18px; background: white; }
+  .specs-row:nth-child(even) { background: var(--accent-soft); }
+  .specs-row + .specs-row { border-top: 1px solid var(--border-light); }
+  .specs-label { font-size: 13px; font-weight: 600; color: var(--text-muted); flex: 0 0 auto; }
+  .specs-value { font-size: 14px; color: var(--text-main); text-align: right; }
+  .divider { border: none; border-top: 1px solid var(--border-light); margin: 48px 0; }
+  .closing p:last-child { margin-bottom: 0; }
+  .back-to-top { position: fixed; bottom: 24px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,.12); transition: opacity .15s ease, background .15s ease; }
+  .back-to-top:hover { background: oklch(0.94 0.008 90); }
+  .back-to-top[hidden] { display: none; }
+  @media (max-width: 640px) {
+    .site-nav { padding: 14px 20px; }
+    .site-nav-links { gap: 2px; }
+    .site-nav-item { padding: 7px 10px; font-size: 13px; }
+    .wrap { padding: 40px 20px 96px; }
+    h1 { font-size: 30px; }
+    .qa-grid { grid-template-columns: 1fr; }
+    .specs-row { flex-direction: column; gap: 4px; }
+    .specs-value { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<header class="site-nav">
+  <a href="index.html#view-projets" class="back-pill" data-i18n="nav-back">← Retour à la page projets</a>
+  <nav class="site-nav-links" aria-label="Navigation principale">
+    <a class="site-nav-item" href="index.html" data-i18n="nav-home">Accueil</a>
+    <a class="site-nav-item" href="index.html#view-cv" data-i18n="nav-cv">CV</a>
+    <a class="site-nav-item" href="index.html#view-projets" data-i18n="nav-projects">Projets</a>
+    <div class="lang-switch" role="group" aria-label="Langue / Language">
+      <button type="button" class="lang-btn is-active" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <div class="eyebrow" data-i18n="cs-eyebrow">Étude de cas</div>
+  <h1>EBP Open Line</h1>
+  <p class="subtitle">Faire évoluer l'expérience d'un logiciel historique sans pouvoir le refondre</p>
+  <p class="subtitle-secondary">De l'UI ponctuelle à la responsabilité UX/UI d'un portefeuille de logiciels EBP.</p>
+  <div class="meta-line">Product Designer · 2022–Présent</div>
+  <div class="facts-line">Logiciel de gestion pour les professionnels du bâtiment · ~15 personnes dans l'équipe · UX/UI · Facture électronique · IA · Design transverse</div>
+
+  <img class="hero-photo" id="hero-photo" src="images/openline-hero.png" alt="EBP Open Line — rapprochement factures / dépenses assisté par IA">
+
+  <section>
+    <h2>Le défi</h2>
+    <p>En arrivant chez EBP en 2022, j'ai été missionné sur <strong>EBP Open Line Bâtiment</strong>, en parallèle du projet Hubbix Bâtiment.</p>
+    <p>Open Line est une gamme de logiciels historiques d'EBP, développée progressivement depuis les années 2010 pour répondre aux besoins de secteurs professionnels aux contraintes métier fortes.</p>
+    <p>Open Line Bâtiment couvre les besoins des entreprises du bâtiment, des artisans aux structures plus importantes. La profondeur fonctionnelle du logiciel est importante : chaque métier peut avoir ses propres règles de TVA, certifications, réglementations et pratiques de facturation.</p>
+    <p>Mais cette richesse fonctionnelle s'accompagne d'une forte complexité.</p>
+    <p>Le produit repose également sur une technologie ancienne qui limite les possibilités d'évolution de l'interface. Les équipes de développement disposent de peu de flexibilité pour introduire des composants ou des interactions trop éloignés de l'existant.</p>
+    <p>La consigne initiale était donc claire :</p>
+    <div class="quote-shift">
+      <blockquote>Faire évoluer le produit sans trop modifier l'existant.</blockquote>
+    </div>
+    <p>Le problème était que le logiciel devait pourtant continuer à évoluer : nouvelles fonctionnalités, nouvelles réglementations, nouveaux services et nouvelles attentes utilisateurs.</p>
+    <p>La question qui a progressivement guidé mon travail est devenue :</p>
+    <div class="quote-shift">
+      <blockquote>Comment améliorer l'expérience d'un produit historique lorsque la refonte n'est ni souhaitable ni techniquement réaliste ?</blockquote>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mon rôle</h2>
+    <p>À mon arrivée, mon rôle était principalement orienté <strong>UI Design</strong>.</p>
+    <p>Je répondais à des demandes ponctuelles :</p>
+    <ul class="bullets">
+      <li>créer ou modifier un composant ;</li>
+      <li>ajouter une action ;</li>
+      <li>produire une icône ;</li>
+      <li>adapter une interface ;</li>
+      <li>apporter des recommandations UX/UI.</li>
+    </ul>
+    <p>L'équipe design ayant connu plusieurs départs successifs, les fichiers historiques devenaient également de moins en moins accessibles. Les migrations de comptes et les différents rachats de l'entreprise avaient progressivement fragmenté les sources disponibles.</p>
+    <p>J'ai donc créé un <strong>UI Kit Open Line</strong> afin de pouvoir continuer à concevoir des interfaces cohérentes avec le produit existant.</p>
+    <p>Au fil des évolutions du produit, mon rôle s'est progressivement élargi :</p>
+    <div class="flow-line">UI → UX/UI → conception de fonctionnalités complexes → sujets transverses → design stratégique</div>
+    <p>Je travaille avec les Product Owners, Product Managers, consultants métier, chefs de projet, développeurs, support et autres équipes produit.</p>
+  </section>
+
+  <section>
+    <h2>01 — Comprendre les contraintes avant de concevoir</h2>
+    <p>Contrairement à un projet de refonte classique, je ne pouvais pas partir d'une page blanche.</p>
+    <p>Chaque proposition devait composer avec plusieurs niveaux de contraintes :</p>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <div class="qa-label">Utilisateurs</div>
+        <p>Des professionnels aux métiers différents, avec des besoins de facturation et de gestion spécifiques.</p>
+      </div>
+      <div class="qa-item">
+        <div class="qa-label">Métier</div>
+        <p>Une forte profondeur fonctionnelle et des règles réglementaires nombreuses.</p>
+      </div>
+      <div class="qa-item">
+        <div class="qa-label">Technique</div>
+        <p>Un framework historique limitant les possibilités de nouveaux composants et interactions.</p>
+      </div>
+      <div class="qa-item">
+        <div class="qa-label">Produit</div>
+        <p>Des roadmaps chargées laissant peu de place à la reprise de l'existant.</p>
+      </div>
+      <div class="qa-item">
+        <div class="qa-label">Stratégie</div>
+        <p>Un produit qui devait continuer à satisfaire ses clients tout en s'inscrivant dans une réflexion plus large sur son évolution à long terme.</p>
+      </div>
+    </div>
+    <p>Cette situation m'a amenée à adopter une approche progressive :</p>
+    <div class="quote-shift">
+      <blockquote>Améliorer ce qui peut l'être, sans engager un investissement disproportionné par rapport au cycle de vie du produit.</blockquote>
+    </div>
+  </section>
+
+  <section>
+    <h2>02 — Faire évoluer l'interface sans pouvoir la refondre</h2>
+    <p>Au départ, la plupart des évolutions devaient rester proches des conventions existantes.</p>
+    <p>Mais certaines fonctionnalités nécessitaient de remettre en question cette approche.</p>
+    <p>J'ai notamment travaillé sur l'intégration de <strong>catalogues produits Sonepar</strong>, ainsi que sur plusieurs évolutions fonctionnelles importantes.</p>
+    <p>À mesure que mon périmètre s'élargissait, une question revenait régulièrement :</p>
+    <div class="quote-shift">
+      <blockquote>Jusqu'où peut-on faire évoluer l'expérience sans sortir des possibilités du produit ?</blockquote>
+    </div>
+    <p>Cette contrainte m'a amenée à travailler davantage sur la <strong>hiérarchisation de l'information, la simplification des interactions et la réorganisation des composants existants</strong>, plutôt que sur une transformation radicale de l'interface.</p>
+  </section>
+
+  <section>
+    <h2>03 — Facture électronique : concevoir à l'échelle de l'écosystème</h2>
+    <p>L'arrivée de la facture électronique a constitué un changement majeur pour EBP.</p>
+    <p>L'ensemble des produits devait évoluer pour répondre aux nouvelles obligations réglementaires prévues pour <strong>septembre 2026</strong>.</p>
+    <p>Le sujet dépassait largement la conception d'une fonctionnalité isolée.</p>
+    <p>Chaque équipe produit devait comprendre :</p>
+    <ul class="bullets">
+      <li>les nouvelles normes ;</li>
+      <li>le cycle de vie d'une facture électronique ;</li>
+      <li>le rôle des plateformes agréées ;</li>
+      <li>le e-reporting ;</li>
+      <li>les impacts sur les différents logiciels ;</li>
+      <li>les dépendances entre produits ;</li>
+      <li>les contraintes techniques internes.</li>
+    </ul>
+
+    <h3>Aligner les équipes autour d'une même vision</h3>
+    <p>J'ai accompagné les Product Managers dans la conception d'un atelier d'alignement transverse.</p>
+    <p>Nous avons réuni environ <strong>20 Product Owners et chefs de projet</strong> issus de différents produits EBP pendant deux jours.</p>
+    <p>Nous avons utilisé notamment :</p>
+    <div class="flow-line">Customer Journey + Service Blueprint</div>
+    <p>L'objectif était de construire une compréhension commune du parcours et de permettre à chaque équipe d'identifier les impacts sur son propre produit.</p>
+    <p>Le travail s'est ensuite étendu à d'autres profils :</p>
+    <div class="flow-line">PO → chefs de projet → consultants métier → développeurs → équipes produit</div>
+
+    <h3>Passer d'une compréhension commune à des parcours concrets</h3>
+    <p>Avec les Product Managers, j'ai ensuite participé à la conception de plusieurs parcours et fonctionnalités :</p>
+    <ul class="bullets">
+      <li>onboarding vers une plateforme agréée ;</li>
+      <li>cycle de vie d'une facture ;</li>
+      <li>e-reporting ;</li>
+      <li>outil comptable intégré aux produits EBP ;</li>
+      <li>rapprochement entre factures et dépenses.</li>
+    </ul>
+    <p>Cette expérience m'a permis de passer d'une intervention centrée sur l'écran à une réflexion davantage orientée <strong>service, écosystème et dépendances entre produits</strong>.</p>
+  </section>
+
+  <section>
+    <h2>04 — Concevoir une fonctionnalité de rapprochement assistée</h2>
+    <p>L'un des sujets sur lesquels j'ai particulièrement itéré concerne le <strong>rapprochement entre factures, commandes et bons de réception</strong>.</p>
+    <p>Le consultant métier m'a initialement proposé une organisation basée sur les composants de tableaux historiques d'Open Line :</p>
+    <div class="flow-line">factures à gauche → commandes et bons de réception à droite</div>
+
+    <h3>V1 — Traduire le besoin métier dans Open Line</h3>
+    <p>Ma première proposition reste volontairement fidèle au besoin exprimé et aux conventions du logiciel.</p>
+
+    <div class="mini-carousel" id="v1-gal">
+      <div class="mini-carousel-viewport">
+        <img class="mini-carousel-img" id="v1-gal-img" src="images/openline-rapprochement-v1-1.jpg" alt="Rapprochement factures / commandes — V1, écran 1">
+      </div>
+      <button type="button" class="mini-carousel-nav mini-carousel-prev" aria-label="Image précédente">‹</button>
+      <button type="button" class="mini-carousel-nav mini-carousel-next" aria-label="Image suivante">›</button>
+      <div class="mini-carousel-caption" id="v1-gal-caption"></div>
+      <div class="mini-carousel-dots"></div>
+      <div class="mini-carousel-data" hidden>
+        <button type="button" data-src="images/openline-rapprochement-v1-1.jpg" data-alt="Rapprochement factures / commandes — V1, écran 1"></button>
+        <button type="button" data-src="images/openline-rapprochement-v1-2.jpg" data-alt="Rapprochement factures / commandes — V1, écran 2"></button>
+        <button type="button" data-src="images/openline-rapprochement-v1-3.jpg" data-alt="Rapprochement factures / commandes — V1, écran 3"></button>
+        <button type="button" data-src="images/openline-rapprochement-v1-4.jpg" data-alt="Rapprochement factures / commandes — V1, écran 4"></button>
+        <button type="button" data-src="images/openline-rapprochement-v1-5.jpg" data-alt="Rapprochement factures / commandes — V1, écran 5"></button>
+      </div>
+    </div>
+
+    <p>L'objectif était d'abord de valider la structure fonctionnelle avant de chercher à transformer l'expérience.</p>
+    <p>Mais cette première version soulève rapidement une question.</p>
+    <p>La fonctionnalité doit être présentée comme une fonctionnalité <strong>IA</strong>, alors que le rapprochement envisagé repose en réalité davantage sur de l'automatisation que sur de l'IA générative.</p>
+    <p>La direction estime donc que l'expérience doit davantage rendre visible cette nouvelle proposition de valeur.</p>
+
+    <h3>V2 — Donner une identité à l'expérience IA</h3>
+    <p>J'explore alors plusieurs pistes.</p>
+    <p>Une première conserve davantage les codes Open Line tout en introduisant :</p>
+    <ul class="bullets">
+      <li>des statuts de rapprochement ;</li>
+      <li>une distinction visuelle des suggestions ;</li>
+      <li>des indicateurs clés ;</li>
+      <li>une meilleure hiérarchie de l'information.</li>
+    </ul>
+    <p>Une seconde piste reprend les codes visuels de l'assistant IA sur lequel je travaille en parallèle.</p>
+    <p>L'objectif est alors d'explorer une rupture plus visible avec l'interface historique.</p>
+    <p>Mais cette piste ouvre une nouvelle question :</p>
+    <div class="quote-shift">
+      <blockquote>Est-ce que l'utilisation de l'IA est réellement pertinente pour ce cas d'usage ?</blockquote>
+    </div>
+  </section>
+
+  <section>
+    <h2>05 — Ne pas utiliser l'IA simplement parce que le produit est présenté comme « IA »</h2>
+    <p>J'ai présenté cette piste au consultant métier et au Lead Product de l'équipe IA.</p>
+    <p>La discussion a permis de confronter l'hypothèse UX à la réalité technique et produit :</p>
+    <ul class="bullets">
+      <li>Le backend de l'assistant aurait-il accès à toutes les données nécessaires ?</li>
+      <li>Pourrait-il produire un résultat suffisamment fiable ?</li>
+      <li>Quel serait le coût de cette approche ?</li>
+      <li>Quelle serait sa place dans la roadmap de l'équipe IA ?</li>
+    </ul>
+    <p>L'arbitrage a finalement été de privilégier <strong>l'automatisation existante</strong>.</p>
+    <p>Cette approche était considérée comme plus fiable, moins coûteuse et plus adaptée au cas d'usage, tandis que la roadmap de l'équipe IA était déjà fortement engagée.</p>
+    <p>Cette exploration m'a confortée dans une conviction :</p>
+    <div class="quote-shift">
+      <blockquote>Le rôle du Product Designer n'est pas de mettre de l'IA partout, mais de déterminer quelle technologie et quelle interaction servent réellement le besoin utilisateur.</blockquote>
+    </div>
+  </section>
+
+  <section>
+    <h2>06 — Repenser l'interface autour de l'activité réelle</h2>
+    <p>En parallèle, je continuais à challenger la structure de l'interface.</p>
+    <p>Dans les premières versions, les deux tableaux occupaient une place relativement équivalente.</p>
+    <p>Mais une discussion avec mon manager m'a amenée à reconsidérer cette organisation :</p>
+    <div class="quote-shift">
+      <blockquote>Les deux tableaux sont-ils réellement aussi importants l'un que l'autre pour l'utilisateur ?</blockquote>
+    </div>
+    <p>En observant mentalement le déroulement de la tâche, j'ai identifié un modèle d'interaction différent :</p>
+    <div class="flow-line is-vertical">
+      Sélectionner une ligne de facture
+      <span class="arrow">↓</span>
+      Identifier les commandes / bons de réception correspondants
+      <span class="arrow">↓</span>
+      Effectuer ou vérifier le rapprochement
+      <span class="arrow">↓</span>
+      Passer à la ligne suivante
+    </div>
+    <p>L'interface devait donc être organisée autour de cette activité plutôt qu'autour de deux tableaux de même importance.</p>
+
+    <h3>V4 — Hiérarchiser l'information</h3>
+    <p>Dans la dernière proposition, j'ai consacré environ :</p>
+    <div class="flow-line is-vertical">
+      30 % de l'espace aux lignes de facture
+      <span class="arrow">·</span>
+      70 % aux commandes et bons de réception
+    </div>
+    <p>L'objectif était de donner davantage d'espace à la zone dans laquelle l'utilisateur effectue réellement son travail.</p>
+    <p>J'ai également conservé une vision globale des lignes de facture plutôt que d'afficher uniquement la ligne active, afin de faciliter :</p>
+    <ul class="bullets">
+      <li>la navigation ;</li>
+      <li>la compréhension de la progression ;</li>
+      <li>l'identification des erreurs ;</li>
+      <li>la conservation du contexte.</li>
+    </ul>
+    <p>J'ai également retravaillé la sémantique des éléments liés à l'automatisation :</p>
+    <ul class="bullets">
+      <li>états de rapprochement ;</li>
+      <li>suggestions ;</li>
+      <li>erreurs ;</li>
+      <li>alertes ;</li>
+      <li>tooltips ;</li>
+      <li>actions permettant à l'utilisateur d'intervenir.</li>
+    </ul>
+
+    <h3>Une interface qui accompagne plutôt qu'elle ne remplace</h3>
+    <p>L'objectif n'est donc pas seulement de faire réaliser automatiquement le rapprochement.</p>
+    <p>Il s'agit de permettre à l'utilisateur de <strong>comprendre ce qui a été fait, d'identifier les anomalies et de garder la possibilité d'agir</strong>.</p>
+    <p>La proposition est actuellement en cours d'arbitrage avant développement.</p>
+  </section>
+
+  <section>
+    <h2>07 — Concevoir dans l'incertitude</h2>
+    <p>Ce projet m'a particulièrement appris à travailler avec des décisions qui ne sont pas toujours immédiatement stabilisées.</p>
+    <p>À chaque itération, je devais confronter le design à plusieurs réalités :</p>
+    <div class="flow-line is-vertical">
+      Besoin métier
+      <span class="arrow">↕</span>
+      Compréhension utilisateur
+      <span class="arrow">↕</span>
+      Faisabilité technique
+      <span class="arrow">↕</span>
+      Coût
+      <span class="arrow">↕</span>
+      Roadmap
+      <span class="arrow">↕</span>
+      Valeur produit
+    </div>
+    <p>Certaines propositions ont été abandonnées, d'autres ont été simplifiées, et certaines ont ouvert de nouvelles questions.</p>
+    <p>Le design n'était donc pas une étape finale permettant de « dessiner la solution ».</p>
+    <p>Il devenait un <strong>outil pour explorer les possibilités et faire émerger les arbitrages</strong>.</p>
+  </section>
+
+  <section>
+    <h2>08 — Aller chercher les problèmes au-delà des maquettes</h2>
+    <p>Pour mieux comprendre les difficultés rencontrées avec Open Line, j'ai également cherché à me rapprocher des équipes qui sont quotidiennement confrontées aux problèmes utilisateurs.</p>
+    <p>J'ai notamment insisté pour participer aux réunions entre les Product Owners et le <strong>support technique</strong>.</p>
+    <p>Cela me permet d'entendre directement les difficultés remontées par les clients et de compléter les informations issues des recherches UX.</p>
+    <p>Cette démarche fait partie d'une évolution plus large de ma pratique :</p>
+    <div class="quote-shift">
+      <blockquote>Ne pas attendre qu'un problème soit transformé en User Story pour commencer à le comprendre.</blockquote>
+    </div>
+  </section>
+
+  <section>
+    <h2>09 — De la connaissance utilisateur à une nouvelle porte d'entrée</h2>
+    <p>Les recherches menées dans le cadre de Hubbix Bâtiment et de la discovery de l'assistant IA m'ont également permis d'échanger directement avec différents utilisateurs EBP :</p>
+    <ul class="bullets">
+      <li>électriciens ;</li>
+      <li>chauffagistes ;</li>
+      <li>peintres ;</li>
+      <li>artisans tous corps d'état ;</li>
+      <li>commerçants ;</li>
+      <li>comptables.</li>
+    </ul>
+    <p>Un constat revenait régulièrement : certains utilisateurs trouvent Open Line riche mais complexe à prendre en main.</p>
+    <p>Ils expliquent notamment devoir contacter EBP pour :</p>
+    <ul class="bullets">
+      <li>paramétrer leur dossier ;</li>
+      <li>trouver comment réaliser certaines opérations ;</li>
+      <li>ajouter ou modifier certaines options ;</li>
+      <li>automatiser certains calculs.</li>
+    </ul>
+    <p>La question devient alors :</p>
+    <div class="quote-shift">
+      <blockquote>Comment continuer à améliorer l'expérience d'un logiciel historique sans engager immédiatement une refonte complète ?</blockquote>
+    </div>
+    <p>L'assistant IA constitue une piste intéressante pour répondre à une partie de cette problématique.</p>
+    <p>Plutôt que d'obliger l'utilisateur à connaître la structure du logiciel pour trouver une fonctionnalité, l'IA peut progressivement devenir <strong>une nouvelle porte d'entrée vers les capacités existantes du produit</strong>.</p>
+  </section>
+
+  <section>
+    <h2>10 — Une responsabilité qui s'élargit à l'ensemble d'EBP Informatique</h2>
+    <p>Depuis <strong>septembre 2026</strong>, mon périmètre a évolué.</p>
+    <p>Je suis désormais en charge de l'<strong>UX/UI design de l'ensemble des logiciels EBP Informatique</strong>, sur plusieurs secteurs :</p>
+    <div class="flow-line">Paie · Bâtiment · Gestion Commerciale · Comptabilité · Mécanique</div>
+    <p>et leurs différents niveaux d'abonnement :</p>
+    <div class="flow-line">Activ · Pro · Elite · Association</div>
+    <p>Cette évolution marque un changement d'échelle dans mon rôle.</p>
+    <p>Je ne travaille plus uniquement sur l'expérience d'un produit ou d'une équipe, mais sur la <strong>cohérence UX/UI d'un portefeuille de logiciels aux contextes métier, aux niveaux de maturité et aux contraintes techniques différents</strong>.</p>
+    <p>Elle m'amène notamment à réfléchir à :</p>
+    <ul class="bullets">
+      <li>la cohérence entre les produits ;</li>
+      <li>la mutualisation des patterns ;</li>
+      <li>l'évolution des standards UI ;</li>
+      <li>la dette UX ;</li>
+      <li>la priorisation des améliorations ;</li>
+      <li>l'intégration progressive de nouvelles technologies comme l'IA.</li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section class="closing">
+    <h2 style="margin-top:0">Ce que ce projet représente dans mon parcours</h2>
+    <p>Open Line est probablement le projet qui illustre le mieux une évolution importante de ma pratique du Product Design.</p>
+    <p>Je suis arrivée avec un rôle principalement orienté <strong>UI</strong>, dans un produit où la consigne était de modifier le moins possible l'existant.</p>
+    <p>Progressivement, mon rôle s'est élargi :</p>
+    <div class="flow-line is-vertical">
+      UI Design
+      <span class="arrow">→</span>
+      UX/UI
+      <span class="arrow">→</span>
+      conception de fonctionnalités complexes
+      <span class="arrow">→</span>
+      recherche et compréhension des utilisateurs
+      <span class="arrow">→</span>
+      facilitation transverse
+      <span class="arrow">→</span>
+      arbitrage avec les équipes métier et techniques
+      <span class="arrow">→</span>
+      vision produit
+      <span class="arrow">→</span>
+      responsabilité UX/UI transverse
+    </div>
+    <p>Ce projet m'a surtout appris à concevoir <strong>avec les contraintes plutôt que contre elles</strong>.</p>
+    <p>Dans un produit neuf, il est possible de remettre en question une grande partie de l'existant.</p>
+    <p>Dans un logiciel historique, chaque changement doit être mis en perspective avec :</p>
+    <div class="quote-shift">
+      <blockquote>la valeur utilisateur, la faisabilité, le coût, la roadmap et le cycle de vie du produit.</blockquote>
+    </div>
+    <p>C'est cette capacité à faire évoluer progressivement un produit complexe, à challenger l'existant tout en tenant compte de la réalité de l'organisation, qui représente pour moi la dimension la plus importante de cette expérience.</p>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <h2 style="margin-top:0">Repères</h2>
+    <div class="specs-table">
+      <div class="specs-row"><span class="specs-label">Depuis</span><span class="specs-value">2022</span></div>
+      <div class="specs-row"><span class="specs-label">Périmètre initial</span><span class="specs-value">Open Line Bâtiment</span></div>
+      <div class="specs-row"><span class="specs-label">Équipe</span><span class="specs-value">~15 personnes</span></div>
+      <div class="specs-row"><span class="specs-label">Domaines</span><span class="specs-value">Bâtiment, Gestion Commerciale, Comptabilité, Paie, Mécanique</span></div>
+      <div class="specs-row"><span class="specs-label">Sujets transverses</span><span class="specs-value">Facture électronique, IA, outils comptables</span></div>
+      <div class="specs-row"><span class="specs-label">Ateliers facture électronique</span><span class="specs-value">~20 PO / chefs de projet</span></div>
+      <div class="specs-row"><span class="specs-label">Depuis septembre 2026</span><span class="specs-value">UX/UI de l'ensemble des logiciels EBP Informatique</span></div>
+    </div>
+  </section>
+
+  <div class="page-footer">
+    <div class="footer-links">
+      <a href="mailto:edwmathieu@gmail.com">edwmathieu@gmail.com</a>
+      <a href="tel:+33760206796">+33 7 60 20 67 96</a>
+    </div>
+    <div class="footer-links">
+      <a href="https://linkedin.com/in/edwine-mathieu-ux-ui-designer" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://behance.net/edmat" target="_blank" rel="noopener">Behance</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button type="button" class="lightbox-close" aria-label="Fermer">&times;</button>
+  <div class="lightbox-viewport"><img class="lightbox-img" id="lightbox-img" src="" alt=""></div>
+  <div class="lightbox-zoom">
+    <button type="button" class="lightbox-zoom-btn" id="lightbox-zoom-out" aria-label="Dézoomer">−</button>
+    <button type="button" class="lightbox-zoom-btn" id="lightbox-zoom-in" aria-label="Zoomer">+</button>
+  </div>
+</div>
+
+<button type="button" class="back-to-top" id="back-to-top" aria-label="Retour en haut" hidden>↑</button>
+
+<script>
+  (function () {
+    var heroPhoto = document.getElementById('hero-photo');
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var closeBtn = lightbox.querySelector('.lightbox-close');
+    var zoomInBtn = document.getElementById('lightbox-zoom-in');
+    var zoomOutBtn = document.getElementById('lightbox-zoom-out');
+    var zoom = 1;
+
+    function applyZoom() { lightboxImg.style.width = zoom === 1 ? 'auto' : (zoom * 92) + 'vw'; }
+    function openLightbox(src, alt) {
+      lightboxImg.src = src; lightboxImg.alt = alt || ''; zoom = 1; applyZoom();
+      lightbox.classList.add('is-open'); lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = ''; lightboxImg.src = '';
+    }
+    heroPhoto.addEventListener('click', function () { openLightbox(heroPhoto.src, heroPhoto.alt); });
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-viewport')) closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+    zoomInBtn.addEventListener('click', function () { zoom = Math.min(4, zoom + 0.5); applyZoom(); });
+    zoomOutBtn.addEventListener('click', function () { zoom = Math.max(1, zoom - 0.5); applyZoom(); });
+
+    document.querySelectorAll('.mini-carousel').forEach(function (carousel) {
+      var img = carousel.querySelector('.mini-carousel-img');
+      var caption = carousel.querySelector('.mini-carousel-caption');
+      var items = Array.prototype.slice.call(carousel.querySelectorAll('.mini-carousel-data button'));
+      var dotsWrap = carousel.querySelector('.mini-carousel-dots');
+      var prevBtn = carousel.querySelector('.mini-carousel-prev');
+      var nextBtn = carousel.querySelector('.mini-carousel-next');
+      var current = 0;
+      var dots = items.map(function (item, i) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'mini-carousel-dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Photo ' + (i + 1) + ' sur ' + items.length);
+        dot.addEventListener('click', function () { showIndex(i); });
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+      function showIndex(i) {
+        current = (i + items.length) % items.length;
+        var item = items[current];
+        img.src = item.dataset.src; img.alt = item.dataset.alt || '';
+        if (caption) caption.textContent = item.dataset.caption || '';
+        dots.forEach(function (d, i2) { d.classList.toggle('is-active', i2 === current); });
+      }
+      if (caption) caption.textContent = items[0] ? (items[0].dataset.caption || '') : '';
+      prevBtn.addEventListener('click', function () { showIndex(current - 1); });
+      nextBtn.addEventListener('click', function () { showIndex(current + 1); });
+      img.addEventListener('click', function () { openLightbox(img.src, img.alt); });
+    });
+
+    var backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () { backToTop.hidden = window.scrollY < 600; });
+    backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  })();
+</script>
+
+<script>
+  var TRANSLATIONS_EN = {
+    'nav-back': '← Back to portfolio',
+    'nav-home': 'Home',
+    'nav-cv': 'Resume',
+    'nav-projects': 'Projects',
+    'cs-eyebrow': 'Case study'
+  };
+  (function () {
+    var LANG_KEY = 'site-lang';
+    var i18nEls = document.querySelectorAll('[data-i18n]');
+    var frContent = new Map();
+    i18nEls.forEach(function (el) { frContent.set(el, el.innerHTML); });
+    var langButtons = document.querySelectorAll('.lang-btn');
+    function applyLanguage(lang) {
+      i18nEls.forEach(function (el) {
+        var key = el.dataset.i18n;
+        el.innerHTML = (lang === 'en' && TRANSLATIONS_EN[key]) ? TRANSLATIONS_EN[key] : frContent.get(el);
+      });
+      document.documentElement.lang = lang;
+      langButtons.forEach(function (btn) {
+        var isActive = btn.dataset.lang === lang;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
+      });
+      try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    }
+    langButtons.forEach(function (btn) { btn.addEventListener('click', function () { applyLanguage(btn.dataset.lang); }); });
+    var savedLang = 'fr';
+    try { savedLang = localStorage.getItem(LANG_KEY) || 'fr'; } catch (e) {}
+    if (savedLang === 'en') applyLanguage('en');
+  })();
+</script>
+</body>
+</html>
