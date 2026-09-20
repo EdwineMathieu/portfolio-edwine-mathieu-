@@ -47,18 +47,7 @@
   .meta-line { font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 8px; }
   .facts-line { font-size: 14px; color: var(--text-faint); margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
   .hero-photo { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 16px; border: 1px solid var(--border-light); margin-bottom: 48px; cursor: zoom-in; }
-  .mini-carousel { position: relative; margin: 24px 0 16px; }
-  .mini-carousel-viewport { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #fff; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  .mini-carousel-img { display: block; width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
-  .mini-carousel-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 6px rgba(0,0,0,.12); }
-  .mini-carousel-nav:hover { background: oklch(0.94 0.008 90); }
-  .mini-carousel-prev { left: 14px; }
-  .mini-carousel-next { right: 14px; }
-  .mini-carousel-caption { font-size: 13px; color: var(--text-faint); text-align: center; margin-top: 12px; line-height: 1.5; }
-  .mini-carousel-caption:empty { display: none; }
-  .mini-carousel-dots { display: flex; justify-content: center; gap: 6px; margin-top: 12px; }
-  .mini-carousel-dot { width: 6px; height: 6px; padding: 0; border: none; border-radius: 50%; background: var(--border-light); cursor: pointer; }
-  .mini-carousel-dot.is-active { background: var(--accent); transform: scale(1.4); }
+  .case-photo { display: block; width: 100%; border-radius: 16px; border: 1px solid var(--border-light); margin: 20px 0; cursor: zoom-in; }
   .lightbox { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; background: oklch(0.15 0.005 260 / 0.92); opacity: 0; visibility: hidden; transition: opacity .2s ease; }
   .lightbox.is-open { opacity: 1; visibility: visible; }
   .lightbox-viewport { max-width: 92vw; max-height: 92vh; overflow: auto; }
@@ -261,21 +250,7 @@
     <h3>V1 — Traduire le besoin métier dans Open Line</h3>
     <p>Ma première proposition reste volontairement fidèle au besoin exprimé et aux conventions du logiciel.</p>
 
-    <div class="mini-carousel" id="v1-gal">
-      <div class="mini-carousel-viewport">
-        <img class="mini-carousel-img" id="v1-gal-img" src="images/openline-rapprochement-v1-2.png" alt="Assistant IA de rapprochement Open Line — rapprochement automatique par ligne">
-      </div>
-      <button type="button" class="mini-carousel-nav mini-carousel-prev" aria-label="Image précédente">‹</button>
-      <button type="button" class="mini-carousel-nav mini-carousel-next" aria-label="Image suivante">›</button>
-      <div class="mini-carousel-caption" id="v1-gal-caption"></div>
-      <div class="mini-carousel-dots"></div>
-      <div class="mini-carousel-data" hidden>
-        <button type="button" data-src="images/openline-rapprochement-v1-2.png" data-alt="Assistant IA de rapprochement Open Line — rapprochement automatique par ligne"></button>
-        <button type="button" data-src="images/openline-rapprochement-v1-3.png" data-alt="Assistant de rapprochement Open Line — recherche par période et type de document"></button>
-        <button type="button" data-src="images/openline-rapprochement-v1-4.png" data-alt="Assistant de rapprochement Open Line — statuts de pointage et suggestions IA"></button>
-        <button type="button" data-src="images/openline-rapprochement-v1-1.png" data-alt="Assistant IA de rapprochement Open Line — options de rapprochement et suggestions IA"></button>
-      </div>
-    </div>
+    <img class="case-photo" src="images/openline-rapprochement-v1-2.png" alt="Assistant IA de rapprochement Open Line — rapprochement automatique par ligne">
 
     <p>L'objectif était d'abord de valider la structure fonctionnelle avant de chercher à transformer l'expérience.</p>
     <p>Mais cette première version soulève rapidement une question.</p>
@@ -283,6 +258,7 @@
     <p>La direction estime donc que l'expérience doit davantage rendre visible cette nouvelle proposition de valeur.</p>
 
     <h3>V2 — Donner une identité à l'expérience IA</h3>
+    <img class="case-photo" src="images/openline-rapprochement-v1-3.png" alt="Assistant de rapprochement Open Line — recherche par période et type de document">
     <p>J'explore alors plusieurs pistes.</p>
     <p>Une première conserve davantage les codes Open Line tout en introduisant :</p>
     <ul class="bullets">
@@ -301,6 +277,7 @@
 
   <section>
     <h2>05 — Ne pas utiliser l'IA simplement parce que le produit est présenté comme « IA »</h2>
+    <img class="case-photo" src="images/openline-rapprochement-v1-4.png" alt="Assistant de rapprochement Open Line — statuts de pointage et suggestions IA">
     <p>J'ai présenté cette piste au consultant métier et au Lead Product de l'équipe IA.</p>
     <p>La discussion a permis de confronter l'hypothèse UX à la réalité technique et produit :</p>
     <ul class="bullets">
@@ -338,6 +315,7 @@
     <p>L'interface devait donc être organisée autour de cette activité plutôt qu'autour de deux tableaux de même importance.</p>
 
     <h3>V4 — Hiérarchiser l'information</h3>
+    <img class="case-photo" src="images/openline-rapprochement-v1-1.png" alt="Assistant IA de rapprochement Open Line — options de rapprochement et suggestions IA">
     <p>Dans la dernière proposition, j'ai consacré environ :</p>
     <div class="flow-line is-vertical">
       30 % de l'espace aux lignes de facture
@@ -551,33 +529,7 @@
     zoomInBtn.addEventListener('click', function () { zoom = Math.min(4, zoom + 0.5); applyZoom(); });
     zoomOutBtn.addEventListener('click', function () { zoom = Math.max(1, zoom - 0.5); applyZoom(); });
 
-    document.querySelectorAll('.mini-carousel').forEach(function (carousel) {
-      var img = carousel.querySelector('.mini-carousel-img');
-      var caption = carousel.querySelector('.mini-carousel-caption');
-      var items = Array.prototype.slice.call(carousel.querySelectorAll('.mini-carousel-data button'));
-      var dotsWrap = carousel.querySelector('.mini-carousel-dots');
-      var prevBtn = carousel.querySelector('.mini-carousel-prev');
-      var nextBtn = carousel.querySelector('.mini-carousel-next');
-      var current = 0;
-      var dots = items.map(function (item, i) {
-        var dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'mini-carousel-dot' + (i === 0 ? ' is-active' : '');
-        dot.setAttribute('aria-label', 'Photo ' + (i + 1) + ' sur ' + items.length);
-        dot.addEventListener('click', function () { showIndex(i); });
-        dotsWrap.appendChild(dot);
-        return dot;
-      });
-      function showIndex(i) {
-        current = (i + items.length) % items.length;
-        var item = items[current];
-        img.src = item.dataset.src; img.alt = item.dataset.alt || '';
-        if (caption) caption.textContent = item.dataset.caption || '';
-        dots.forEach(function (d, i2) { d.classList.toggle('is-active', i2 === current); });
-      }
-      if (caption) caption.textContent = items[0] ? (items[0].dataset.caption || '') : '';
-      prevBtn.addEventListener('click', function () { showIndex(current - 1); });
-      nextBtn.addEventListener('click', function () { showIndex(current + 1); });
+    document.querySelectorAll('.case-photo').forEach(function (img) {
       img.addEventListener('click', function () { openLightbox(img.src, img.alt); });
     });
 
