@@ -45,18 +45,10 @@
   .subtitle { font-size: 19px; color: var(--text-muted); margin: 0 0 20px; }
   .meta-line { font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 8px; }
   .facts-line { font-size: 14px; color: var(--text-faint); margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
-  .mini-carousel { position: relative; margin: 0 0 48px; }
-  .mini-carousel-viewport { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #fff; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  .mini-carousel-img { display: block; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
-  .mini-carousel-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 6px rgba(0,0,0,.12); }
-  .mini-carousel-nav:hover { background: oklch(0.94 0.008 90); }
-  .mini-carousel-prev { left: 14px; }
-  .mini-carousel-next { right: 14px; }
-  .mini-carousel-caption { font-size: 13px; color: var(--text-faint); text-align: center; margin-top: 12px; line-height: 1.5; }
-  .mini-carousel-caption:empty { display: none; }
-  .mini-carousel-dots { display: flex; justify-content: center; gap: 6px; margin-top: 12px; }
-  .mini-carousel-dot { width: 6px; height: 6px; padding: 0; border: none; border-radius: 50%; background: var(--border-light); cursor: pointer; }
-  .mini-carousel-dot.is-active { background: var(--accent); transform: scale(1.4); }
+  .hero-photo { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 16px; border: 1px solid var(--border-light); margin-bottom: 48px; cursor: zoom-in; }
+  .case-figure { margin: 24px 0 28px; }
+  .case-figure img { display: block; width: 100%; border-radius: 16px; border: 1px solid var(--border-light); cursor: zoom-in; }
+  .case-figure figcaption { font-size: 13px; color: var(--text-faint); text-align: center; margin-top: 12px; line-height: 1.5; }
   .lightbox { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; background: oklch(0.15 0.005 260 / 0.92); opacity: 0; visibility: hidden; transition: opacity .2s ease; }
   .lightbox.is-open { opacity: 1; visibility: visible; }
   .lightbox-viewport { max-width: 92vw; max-height: 92vh; overflow: auto; }
@@ -120,21 +112,7 @@
   <div class="meta-line">Product Designer · 2025–2026</div>
   <div class="facts-line">Projet 0→1 · Discovery → conception → lancement · 80 utilisateurs actifs en 20 jours</div>
 
-  <div class="mini-carousel" id="gal">
-    <div class="mini-carousel-viewport">
-      <img class="mini-carousel-img" id="gal-img" src="images/agent-ia-hero.png" alt="Assistant IA — EBP Open Line">
-    </div>
-    <button type="button" class="mini-carousel-nav mini-carousel-prev" aria-label="Image précédente">‹</button>
-    <button type="button" class="mini-carousel-nav mini-carousel-next" aria-label="Image suivante">›</button>
-    <div class="mini-carousel-caption" id="gal-caption"></div>
-    <div class="mini-carousel-dots"></div>
-    <div class="mini-carousel-data" hidden>
-      <button type="button" data-src="images/agent-ia-hero.png" data-alt="Assistant IA — un assistant conversationnel au cœur de vos logiciels EBP Open Line"></button>
-      <button type="button" data-src="images/agent-ia-openline.png" data-alt="Assistant IA — EBP Open Line" data-caption="Capture d'écran du chatbot intégrée au logiciel de gestion commerciale EBP version Plus Elite. - juillet 2026"></button>
-      <button type="button" data-src="images/agent-ia-figma.png" data-alt="Assistant IA — maquette Figma" data-caption="Espace de travail partagé sur Figma où nous avons conçu les différents composants de l'agent IA EBP."></button>
-      <button type="button" data-src="images/agent-ia-mobile.png" data-alt="Assistant IA — tableau et répartition public/privé" data-caption="Capture du chatbot IA replié en panneau latéral droit."></button>
-    </div>
-  </div>
+  <img class="hero-photo" src="images/agent-ia-hero.png" alt="Assistant IA — un assistant conversationnel au cœur de vos logiciels EBP Open Line">
 
   <section>
     <h2>Le contexte</h2>
@@ -305,6 +283,10 @@
     <p>Par exemple, certaines propositions impliquaient un coût élevé en tokens, tandis que d'autres nécessitaient d'interroger davantage de données, avec des conséquences potentielles sur les performances et le stockage.</p>
     <p>Mon rôle consistait alors à comprendre la contrainte technique, à en mesurer les conséquences sur l'expérience et à rechercher avec les développeurs une solution permettant de conserver le maximum de valeur utilisateur.</p>
     <p>Cette collaboration étroite avec la tech était indispensable pour concevoir une IA réellement intégrable dans le produit.</p>
+    <figure class="case-figure">
+      <img src="images/agent-ia-mobile.png" alt="Assistant IA — chatbot replié en panneau latéral droit">
+      <figcaption>Capture du chatbot IA replié en panneau latéral droit.</figcaption>
+    </figure>
   </section>
 
   <section>
@@ -362,6 +344,10 @@
     </ul>
     <p>Après le départ de ma collègue Product Designer, j'ai pris la responsabilité complète du design du projet.</p>
     <p>Cette autonomie m'a amenée à devenir l'interlocutrice UX/UI principale du projet et à travailler directement avec le Product Lead et les développeurs sur les décisions d'expérience.</p>
+    <figure class="case-figure">
+      <img src="images/agent-ia-figma.png" alt="Assistant IA — espace de travail Figma">
+      <figcaption>Espace de travail partagé sur Figma où nous avons conçu les différents composants de l'agent IA EBP.</figcaption>
+    </figure>
   </section>
 
   <section>
@@ -369,6 +355,10 @@
     <p>En juillet 2026, l'assistant IA a été lancé auprès des clients EBP Open Line Gestion Commerciale.</p>
     <p>Plutôt que d'attendre plusieurs mois avant d'évaluer son intérêt, l'équipe a immédiatement mis en place une démarche d'observabilité.</p>
     <p>Un tableau de bord interne permet de suivre l'utilisation de l'assistant et d'alimenter les décisions produit.</p>
+    <figure class="case-figure">
+      <img src="images/agent-ia-openline.png" alt="Assistant IA — chatbot intégré à EBP Gestion Commerciale">
+      <figcaption>Capture d'écran du chatbot intégrée au logiciel de gestion commerciale EBP version Plus Elite. - juillet 2026</figcaption>
+    </figure>
 
     <h3>Les premiers signaux</h3>
     <p>En seulement 20 jours :</p>
@@ -537,33 +527,7 @@
     zoomInBtn.addEventListener('click', function () { zoom = Math.min(4, zoom + 0.5); applyZoom(); });
     zoomOutBtn.addEventListener('click', function () { zoom = Math.max(1, zoom - 0.5); applyZoom(); });
 
-    document.querySelectorAll('.mini-carousel').forEach(function (carousel) {
-      var img = carousel.querySelector('.mini-carousel-img');
-      var caption = carousel.querySelector('.mini-carousel-caption');
-      var items = Array.prototype.slice.call(carousel.querySelectorAll('.mini-carousel-data button'));
-      var dotsWrap = carousel.querySelector('.mini-carousel-dots');
-      var prevBtn = carousel.querySelector('.mini-carousel-prev');
-      var nextBtn = carousel.querySelector('.mini-carousel-next');
-      var current = 0;
-      var dots = items.map(function (item, i) {
-        var dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'mini-carousel-dot' + (i === 0 ? ' is-active' : '');
-        dot.setAttribute('aria-label', 'Photo ' + (i + 1) + ' sur ' + items.length);
-        dot.addEventListener('click', function () { showIndex(i); });
-        dotsWrap.appendChild(dot);
-        return dot;
-      });
-      function showIndex(i) {
-        current = (i + items.length) % items.length;
-        var item = items[current];
-        img.src = item.dataset.src; img.alt = item.dataset.alt || '';
-        if (caption) caption.textContent = item.dataset.caption || '';
-        dots.forEach(function (d, i2) { d.classList.toggle('is-active', i2 === current); });
-      }
-      if (caption) caption.textContent = items[0] ? (items[0].dataset.caption || '') : '';
-      prevBtn.addEventListener('click', function () { showIndex(current - 1); });
-      nextBtn.addEventListener('click', function () { showIndex(current + 1); });
+    document.querySelectorAll('.hero-photo, .case-figure img').forEach(function (img) {
       img.addEventListener('click', function () { openLightbox(img.src, img.alt); });
     });
 
