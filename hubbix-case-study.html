@@ -211,9 +211,6 @@
     transition: background .15s ease;
   }
   .btn-proto:hover { background: var(--accent-soft); }
-  .case-figure { margin: 24px 0 28px; }
-  .case-figure img { display: block; width: 100%; border-radius: 16px; border: 1px solid var(--border-light); cursor: zoom-in; }
-  .case-figure figcaption { font-size: 13px; color: var(--text-faint); text-align: center; margin-top: 12px; line-height: 1.5; }
 
   /* Journey map : à la largeur de la colonne de texte, une étape après l'autre */
   .jm-bleed {
@@ -856,10 +853,6 @@
 
     <h3 data-i18n="hs-s2-h3a">L'option évidente : reprendre l'existant</h3>
     <p data-i18n="hs-s2-p1">Pour l'éditeur de devis et de factures, l'idée naturelle était de reprendre la grille de la gestion commerciale existante. En l'analysant, j'ai constaté qu'elle était puissante mais complexe, et peu adaptée à l'expérience visée pour le bâtiment. J'ai étudié les solutions concurrentes et construit une proposition différente.</p>
-    <figure class="case-figure">
-      <img src="images/hubbix-grille-gestion-commerciale.webp" alt="Hubbix Gestion commerciale — grille d'édition d'un devis">
-      <figcaption data-i18n="hs-s2-fig">La grille de Hubbix Gestion commerciale, point de départ que je devais reprendre.</figcaption>
-    </figure>
 
     <h3 data-i18n="hs-s2-h3t">Ce que les tests utilisateurs ont révélé</h3>
     <p data-i18n="hs-s2-pt1">Les tests menés à la suite des interviews ont montré que les utilisateurs souhaitaient retrouver toutes les informations du devis sur un seul et même écran.</p>
@@ -1004,13 +997,7 @@
 
     heroPhoto.addEventListener('click', function () {
       openLightbox(heroPhoto.src, heroPhoto.alt);
-    });
-    document.querySelectorAll('.case-figure img').forEach(function (img) {
-      img.addEventListener('click', function () {
-        openLightbox(img.src, img.alt);
-      });
-    });
-    document.querySelectorAll('.compare').forEach(function (cmp) {
+    });    document.querySelectorAll('.compare').forEach(function (cmp) {
       var handle = cmp.querySelector('.compare-handle');
       var dragging = false;
 
@@ -1180,7 +1167,6 @@
     'hs-s2-h3a': 'The obvious option: reuse what exists',
     'hs-s2-p1': 'For the quote and invoice editor, the natural idea was to reuse the grid from the existing sales management solution. After analyzing it, I found it was powerful but complex, and poorly suited to the experience intended for construction users. I studied competing solutions and built a different proposal.',
     'hs-s2-cmp-cap': 'Drag the handle: on the left, the Open Line Bâtiment grid; on the right, the new Hubbix Bâtiment grid.',
-    'hs-s2-fig': 'The Hubbix Gestion commerciale grid, the starting point I was expected to reuse.',
     'hs-s2-h3t': 'What user testing revealed',
     'hs-s2-pt1': 'The tests run after the interviews showed that users wanted to find all the information of a quote on one and the same screen.',
     'hs-s2-pt2': 'They also exposed a limit of the sales management grid: it did not allow "marathon entry", meaning typing everything in one go, helped by keyboard shortcuts and the Tab key.',
