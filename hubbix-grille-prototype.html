@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hubbix Bâtiment — Prototype de la grille de saisie</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0b0b7a;
+    --accent: #3d33c9;
+    --accent-soft: #eeedfc;
+    --peach: #fdebd3;
+    --peach-border: #fbdcb4;
+    --text: #2b2b33;
+    --muted: #6b6b78;
+    --line: #e6e6ec;
+    --bg: #f7f7fa;
+    --w-cost: minmax(120px, 1.5fr);
+    --w-fg: minmax(90px, 1fr);
+    --w-margin: minmax(110px, 1.4fr);
+    --w-discount: minmax(90px, 1fr);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--bg);
+    padding: 72px 24px 48px;
+  }
+  .back-link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    padding: 9px 16px;
+    border-radius: 100px;
+    background: #fff;
+    color: #111;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 1px 6px rgba(0,0,0,.15);
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .proto { max-width: 1500px; margin: 0 auto; }
+  .proto-scroll { overflow-x: auto; padding-bottom: 8px; }
+  .proto-inner {
+    --cols: 44px 52px minmax(150px, 2.2fr) 64px minmax(80px, 1fr) 64px var(--w-cost) var(--w-fg) var(--w-margin) var(--w-discount) minmax(90px, 1fr) minmax(90px, 1fr) minmax(100px, 1fr);
+    min-width: 1180px;
+    position: relative;
+    padding-right: 64px;
+    padding-bottom: 24px;
+  }
+  /* Options du document : colonnes masquées (la piste de la grille se réduit à 0) */
+  .proto-inner.hide-discount { --w-discount: 0px; }
+  .proto-inner.hide-profit { --w-cost: 0px; --w-fg: 0px; --w-margin: 0px; }
+  .proto-inner.hide-discount [data-col="discount"],
+  .proto-inner.hide-profit [data-col="cost"],
+  .proto-inner.hide-profit [data-col="fg"],
+  .proto-inner.hide-profit [data-col="margin"] { visibility: hidden; padding: 0; min-width: 0; overflow: hidden; }
+
+  .proto-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .icon-btn:hover { background: var(--accent-soft); }
+  .icon-btn svg { width: 20px; height: 20px; }
+  .top-actions { display: flex; align-items: center; gap: 24px; }
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: transparent;
+    color: var(--accent);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .link-btn svg { width: 20px; height: 20px; }
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--accent);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .btn-outline svg { width: 18px; height: 18px; }
+  .btn-outline:hover { background: var(--accent-soft); }
+
+  /* Grille */
+  .grid-head,
+  .row {
+    display: grid;
+    grid-template-columns: var(--cols);
+    align-items: center;
+    column-gap: 4px;
+  }
+  .grid-head {
+    background: var(--navy);
+    color: #fff;
+    font-weight: 600;
+    font-size: 12.5px;
+    height: 36px;
+    padding-right: 12px;
+  }
+  .grid-head > div { text-align: center; }
+  .grid-body { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+
+  .row {
+    min-height: 40px;
+    padding-right: 12px;
+    background: #fff;
+    border-radius: 4px;
+  }
+  .row .cell { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .cell.num { text-align: right; }
+  .row .cell.center { text-align: center; }
+  .row .view.pair { display: flex; justify-content: flex-end; gap: 10px; }
+  .row .view.pair .unit { width: 22px; text-align: center; color: var(--text); }
+  .row .view .val[data-placeholder]:empty::before { content: attr(data-placeholder); color: #9a9aa8; }
+  .row .view.pair .val:empty + .unit { visibility: hidden; }
+  .ref-chip { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 4px; background: #f1f1f5; font-size: 12px; }
+  .row .chev { display: flex; align-items: center; justify-content: center; color: var(--navy); }
+  .row .chev svg { width: 16px; height: 16px; }
+  .row .ref { text-align: center; font-size: 12px; }
+  .row[data-level="child"] > .chev { transform: translateX(4px); }
+
+  .row.note .note-text {
+    grid-column: 3 / -1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .type-badge {
+    width: 28px;
+    height: 28px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Ligne : lecture seule par défaut, champs éditables uniquement sur la ligne active (survolée) */
+  .row.line { min-height: 48px; }
+  .row.line:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .row.line .ed { display: none; }
+  .row.line.is-active .view { display: none; }
+  .row.line.is-active .ed { display: block; }
+  .row.line.is-active .field-select.ed,
+  .row.line.is-active .type-select.ed { display: flex; }
+  /* Numérotation / poignée de déplacement */
+  .numcell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 32px;
+    border-radius: 4px;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+  }
+  .numcell .grip { display: none; color: var(--muted); }
+  .numcell .grip svg { width: 18px; height: 18px; }
+  .numcell:hover { background: rgba(11, 11, 122, .07); }
+  .numcell:hover .ref,
+  .numcell.is-grabbed .ref { display: none; }
+  .numcell:hover .grip,
+  .numcell.is-grabbed .grip { display: flex; }
+
+  /* Glisser-déposer */
+  body.dnd-active, body.dnd-active * { cursor: grabbing !important; user-select: none; -webkit-user-select: none; }
+  .dnd-source { opacity: .35; }
+  .dnd-ghost {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: .96;
+    box-shadow: 0 8px 24px rgba(30, 30, 80, .28);
+    border-radius: 6px;
+  }
+  .dnd-ghost.group { border-radius: 8px; }
+  .drop-line {
+    position: fixed;
+    z-index: 999;
+    display: none;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--accent);
+    pointer-events: none;
+  }
+  .just-moved { animation: moved-flash 1s ease-out; }
+  @keyframes moved-flash {
+    from { box-shadow: 0 0 0 3px var(--accent); }
+    to { box-shadow: 0 0 0 3px transparent; }
+  }
+  .field {
+    width: 100%;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-size: 12.5px;
+    text-align: right;
+  }
+  .field.left { text-align: left; }
+  .field.unit-pick { padding: 0 2px 0 6px; text-align: center; text-align-last: center; cursor: pointer; }
+  .field::placeholder { color: #9a9aa8; }
+  .field:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .field-select {
+    display: flex;
+    align-items: center;
+    height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .field-select .field { border: none; border-radius: 0; height: 32px; min-width: 0; flex: 1; }
+  .field-select .suffix {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 6px;
+    border-left: 1px solid var(--line);
+    height: 100%;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .field-select .suffix svg { width: 12px; height: 12px; }
+  .field-select select.suffix {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 100%;
+    margin: 0;
+    padding: 0 20px 0 8px;
+    border: none;
+    border-left: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232b2b33' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 5px center / 11px;
+    color: var(--text);
+    font: inherit;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .field-select select.suffix:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .type-select {
+    width: 100%;
+    font: inherit;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+    height: 34px;
+    padding: 0 6px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+  }
+  .type-select .type-badge { margin: 0; }
+  .type-select svg.caret { width: 12px; height: 12px; color: var(--text); }
+
+  /* Groupe (Titre) */
+  .group {
+    background: var(--peach);
+    border: 1px solid var(--peach-border);
+    border-radius: 8px;
+    padding: 0;
+  }
+  .group .group-head {
+    display: grid;
+    grid-template-columns: var(--cols);
+    align-items: center;
+    column-gap: 4px;
+    min-height: 46px;
+    padding-right: 12px;
+  }
+  .group .group-head .chev { display: flex; align-items: center; justify-content: center; color: var(--navy); }
+  .group .group-head .chev svg { width: 16px; height: 16px; }
+  .group .group-head .ref { text-align: center; font-weight: 500; }
+  .group .group-head .title-input {
+    grid-column: 3 / 9;
+    width: 100%;
+    max-width: 420px;
+    height: 32px;
+    padding: 0 8px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .group .group-head .title-input:hover { border-color: var(--peach-border); background: rgba(255, 255, 255, .55); }
+  .group .group-head .title-input:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .group .group-head .title-input::placeholder { color: var(--muted); font-weight: 400; }
+  .group .group-head .total-label { grid-column: 10 / 12; text-align: right; color: var(--muted); padding: 0 6px; }
+  .group .group-head .total-value { text-align: right; padding: 0 6px; }
+  .group .group-lines { display: flex; flex-direction: column; gap: 6px; padding: 0 8px 8px; }
+  .group.subgroup { background: #fff4e3; border-color: #f7ddb8; }
+  .group.subgroup > .group-head { min-height: 42px; }
+
+  /* Ligne de texte : défaut → survol → lecture seule dépliée → édition */
+  .row.text .text-body { grid-column: 3 / -1; min-width: 0; }
+  .row.text .text-preview {
+    height: 34px;
+    line-height: 32px;
+    padding: 0 7px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+  .row.text .text-preview:empty::before { content: 'Texte vide'; color: #9a9aa8; }
+  .row.text .text-read,
+  .row.text .text-editor-wrap { display: none; }
+  .row.text[data-state="default"]:hover { box-shadow: 0 2px 8px rgba(30, 30, 80, .15); }
+  .row.text[data-state="default"]:hover .text-preview { border-color: var(--line); background: #fff; }
+  .row.text[data-state="default"]:hover .numcell .ref { display: none; }
+  .row.text[data-state="default"]:hover .numcell .grip { display: flex; }
+  .row.text:not([data-state="default"]) { align-items: start; padding-top: 12px; padding-bottom: 14px; }
+  .row.text:not([data-state="default"]) > .chev,
+  .row.text:not([data-state="default"]) > .numcell { align-self: start; height: 32px; }
+  .row.text:not([data-state="default"]) .text-preview { display: none; }
+  .row.text:not([data-state="default"]) > .chev svg { transform: rotate(180deg); }
+  .row.text[data-state="open"] .text-read { display: block; }
+  .row.text[data-state="edit"] { box-shadow: 0 2px 10px rgba(30, 30, 80, .18); }
+  .row.text[data-state="edit"] .text-editor-wrap { display: block; }
+  .text-read {
+    max-width: 460px;
+    padding: 6px 7px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    line-height: 1.4;
+    cursor: text;
+  }
+  .text-read:hover { background: rgba(11, 11, 122, .04); }
+  .text-read p, .text-editor p { margin: 0 0 1em; }
+  .text-read p:last-child, .text-editor p:last-child { margin-bottom: 0; }
+  .text-read blockquote, .text-editor blockquote { margin: 0 0 1em; padding-left: 12px; border-left: 3px solid var(--line); color: var(--muted); }
+  .text-read ul, .text-read ol, .text-editor ul, .text-editor ol { margin: 0 0 1em; padding-left: 22px; }
+  .text-read img, .text-editor img { max-width: 100%; height: auto; }
+  .text-read a, .text-editor a { color: var(--accent); }
+  .text-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 12px;
+    padding: 6px 8px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(30, 30, 80, .12);
+  }
+  .tb-btn {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+    cursor: pointer;
+  }
+  .tb-btn:hover { background: #f0f0f6; }
+  .tb-btn.is-active { background: #e2e2ea; }
+  .tb-btn svg { width: 20px; height: 20px; }
+  .tb-btn .tb-letter { font-size: 16px; line-height: 1; }
+  .tb-btn .tb-a { font-weight: 700; font-size: 16px; line-height: 1; margin-top: -4px; }
+  .tb-btn .tb-bar { position: absolute; left: 8px; right: 8px; bottom: 6px; height: 3px; border-radius: 2px; }
+  .tb-btn input[type="color"] { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: none; opacity: 0; cursor: pointer; }
+  .tb-sep { width: 8px; }
+  .tb-select {
+    height: 34px;
+    padding: 0 6px;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .tb-select.tb-font { min-width: 150px; }
+  .text-editor {
+    min-height: 84px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
+    color: #555;
+    font-size: 12.5px;
+    line-height: 1.4;
+    outline: none;
+  }
+  .text-editor:focus { border-color: var(--accent); }
+  .text-editor:empty::before { content: attr(data-placeholder); color: #9a9aa8; }
+
+  /* Repli des lignes enfants */
+  .node { display: flex; flex-direction: column; }
+  .children {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows .22s ease;
+  }
+  .children > .inner { min-height: 0; overflow: hidden; }
+  .children .stack { display: flex; flex-direction: column; gap: 6px; padding-top: 6px; }
+  .children .stack:empty { padding: 0; }
+  .node[data-open="false"] > .children { grid-template-rows: 0fr; }
+  .node[data-open="false"] > .children > .inner { visibility: hidden; transition: visibility 0s .22s; }
+  button.chev {
+    border: none;
+    background: transparent;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  button.chev:hover { background: rgba(11, 11, 122, .08); }
+  button.chev:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  button.chev svg { transition: transform .22s ease; }
+  .node[data-open="false"] > .row button.chev svg,
+  .node[data-open="false"] > .group-head button.chev svg { transform: rotate(-90deg); }
+
+  /* Pied de grille */
+  .grid-foot { display: flex; align-items: center; gap: 24px; margin: 18px 0 14px 56px; }
+  .add-line-wrap { position: relative; width: 40%; min-width: 260px; }
+  .elements-list {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 6px);
+    z-index: 30;
+    width: 780px;
+    max-width: calc(100vw - 80px);
+    max-height: 340px;
+    overflow-y: auto;
+    padding: 4px 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(30, 30, 80, .22);
+  }
+  .elements-list[hidden] { display: none; }
+  .elements-list.up { top: auto; bottom: calc(100% + 6px); }
+  .element-item {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) 96px 24px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px 8px 13px;
+    border-left: 3px solid transparent;
+    color: #5b5f73;
+    font-size: 13.5px;
+    cursor: pointer;
+  }
+  .element-item .element-main { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .element-item .element-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .element-item .element-chip { flex: none; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 4px 8px; border-radius: 4px; background: #f1f1f5; color: var(--text); font-size: 12.5px; }
+  .element-item .element-price { text-align: right; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .element-item .element-check { display: none; color: #1d6b3a; }
+  .element-item .element-check svg { width: 18px; height: 18px; display: block; }
+  .element-item.is-highlighted { background: #ecebfd; border-left-color: var(--accent); }
+  .element-item.is-highlighted .element-name { font-weight: 700; }
+  .element-item.is-highlighted .element-chip { background: #fff; }
+  .element-item.is-highlighted .element-check { display: block; }
+  .elements-empty { padding: 14px 16px; color: var(--muted); font-size: 13px; }
+
+  /* Tiroir « Éléments » : catalogue filtré par catégories */
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    background: rgba(20, 20, 40, .45);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease, visibility 0s .2s;
+  }
+  .drawer-backdrop.is-open { opacity: 1; visibility: visible; transition: opacity .2s ease; }
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1210;
+    width: min(780px, 100vw);
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: -8px 0 30px rgba(20, 20, 50, .25);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform .25s ease, visibility 0s .25s;
+  }
+  .drawer.is-open { transform: none; visibility: visible; transition: transform .25s ease; }
+  .drawer-title { margin: 0; padding: 28px 32px 14px; font-size: 22px; font-weight: 500; color: #2b2b33; }
+  .drawer-body { flex: 1; min-height: 0; display: grid; grid-template-columns: 250px minmax(0, 1fr); margin: 0 32px; }
+  .drawer-cats { padding: 18px 18px 18px 20px; background: #f6f6fb; overflow-y: auto; }
+  .drawer-cats h3 { margin: 0 0 8px; font-size: 18px; font-weight: 500; color: #5b6b8b; }
+  .drawer-cats .link-btn { margin-bottom: 20px; font-size: 14px; }
+  .cat-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; color: #5b6b8b; font-size: 14px; cursor: pointer; }
+  .cat-row input {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    border: 1.5px solid #9aa3b8;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+  }
+  .cat-row input:checked {
+    border-color: var(--accent);
+    background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.500l4.500 4.500L19 7.500'/%3E%3C/svg%3E") center / 16px no-repeat;
+  }
+  .cat-row input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .drawer-main { display: flex; flex-direction: column; min-height: 0; padding: 8px 8px 0 16px; }
+  .drawer-search { position: relative; margin-bottom: 18px; }
+  .drawer-search input {
+    width: 100%;
+    height: 40px;
+    padding: 0 40px 0 8px;
+    border: none;
+    border-bottom: 1px solid #c9cdd8;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .drawer-search input:focus { outline: none; border-bottom-color: var(--accent); }
+  .drawer-search svg { position: absolute; top: 9px; right: 8px; width: 22px; height: 22px; color: var(--accent); pointer-events: none; }
+  .drawer-main label.drawer-field { display: block; margin-bottom: 4px; font-size: 14px; color: #5b6b8b; }
+  .drawer-main select {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 18px;
+    padding: 0 8px;
+    border: none;
+    border-bottom: 1px solid #c9cdd8;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    color: #5b6b8b;
+  }
+  .catalogue-list { flex: 1; min-height: 0; overflow-y: auto; margin: 0 -8px 0 -4px; }
+  .catalogue-item {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px 8px 10px;
+    border-left: 3px solid transparent;
+    color: #5b6b8b;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .catalogue-item .type-badge { width: 30px; height: 30px; }
+  .catalogue-item:hover { background: #f6f6fb; }
+  .catalogue-item.is-selected { background: #ecebfd; border-left-color: var(--accent); }
+  .catalogue-item.is-selected .element-name { font-weight: 700; }
+  .catalogue-item .element-main { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .catalogue-item .element-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .catalogue-item .element-chip { flex: none; padding: 4px 8px; border-radius: 4px; background: #f1f1f5; color: var(--text); font-size: 12.5px; }
+  .catalogue-item.is-selected .element-chip { background: #fff; }
+  .catalogue-item .element-check { display: none; color: #1d6b3a; }
+  .catalogue-item .element-check svg { width: 18px; height: 18px; display: block; }
+  .catalogue-item.is-selected .element-check { display: block; }
+  .drawer-foot { display: flex; align-items: center; justify-content: flex-end; gap: 24px; padding: 16px 32px 22px; }
+  .btn-primary {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 4px;
+    background: var(--accent);
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: oklch(0.45 0.13 258); }
+  .btn-primary:disabled { opacity: .4; cursor: default; }
+  @media (max-width: 700px) {
+    .drawer-body { grid-template-columns: 1fr; overflow-y: auto; }
+    .drawer-cats { overflow: visible; }
+    .catalogue-list { overflow: visible; }
+  }
+
+  /* Tiroirs « Options du document » et « Récapitulatif » */
+  .drawer-side { width: min(440px, 100vw); background: #f8f8fa; }
+  .side-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 28px 32px 16px; }
+  .side-head h2 { margin: 0; font-size: 24px; font-weight: 700; color: #0f1728; }
+  .side-close, .side-back {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .side-close:hover, .side-back:hover { background: var(--accent-soft); }
+  .side-close svg, .side-back svg { width: 26px; height: 26px; }
+  .side-body { flex: 1; min-height: 0; overflow-y: auto; padding: 0 28px 28px; }
+  .side-card { margin-bottom: 22px; padding: 22px 24px; border-radius: 8px; background: #fff; box-shadow: 0 1px 4px rgba(30, 30, 80, .14); }
+  .side-card-title { margin: 0 0 18px; font-size: 19px; font-weight: 600; }
+  .side-card-title.tva { color: #a15c00; }
+  .side-card-title.cols { color: #ff9500; }
+  .side-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; color: #5b6b8b; font-size: 16px; }
+  .side-row small { font-size: 14px; color: #7a869f; }
+  .side-help { margin: -6px 0 22px; font-size: 13.5px; line-height: 1.5; color: #1f2937; }
+  .side-help:last-child { margin-bottom: 0; }
+  .side-label { display: block; margin: 26px 0 8px; color: #5b6b8b; font-size: 16px; }
+  .side-select {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    border: none;
+    border-bottom: 1.5px solid #b9bfcc;
+    background: #fff;
+    font: inherit;
+    font-size: 15px;
+    color: #1f2937;
+  }
+  .switch {
+    position: relative;
+    flex: none;
+    width: 44px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: #e1e1e8;
+    cursor: pointer;
+    transition: background .15s ease;
+  }
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .28);
+    transition: transform .15s ease;
+  }
+  .switch[aria-checked="true"] { background: var(--accent); }
+  .switch[aria-checked="true"]::after { transform: translateX(20px); }
+  .switch.has-check[aria-checked="true"]::before {
+    content: '✓';
+    position: absolute;
+    top: 2px;
+    left: 22px;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Récapitulatif */
+  .recap-card { margin-bottom: 18px; padding: 12px 16px 18px; border-radius: 8px; background: #fff; box-shadow: 0 1px 4px rgba(30, 30, 80, .14); }
+  .recap-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 4px 14px;
+    border: none;
+    background: none;
+    color: #1f2937;
+    font: inherit;
+    font-size: 17px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+  .recap-card-head .ic { width: 24px; height: 24px; color: #ff9500; }
+  .recap-card-head .caret { width: 16px; height: 16px; transition: transform .2s ease; }
+  .recap-card[data-open="false"] .caret { transform: rotate(180deg); }
+  .recap-card[data-open="false"] .recap-card-body { display: none; }
+  .rate-block { display: grid; grid-template-columns: 92px minmax(0, 1fr); margin-bottom: 14px; }
+  .rate-tile { display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 12px; background: #fdebd3; font-size: 16px; font-weight: 700; color: #1f2937; }
+  .rate-tile small { font-size: 12px; font-weight: 400; color: #6b7280; }
+  .rate-lines { padding: 0 6px 0 16px; }
+  .rate-line { display: flex; justify-content: space-between; gap: 12px; padding: 12px 6px; font-size: 14px; color: #1f2937; font-variant-numeric: tabular-nums; }
+  .rate-line + .rate-line { border-bottom: 1px solid #c9cdd8; }
+  .profit-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; padding: 12px 14px; background: #fdebd3; color: #1f2937; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .profit-row .sub { display: block; font-size: 11px; color: #6b7280; text-align: right; }
+  .profit-row .val { text-align: right; }
+  .eco-card { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 8px; background: #fff; box-shadow: 0 1px 4px rgba(30, 30, 80, .14); color: #1f2937; font-size: 17px; font-weight: 600; }
+  .eco-card .ic { width: 24px; height: 24px; color: #ff9500; }
+  .eco-card .caret { width: 14px; height: 14px; color: #5b6b8b; }
+  .eco-card .eco-val { margin-left: auto; font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; }
+  /* Variante mobile : page « TVA et rentabilité » */
+  .recap-mobile .side-head h2 { color: #3a2000; font-size: 22px; flex: 1; text-align: center; }
+  .rate-acc { margin-bottom: 8px; background: #fdebd3; }
+  .rate-acc-head { display: flex; align-items: center; gap: 8px; width: 100%; padding: 12px 14px; border: none; background: none; color: #1f2937; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .rate-acc-head small { font-size: 11px; font-weight: 400; color: #6b7280; }
+  .rate-acc-head .caret { width: 16px; height: 16px; margin-left: auto; transition: transform .2s ease; }
+  .rate-acc[data-open="true"] .caret { transform: rotate(180deg); }
+  .rate-acc-body { display: none; padding: 0 14px 10px; }
+  .rate-acc[data-open="true"] .rate-acc-body { display: block; }
+  .recap-mobile .profit-row .val { font-family: ui-monospace, Menlo, Consolas, monospace; }
+
+  /* Menu de la colonne Type */
+  .type-menu {
+    position: fixed;
+    z-index: 1100;
+    min-width: 210px;
+    padding: 4px 0;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(30, 30, 80, .22);
+  }
+  .type-menu[hidden] { display: none; }
+  .type-option {
+    display: grid;
+    grid-template-columns: 28px 1fr 22px;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px 10px 13px;
+    border-left: 3px solid transparent;
+    color: #5b6b8b;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .type-option .type-badge { width: 28px; height: 28px; }
+  .type-option.is-highlighted { background: #ecebfd; border-left-color: var(--accent); }
+  .type-option .type-check { display: none; color: #1d6b3a; }
+  .type-option .type-check svg { width: 18px; height: 18px; display: block; }
+  .type-option.is-selected .type-check { display: block; }
+  .add-line {
+    width: 100%;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
+    font: inherit;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .add-line::placeholder { color: #9a9aa8; }
+  .foot-buttons { display: flex; gap: 12px; }
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--accent);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .btn-add svg { width: 16px; height: 16px; }
+  .btn-add:hover { background: var(--accent-soft); }
+
+  /* Barre d'outils flottante */
+  .side-tools {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .12s ease, visibility 0s .12s;
+    width: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(30, 30, 80, .18);
+  }
+  .side-tools.is-visible { opacity: 1; visibility: visible; transition: opacity .12s ease; }
+  body.dnd-active .side-tools { visibility: hidden; }
+  .side-tools .icon-btn:disabled { opacity: .3; cursor: default; background: transparent; }
+  .side-tools.is-card [data-remote="add-above"],
+  .side-tools.is-card [data-remote="add-below"],
+  .side-tools.is-card [data-remote="add-to-elements"],
+  .side-tools.is-card [data-remote="sign"],
+  .side-tools.is-card [data-remote="duplicate"],
+  .side-tools.is-card .sep-1 { display: none; }
+  .group-head.is-active { background: rgba(255, 255, 255, .4); border-radius: 8px; }
+  .row.is-active { box-shadow: 0 2px 8px rgba(30, 30, 80, .15); }
+  .side-tools .icon-btn svg { width: 22px; height: 22px; }
+  /* Info-bulle à gauche de l'icône */
+  .side-tools .icon-btn[data-tooltip] { position: relative; }
+  .side-tools .icon-btn[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 12px);
+    transform: translateY(-50%);
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #2b2b33;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.3;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .12s ease, visibility 0s .12s;
+  }
+  .side-tools .icon-btn[data-tooltip]::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 6px);
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: #2b2b33;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .12s ease, visibility 0s .12s;
+  }
+  .side-tools .icon-btn[data-tooltip]:hover::after,
+  .side-tools .icon-btn[data-tooltip]:hover::before,
+  .side-tools .icon-btn[data-tooltip]:focus-visible::after,
+  .side-tools .icon-btn[data-tooltip]:focus-visible::before {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .12s ease .2s;
+  }
+  .side-tools .sep { width: 24px; height: 1px; background: var(--line); margin: 2px 0; }
+  .side-tools .danger { color: #d93a3a; }
+  .side-tools .danger:hover { background: #fdeaea; }
+</style>
+</head>
+<body>
+<a class="back-link" href="hubbix-case-study.html">← Retour à l'étude de cas</a>
+
+<main class="proto">
+  <div class="proto-scroll">
+    <div class="proto-inner" id="proto"></div>
+  </div>
+</main>
+
+<script>
+  var ICONS = {
+    chevDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+    chevUp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+    grip: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>',
+    collapse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l6 6 6-6M6 20l6-6 6 6"/></svg>',
+    expand: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+    gear: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.4 13a7.7 7.7 0 000-2l2-1.6-2-3.4-2.4 1a7.4 7.4 0 00-1.7-1l-.4-2.6h-4l-.4 2.6a7.4 7.4 0 00-1.7 1l-2.4-1-2 3.4 2 1.6a7.7 7.7 0 000 2l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 001.7 1l.4 2.6h4l.4-2.6a7.4 7.4 0 001.7-1l2.4 1 2-3.4zM12 15.5A3.5 3.5 0 1112 8.500a3.5 3.5 0 010 7z"/></svg>',
+    pie: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 109 9h-9z"/><path d="M15 3.5A9 9 0 0120.500 9H15z"/></svg>',
+    plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+    addAbove: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="12" width="16" height="8" rx="2"/><path d="M12 3v7M8.500 6.500h7"/></svg>',
+    addBelow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="8" rx="2"/><path d="M12 14v7M8.500 17.500h7"/></svg>',
+    folderPlus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M12 10.500v5M9.500 13h5"/></svg>',
+    sign: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M3 21h18"/></svg>',
+    copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/></svg>',
+    trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>',
+    /* Pastille hexagonale selon le type : fourniture (rouge), main d'œuvre (marron), ouvrage (violet) */
+    typeBadge: function (type) {
+      var colors = { 'fourniture': '#c8325b', 'main-oeuvre': '#b4672a', 'ouvrage': '#a23bb5' };
+      var inner = {
+        'fourniture': '<path d="M9.500 18.500l9-9M9.500 9.500l9 9" stroke="#fff" stroke-width="2.600" stroke-linecap="round"/><circle cx="9" cy="9" r="1.800" fill="#fff"/><circle cx="19" cy="9" r="1.800" fill="#fff"/>',
+        'main-oeuvre': '<path d="M9.300 12.200a3.200 3.200 0 016.400 0z" fill="#fff"/><circle cx="12.500" cy="13.600" r="1.900" fill="#fff"/><path d="M8 20c0-2.800 2.200-4.600 4.500-4.600S17 17.200 17 20z" fill="#fff"/><circle cx="19" cy="10" r="1.500" fill="none" stroke="#fff" stroke-width="1.200"/><circle cx="19.500" cy="16" r="1.100" fill="none" stroke="#fff" stroke-width="1"/>',
+        'ouvrage': '<path d="M8.500 19.500l5-5" stroke="#fff" stroke-width="2.600" stroke-linecap="round"/><circle cx="10.500" cy="9.500" r="2.500" fill="none" stroke="#fff" stroke-width="1.800"/><circle cx="18" cy="17.500" r="3.600" fill="' + colors['ouvrage'] + '" stroke="#fff" stroke-width="1.600"/><path d="M18 15.500v2l1.300.8" stroke="#fff" stroke-width="1.300" fill="none" stroke-linecap="round"/>'
+      };
+      var bg = colors[type] || colors['main-oeuvre'];
+      return '<svg class="type-badge" viewBox="0 0 28 28"><path d="M14 2l10.400 6v12L14 26 3.600 20V8z" fill="' + bg + '" stroke="' + bg + '" stroke-width="2" stroke-linejoin="round"/>' + (inner[type] || inner['main-oeuvre']) + '</svg>';
+    }
+  };
+
+  var LINE = { ref: '1.1.1', label: 'Pose de veranda 5m²', qty: '1 234,56', unit: 'h', cost: '1 234 567,89', costPct: '20', margin: '80,00', discount: '5,00', pv: '4 567,89', total: '1 234,56', tva: '20,00' };
+
+  var UNIT_GROUPS = [
+    { label: 'Quantité', units: ['u', 'ens', 'fft', 'lot'] },
+    { label: 'Temps', units: ['h', 'j'] },
+    { label: 'Longueur', units: ['m', 'ml'] },
+    { label: 'Surface', units: ['m²'] },
+    { label: 'Volume', units: ['L', 'm³'] },
+    { label: 'Poids', units: ['kg', 't'] },
+    { label: 'Conditionnement', units: ['sac', 'pot', 'rouleau'] }
+  ];
+
+  var EMPTY_LINE = { ref: '', label: '', qty: '', unit: '', cost: '', costPct: '', margin: '', discount: '', pv: '', total: '', tva: '', empty: true };
+
+  function numCell(ref) {
+    return '<div class="numcell" title="Déplacer la ligne">' +
+      '<span class="ref">' + ref + '</span>' +
+      '<span class="grip">' + ICONS.grip + '</span>' +
+    '</div>';
+  }
+
+  /* Une ligne a deux vues : le texte en lecture seule (.view) et les champs (.ed),
+     ces derniers n'étant affichés que sur la ligne active, celle qui est survolée. */
+  function lineRow(d, level) {
+    var isParent = level === 'parent';
+    var type = d.type || (d.empty ? 'ouvrage' : 'main-oeuvre');
+    var badge = ICONS.typeBadge(type);
+    function textCell(cls, value, inputCls, placeholder, col) {
+      return '<div class="cell ' + cls + '"' + (col ? ' data-col="' + col + '"' : '') + '><span class="view">' + value + '</span>' +
+        '<input class="field ed' + (inputCls ? ' ' + inputCls : '') + '" value="' + value + '" placeholder="' + placeholder + '"></div>';
+    }
+    /* Colonne U : les unités du bâtiment, regroupées par nature. */
+    function unitCell(unit) {
+      var known = UNIT_GROUPS.some(function (group) { return group.units.indexOf(unit) !== -1; });
+      return '<div class="cell center" data-col="unit"><span class="view">' + unit + '</span>' +
+        '<select class="field ed unit-pick" aria-label="Unité de la ligne"><option value=""' + (unit ? '' : ' selected') + '></option>' +
+        UNIT_GROUPS.map(function (group) {
+          return '<optgroup label="' + group.label + '">' + group.units.map(function (u) {
+            return '<option' + (u === unit ? ' selected' : '') + '>' + u + '</option>';
+          }).join('') + '</optgroup>';
+        }).join('') +
+        (unit && !known ? '<option selected>' + unit + '</option>' : '') + '</select></div>';
+    }
+    /* Colonnes en %, Marge et Remise : l'unité se choisit entre % et € sur la ligne active. La TVA reste en %. */
+    function pairCell(value, col) {
+      var choosable = col === 'fg' || col === 'margin' || col === 'discount';
+      var unit = (d.units && d.units[col]) || '%';
+      var control = choosable
+        ? '<select class="suffix unit-select" aria-label="Unité"><option' + (unit === '%' ? ' selected' : '') + '>%</option><option' + (unit === '€' ? ' selected' : '') + '>€</option></select>'
+        : '<span class="suffix">%</span>';
+      return '<div class="cell"' + (col ? ' data-col="' + col + '"' : '') + '><span class="view pair"><span class="val">' + value + '</span><span class="unit">' + unit + '</span></span>' +
+        '<div class="field-select ed"><input class="field" value="' + value + '" placeholder="0">' + control + '</div></div>';
+    }
+    return '<div class="row line" tabindex="0" data-level="' + (isParent ? 'parent' : 'child') + '" data-type="' + type + '" data-ref="' + d.ref + '">' +
+      (isParent
+        ? '<button type="button" class="chev toggle" aria-expanded="true" aria-label="Replier">' + ICONS.chevDown + '</button>'
+        : '<div class="chev">' + ICONS.chevDown + '</div>') +
+      numCell(d.ref) +
+      '<div class="cell"><span class="view"><span class="val" data-placeholder="Nom de l\'ouvrage">' + d.label + '</span>' +
+        (d.code ? '<span class="ref-chip">' + d.code + '</span>' : '') + '</span>' +
+        '<input class="field left ed" value="' + d.label + '" placeholder="Nom de l\'ouvrage"></div>' +
+      '<div class="cell center type-cell"><span class="view">' + badge + '</span>' +
+        '<button type="button" class="type-select ed" aria-haspopup="listbox" aria-expanded="false" aria-label="Type de la ligne"><span class="ts-badge">' + badge + '</span><span class="caret">' + ICONS.chevDown.replace('<svg', '<svg class="caret"') + '</span></button></div>' +
+      textCell('num', d.qty, '', '0', 'qty') +
+      unitCell(d.unit) +
+      textCell('num', d.cost, '', '0,00', 'cost') +
+      pairCell(d.costPct, 'fg') +
+      pairCell(d.margin, 'margin') +
+      pairCell(d.discount, 'discount') +
+      textCell('num', d.pv, '', '0,00', 'pv') +
+      textCell('num', d.total, '', '0,00', 'total') +
+      pairCell(d.tva, 'tva') +
+    '</div>';
+  }
+
+  var TEXT_SAMPLE = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rhoncus gravida justo, ac dictum ipsum posuere a. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras mollis mauris id felis faucibus elementum. Donec dignissim nec lectus vel faucibus. Duis dictum leo in nisl malesuada, nec tempus neque convallis. Donec et consequat dolor. Donec sapien nisl, fringilla in nisl et, aliquet pretium leo.</p>' +
+    '<p>Aliquam arcu quam, mollis at orci a, gravida volutpat tortor. Nulla tempor a lectus non congue. Donec ac ex risus. Phasellus ex leo, blandit eu metus non, ultrices sagittis erat. Curabitur enim nisl, convallis mollis massa sed, interdum aliquet orci. Morbi pellentesque ipsum in leo convallis laoreet. Phasellus at viverra mauris. Donec nibh nulla, commodo vel elit posuere, tincidunt rhoncus ligula. Curabitur a placerat nibh, sed sollicitudin nibh. Aenean at nisl magna. Nam eu placerat leo, sed hendrerit justo. Nulla tempor ligula vitae felis fermentum rutrum. Vestibulum ornare tempus lorem, eu molestie.</p>';
+
+  function plainText(html) {
+    var d = document.createElement('div');
+    d.innerHTML = html;
+    return d.textContent.replace(/\s+/g, ' ').trim();
+  }
+
+  function escapeHtml(text) {
+    var d = document.createElement('div');
+    d.textContent = text;
+    return d.innerHTML;
+  }
+
+  function tbButton(cmd, label, inner) {
+    return '<button type="button" class="tb-btn" data-cmd="' + cmd + '" title="' + label + '" aria-label="' + label + '">' + inner + '</button>';
+  }
+
+  function tbSvg(paths) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + paths + '</svg>';
+  }
+
+  function textToolbar() {
+    return '<div class="text-toolbar" role="toolbar" aria-label="Mise en forme du texte">' +
+      '<select class="tb-select tb-size" data-select="fontSize" aria-label="Taille du texte">' +
+        '<option value="">Aa</option><option value="2">Petit</option><option value="3">Normal</option><option value="5">Grand</option><option value="6">Très grand</option>' +
+      '</select>' +
+      '<select class="tb-select tb-font" data-select="fontName" aria-label="Police">' +
+        '<option>Arial</option><option>Georgia</option><option>Verdana</option><option>Times New Roman</option><option>Courier New</option>' +
+      '</select>' +
+      '<span class="tb-sep"></span>' +
+      tbButton('bold', 'Gras', '<span class="tb-letter" style="font-weight:800">B</span>') +
+      tbButton('italic', 'Italique', '<span class="tb-letter" style="font-style:italic;font-family:Georgia,serif">I</span>') +
+      tbButton('underline', 'Souligné', '<span class="tb-letter" style="text-decoration:underline">U</span>') +
+      tbButton('strikeThrough', 'Barré', '<span class="tb-letter" style="text-decoration:line-through">S</span>') +
+      '<label class="tb-btn" title="Couleur du texte"><span class="tb-a">A</span><i class="tb-bar" style="background:#e03131"></i><input type="color" data-color="foreColor" value="#e03131" aria-label="Couleur du texte"></label>' +
+      '<label class="tb-btn" title="Surlignage">' + tbSvg('<path d="M14 4l6 6-8 8H6v-6z"/><path d="M4 21h8"/>') + '<i class="tb-bar" style="background:#ffd43b"></i><input type="color" data-color="hiliteColor" value="#ffd43b" aria-label="Couleur de surlignage"></label>' +
+      '<span class="tb-sep"></span>' +
+      tbButton('justifyLeft', 'Aligner à gauche', tbSvg('<path d="M4 6h16M4 10h10M4 14h16M4 18h10"/>')) +
+      tbButton('justifyCenter', 'Centrer', tbSvg('<path d="M4 6h16M7 10h10M4 14h16M7 18h10"/>')) +
+      tbButton('justifyRight', 'Aligner à droite', tbSvg('<path d="M4 6h16M10 10h10M4 14h16M10 18h10"/>')) +
+      tbButton('justifyFull', 'Justifier', tbSvg('<path d="M4 6h16M4 10h16M4 14h16M4 18h16"/>')) +
+      '<span class="tb-sep"></span>' +
+      tbButton('insertUnorderedList', 'Liste à puces', tbSvg('<circle cx="5" cy="7" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="5" cy="17" r="1"/><path d="M9 7h11M9 12h11M9 17h11"/>')) +
+      tbButton('insertOrderedList', 'Liste numérotée', '<svg viewBox="0 0 24 24" fill="currentColor"><text x="2" y="9" font-size="7" font-weight="700">1</text><text x="2" y="14.500" font-size="7" font-weight="700">2</text><text x="2" y="20" font-size="7" font-weight="700">3</text><path d="M9 7h11M9 12.500h11M9 18h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>') +
+      tbButton('quote', 'Citation', '<span class="tb-letter" style="font-weight:800;font-size:22px;line-height:.8">”</span>') +
+      tbButton('link', 'Lien', tbSvg('<path d="M10 14a4 4 0 005.700 0l3-3a4 4 0 00-5.700-5.700l-1 1M14 10a4 4 0 00-5.700 0l-3 3a4 4 0 005.700 5.700l1-1"/>')) +
+      tbButton('image', 'Image', tbSvg('<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.500"/><path d="M4 18l5-5 4 4 3-3 4 4"/>')) +
+      '<input type="file" accept="image/*" data-file="image" hidden>' +
+    '</div>';
+  }
+
+  function textRow(ref, html) {
+    return '<div class="row text" data-level="parent" data-kind="text" data-state="default" data-ref="' + ref + '">' +
+      '<button type="button" class="chev text-toggle" aria-expanded="false" aria-label="Déplier le texte">' + ICONS.chevDown + '</button>' +
+      numCell(ref) +
+      '<div class="text-body">' +
+        '<div class="text-preview" tabindex="0" role="button" aria-label="Afficher le texte">' + escapeHtml(plainText(html)) + '</div>' +
+        '<div class="text-read" tabindex="0" role="button" aria-label="Modifier le texte">' + html + '</div>' +
+        '<div class="text-editor-wrap">' + textToolbar() + '<div class="text-editor" contenteditable="true" data-placeholder="Saisissez votre texte…"></div></div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function lines(count) {
+    var html = '';
+    for (var i = 0; i < count; i++) html += parentNode(lineRow(LINE, 'parent'), '');
+    return html;
+  }
+
+  /* Carte orange : un Titre, ou un Sous-titre (carte imbriquée dans un Titre). */
+  function card(isSub, content, title, total) {
+    return '<div class="group node' + (isSub ? ' subgroup' : '') + '" data-open="true">' +
+      '<div class="group-head">' +
+        '<button type="button" class="chev toggle" aria-expanded="true" aria-label="Replier">' + ICONS.chevDown + '</button>' +
+        numCell('1') +
+        '<input class="title-input" value="' + title + '" placeholder="' + (isSub ? 'Sous-titre' : 'Titre') + '" aria-label="' + (isSub ? 'Titre du sous-titre' : 'Titre de la section') + '">' +
+        '<div class="total-label">Total</div>' +
+        '<div class="total-value">' + total + '</div>' +
+      '</div>' +
+      '<div class="children"><div class="inner"><div class="group-lines stack">' + content + '</div></div></div>' +
+    '</div>';
+  }
+
+  function group(count, title, total, extra) {
+    return card(false, lines(count) + (extra || ''), title, total);
+  }
+
+  function parentNode(parentHtml, childrenHtml) {
+    return '<div class="node line-node" data-open="true">' + parentHtml +
+      '<div class="children"><div class="inner"><div class="stack">' + childrenHtml + '</div></div></div>' +
+    '</div>';
+  }
+
+  /* Document d'exemple : devis de peinture d'une maison (cuisine, salle de bain) avec installation d'un lavabo. */
+  function formatQty(n) {
+    return Number.isInteger(n) ? String(n) : n.toLocaleString('fr-FR', { maximumFractionDigits: 2 });
+  }
+
+  /* Ligne d'un montant : PV net HT = déboursé × (1 + frais 10 %) × (1 + marge) × (1 − remise), total = quantité × PV. */
+  function mkLine(label, type, q, unit, cost, margin, tva) {
+    var overhead = 10;
+    var pv = Math.round(cost * (1 + overhead / 100) * (1 + margin / 100) * 100) / 100;
+    return { ref: '', label: label, type: type, qty: formatQty(q), unit: unit, cost: fr(cost), costPct: String(overhead), margin: fr(margin), discount: fr(0), pv: fr(pv), total: fr(Math.round(q * pv * 100) / 100), tva: fr(tva) };
+  }
+
+  function demoDocument() {
+    function leaf(d) { return parentNode(lineRow(d, 'parent'), ''); }
+    /* Un ouvrage est une ligne parent dont les enfants sont ses fournitures et sa main d'œuvre. */
+    function ouvrage(label, q, unit, kids) {
+      var parent = Object.assign({}, EMPTY_LINE, { empty: false, label: label, type: 'ouvrage', qty: formatQty(q), unit: unit, tva: fr(10) });
+      return parentNode(lineRow(parent, 'parent'), kids.map(function (kid) { return lineRow(kid); }).join(''));
+    }
+    var paint = function (label, litres, cost) { return mkLine(label, 'fourniture', litres, 'L', cost, 25, 20); };
+    var labour = function (label, hours) { return mkLine(label, 'main-oeuvre', hours, 'h', 32, 35, 10); };
+
+    var kitchen = card(false,
+      leaf(labour('Protection des sols et des meubles', 2)) +
+      ouvrage('Mise en peinture des murs et du plafond', 39, 'm²', [paint('Peinture acrylique mate blanche', 11, 14.8), labour('Application, 2 couches', 8.5)]),
+      'Cuisine', '0,00');
+
+    var paintSub = card(true,
+      leaf(paint('Peinture hydrofuge satinée', 6, 18.4)) +
+      leaf(labour('Application, 2 couches', 5)),
+      'Peinture', '0,00');
+
+    var basinSub = card(true,
+      leaf(mkLine('Meuble vasque 80 cm avec mitigeur', 'fourniture', 1, 'u', 268, 30, 20)) +
+      leaf(mkLine('Dépose de l’ancien lavabo', 'main-oeuvre', 1, 'h', 38, 35, 10)) +
+      leaf(mkLine('Pose et raccordement du lavabo', 'main-oeuvre', 2.5, 'h', 38, 35, 10)),
+      'Installation de lavabo', '0,00');
+
+    var bathroom = card(false, paintSub + basinSub, 'Salle de bain', '0,00');
+
+    return parentNode(textRow('', '<p>Remise en peinture de la cuisine et de la salle de bain, avec installation d’un nouveau lavabo. Travaux réalisés en 5 jours ouvrés, fournitures et protections comprises.</p>'), '') +
+      kitchen + bathroom +
+      parentNode(textRow('', '<p>Conditions de paiement : 30 % d’acompte à la commande, solde à réception des travaux. Devis valable 30 jours.</p>'), '');
+  }
+
+  /* Bouton de la télécommande : le libellé sert à la fois d'info-bulle et de nom accessible. */
+  function remoteButton(cls, action, label, icon) {
+    return '<button class="icon-btn' + (cls ? ' ' + cls : '') + '" type="button" data-remote="' + action + '" data-tooltip="' + label + '" aria-label="' + label + '">' + icon + '</button>';
+  }
+
+  function render() {
+    var html = '' +
+      '<div class="proto-top">' +
+        '<div><button class="icon-btn" type="button" aria-label="Tout replier">' + ICONS.collapse + '</button>' +
+        '<button class="icon-btn" type="button" aria-label="Plein écran">' + ICONS.expand + '</button></div>' +
+        '<div class="top-actions">' +
+          '<button class="link-btn" type="button" data-action="open-options">' + ICONS.gear + 'Options du document</button>' +
+          '<button class="btn-outline" type="button" data-action="open-recap">' + ICONS.pie + 'Récapitulatif</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="grid-head">' +
+        '<div></div><div></div><div>Description</div><div>Type</div><div>Quantité</div><div>U</div><div data-col="cost">Déboursé</div><div data-col="fg">en %</div><div data-col="margin">Marge</div><div data-col="discount">Remise</div><div>PV Net HT</div><div>Total net HT</div><div>TVA</div>' +
+      '</div>' +
+      '<div class="grid-body">' +
+        demoDocument() +
+      '</div>' +
+      '<div class="grid-foot">' +
+        '<div class="add-line-wrap">' +
+          '<input class="add-line" placeholder="Ajouter une ligne" role="combobox" aria-expanded="false" aria-controls="elements-list" aria-autocomplete="list" autocomplete="off">' +
+          '<div class="elements-list" id="elements-list" role="listbox" hidden></div>' +
+        '</div>' +
+        '<button class="link-btn" type="button" data-action="open-elements">Ajouter depuis les éléments</button>' +
+      '</div>' +
+      '<div class="foot-buttons">' +
+        '<button class="btn-add" type="button" data-action="add-title">' + ICONS.plus + 'Titre</button>' +
+        '<button class="btn-add" type="button" data-action="add-text">' + ICONS.plus + 'Texte</button>' +
+      '</div>' +
+      '<div class="side-tools">' +
+        remoteButton('', 'up', 'Monter la ligne', ICONS.chevUp) +
+        remoteButton('', 'add-above', 'Ajouter une ligne au-dessus', ICONS.addAbove) +
+        remoteButton('', 'add-below', 'Ajouter une ligne en dessous', ICONS.addBelow) +
+        remoteButton('', 'down', 'Descendre la ligne', ICONS.chevDown) +
+        '<div class="sep sep-1"></div>' +
+        remoteButton('', 'add-to-elements', 'Ajouter à la liste éléments', ICONS.folderPlus) +
+        remoteButton('', 'sign', 'Signer', ICONS.sign) +
+        '<div class="sep sep-2"></div>' +
+        remoteButton('', 'duplicate', 'Dupliquer', ICONS.copy) +
+        remoteButton('danger', 'delete', 'Supprimer', ICONS.trash) +
+      '</div>';
+    document.getElementById('proto').innerHTML = html;
+  }
+
+  render();
+
+  var proto = document.getElementById('proto');
+  var gridBody = proto.querySelector('.grid-body');
+
+  function headOf(node) { return node.querySelector(':scope > .row, :scope > .group-head'); }
+  function stackOf(node) { return node.querySelector(':scope > .children .stack'); }
+
+  function setRef(el, ref) {
+    el.dataset.ref = ref;
+    el.querySelector('.ref').textContent = ref;
+  }
+
+  /* Numérotation hiérarchique : 3 pour un Titre, 3.1 pour une ligne ou un Sous-titre
+     qu'il contient, 3.2.1 pour une ligne du Sous-titre 3.2, puis 3.2.1.1 pour ses enfants. */
+  function numberStack(container, prefix) {
+    [].forEach.call(container.children, function (item, i) {
+      var ref = prefix ? prefix + '.' + (i + 1) : String(i + 1);
+      if (item.classList.contains('node')) {
+        setRef(headOf(item), ref);
+        numberStack(stackOf(item), ref);
+      } else {
+        setRef(item, ref);
+      }
+    });
+  }
+
+  function renumber() {
+    numberStack(gridBody, '');
+    recomputeTotals();
+  }
+
+  /* Calculs : nombres au format français, totaux des lignes parents et des cartes. */
+  function parseFr(text) {
+    var n = parseFloat(String(text).replace(/[\s  ]/g, '').replace(',', '.'));
+    return isNaN(n) ? 0 : n;
+  }
+
+  function fr(n) {
+    return n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/[  ]/g, ' ');
+  }
+
+  function colInput(row, col) {
+    var cell = row.querySelector('[data-col="' + col + '"]');
+    return cell ? cell.querySelector('input.field') : null;
+  }
+
+  function colValue(row, col) {
+    var input = colInput(row, col);
+    return input ? input.value : '';
+  }
+
+  function setCol(row, col, text) {
+    var cell = row.querySelector('[data-col="' + col + '"]');
+    if (!cell) return;
+    cell.querySelector('input.field').value = text;
+    var view = cell.querySelector('.view');
+    (view.querySelector('.val') || view).textContent = text;
+  }
+
+  function recomputeTotals() {
+    /* Une ligne parent qui a des enfants totalise ses enfants. */
+    [].forEach.call(gridBody.querySelectorAll('.line-node'), function (node) {
+      var head = headOf(node);
+      var kids = [].slice.call(stackOf(node).children);
+      if (head.dataset.kind === 'text' || !kids.length) return;
+      setCol(head, 'total', fr(kids.reduce(function (sum, kid) { return sum + parseFr(colValue(kid, 'total')); }, 0)));
+    });
+    /* Une carte totalise ses lignes et ses sous-cartes (les plus profondes d'abord). */
+    [].slice.call(gridBody.querySelectorAll('.group')).reverse().forEach(function (card) {
+      var sum = 0;
+      [].forEach.call(stackOf(card).children, function (item) {
+        var head = headOf(item);
+        if (item.classList.contains('group')) sum += parseFr(head.querySelector('.total-value').textContent);
+        else if (head.dataset.kind !== 'text') sum += parseFr(colValue(head, 'total'));
+      });
+      headOf(card).querySelector('.total-value').textContent = fr(sum);
+    });
+  }
+
+  /* Lignes « feuilles » : celles qui portent un montant (enfants, ou parents sans enfant). */
+  function leafRows() {
+    return [].filter.call(gridBody.querySelectorAll('.row.line'), function (row) {
+      return row.dataset.level === 'child' || !stackOf(row.closest('.node')).children.length;
+    });
+  }
+
+  function documentSummary() {
+    var byRate = {};
+    var sale = 0;
+    var cost = 0;
+    leafRows().forEach(function (row) {
+      if (!colValue(row, 'total')) return;
+      var total = parseFr(colValue(row, 'total'));
+      var rate = parseFr(colValue(row, 'tva')).toFixed(2);
+      sale += total;
+      cost += parseFr(colValue(row, 'qty')) * parseFr(colValue(row, 'cost'));
+      byRate[rate] = (byRate[rate] || 0) + total;
+    });
+    var rates = Object.keys(byRate).map(function (key) {
+      var rate = parseFloat(key);
+      return { rate: rate, base: byRate[key], vat: byRate[key] * rate / 100 };
+    }).sort(function (a, b) { return a.rate - b.rate; });
+    var gain = sale - cost;
+    return { rates: rates, sale: sale, cost: cost, gain: gain, marginPct: cost ? gain / cost * 100 : 0 };
+  }
+
+  function nodeType(node) {
+    if (node.classList.contains('subgroup')) return 'subgroup';
+    if (node.classList.contains('group')) return 'group';
+    return headOf(node).dataset.kind === 'text' ? 'text' : 'line';
+  }
+
+  /* Ce que chaque conteneur accepte : le premier niveau reçoit des Titres et des lignes,
+     un Titre des Sous-titres et des lignes, un Sous-titre des lignes, une ligne ses enfants. */
+  var ACCEPTS = { group: ['subgroup', 'line'], subgroup: ['line'], line: ['child'], text: [] };
+  var ROOT_ACCEPTS = ['group', 'line'];
+
+  renumber();
+
+  /* Glisser-déposer : un parent se déplace avec ses enfants entre les parents ;
+     une ligne enfant se place sous n'importe quel parent. */
+  var drag = null;
+  var dropLine = document.createElement('div');
+  dropLine.className = 'drop-line';
+  document.body.appendChild(dropLine);
+
+  function findSlot(y) {
+    var best = null;
+    var bestDist = Infinity;
+    function add(lineY, rect, parentEl, before, node) {
+      var dist = Math.abs(y - lineY);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = { y: lineY, rect: rect, parentEl: parentEl, before: before, node: node };
+      }
+    }
+    function addAfterHead(node) {
+      var headRect = headOf(node).getBoundingClientRect();
+      var stack = stackOf(node);
+      add(headRect.bottom + 3, headRect, stack, stack.firstElementChild, node);
+      if (node.dataset.open !== 'true') return;
+      [].forEach.call(stack.children, function (child) {
+        if (child === drag.src) return;
+        var r = child.getBoundingClientRect();
+        add(r.bottom + 3, r, stack, child.nextElementSibling, node);
+      });
+    }
+    function addRoot() {
+      var items = [].slice.call(gridBody.children).filter(function (n) { return n !== drag.src; });
+      items.forEach(function (n) {
+        var r = n.getBoundingClientRect();
+        add(r.top - 3, r, gridBody, n, null);
+      });
+      if (items.length) {
+        var lastRect = items[items.length - 1].getBoundingClientRect();
+        add(lastRect.bottom + 3, lastRect, gridBody, null, null);
+      }
+    }
+    /* Conteneurs visibles qui peuvent recevoir l'élément glissé. */
+    var targets = [].filter.call(gridBody.querySelectorAll('.node'), function (n) {
+      if (n === drag.src || drag.src.contains(n)) return false;
+      if (n.parentElement.closest('.node[data-open="false"]')) return false;
+      return ACCEPTS[nodeType(n)].indexOf(drag.kind) !== -1;
+    });
+    if (drag.kind === 'child') {
+      targets.forEach(addAfterHead);
+      return best;
+    }
+    /* Pointeur à l'intérieur d'une carte : l'élément y entre (la plus profonde qui l'accepte),
+       même si elle est vide. */
+    var inside = targets.filter(function (n) {
+      var r = n.getBoundingClientRect();
+      return y > r.top + 6 && y < r.bottom - 6;
+    }).sort(function (a, b) {
+      return a.getBoundingClientRect().height - b.getBoundingClientRect().height;
+    })[0];
+    if (inside) {
+      addAfterHead(inside);
+    } else if (ROOT_ACCEPTS.indexOf(drag.kind) !== -1) {
+      addRoot();
+    } else {
+      targets.forEach(addAfterHead);
+    }
+    return best;
+  }
+
+  function startDrag(e) {
+    var rect = drag.head.getBoundingClientRect();
+    var ghost = document.createElement('div');
+    ghost.className = 'dnd-ghost' + (drag.head.classList.contains('group-head') ? ' group' : '') + (drag.kind === 'subgroup' ? ' subgroup' : '');
+    ghost.style.width = rect.width + 'px';
+    var clone = drag.head.cloneNode(true);
+    clone.classList.remove('is-active');
+    ghost.appendChild(clone);
+    proto.appendChild(ghost);
+    drag.ghost = ghost;
+    drag.offX = e.clientX - rect.left;
+    drag.offY = e.clientY - rect.top;
+    drag.active = true;
+    drag.src.classList.add('dnd-source');
+    drag.cell.classList.add('is-grabbed');
+    document.body.classList.add('dnd-active');
+  }
+
+  function endDrag() {
+    drag.ghost.remove();
+    dropLine.style.display = 'none';
+    drag.src.classList.remove('dnd-source');
+    drag.cell.classList.remove('is-grabbed');
+    document.body.classList.remove('dnd-active');
+    clearActive();
+  }
+
+  proto.addEventListener('pointerdown', function (e) {
+    var cell = e.target.closest('.numcell');
+    if (!cell || e.button > 0) return;
+    var head = cell.closest('.row, .group-head');
+    var kind = head.classList.contains('group-head')
+      ? nodeType(head.closest('.node'))
+      : (head.dataset.level === 'parent' ? 'line' : 'child');
+    drag = {
+      cell: cell,
+      head: head,
+      kind: kind,
+      src: kind === 'child' ? head : head.closest('.node'),
+      startX: e.clientX,
+      startY: e.clientY,
+      active: false
+    };
+    cell.setPointerCapture(e.pointerId);
+  });
+
+  proto.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    if (!drag.active) {
+      if (Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) < 5) return;
+      startDrag(e);
+    }
+    drag.ghost.style.transform = 'translate(' + (e.clientX - drag.offX) + 'px,' + (e.clientY - drag.offY) + 'px)';
+    if (e.clientY < 70) window.scrollBy(0, -14);
+    else if (e.clientY > window.innerHeight - 70) window.scrollBy(0, 14);
+    var slot = findSlot(e.clientY);
+    if (!slot) return;
+    dropLine.style.display = 'block';
+    dropLine.style.left = slot.rect.left + 'px';
+    dropLine.style.width = slot.rect.width + 'px';
+    dropLine.style.top = (slot.y - 1.5) + 'px';
+  });
+
+  function finishDrag(e, cancelled) {
+    if (!drag) return;
+    var d = drag;
+    if (!d.active) { drag = null; return; }
+    var slot = cancelled ? null : findSlot(e.clientY);
+    endDrag();
+    drag = null;
+    if (!slot) return;
+    slot.parentEl.insertBefore(d.src, slot.before);
+    if (slot.node && slot.node.dataset.open !== 'true') {
+      slot.node.dataset.open = 'true';
+      var toggle = headOf(slot.node).querySelector('.chev.toggle');
+      if (toggle) {
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', 'Replier');
+      }
+    }
+    renumber();
+    var moved = d.kind === 'child' ? d.src : headOf(d.src);
+    moved.classList.add('just-moved');
+    setTimeout(function () { moved.classList.remove('just-moved'); }, 1100);
+  }
+
+  proto.addEventListener('pointerup', function (e) { finishDrag(e, false); });
+  proto.addEventListener('pointercancel', function (e) { finishDrag(e, true); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && drag && drag.active) finishDrag(e, true);
+  });
+
+  /* Télécommande : apparaît au survol d'une ligne (la ligne « active »). */
+  var remote = proto.querySelector('.side-tools');
+  var activeRow = null;
+  var hideTimer = null;
+
+  /* Ce qui se déplace avec la ligne : un parent emmène ses enfants. */
+  function movableOf(row) {
+    return row.dataset.level === 'child' ? row : row.closest('.node');
+  }
+
+  function updateRemote() {
+    if (!activeRow) return;
+    var el = movableOf(activeRow);
+    remote.querySelector('[data-remote="up"]').disabled = !el.previousElementSibling;
+    remote.querySelector('[data-remote="down"]').disabled = !el.nextElementSibling;
+    var rowRect = activeRow.getBoundingClientRect();
+    var top = rowRect.top - proto.getBoundingClientRect().top - 4;
+    var maxTop = proto.offsetHeight - remote.offsetHeight - 8;
+    remote.style.top = Math.max(0, Math.min(top, maxTop)) + 'px';
+  }
+
+  function setActive(row) {
+    clearTimeout(hideTimer);
+    /* Sur une carte Titre ou Sous-titre, la télécommande se limite à monter, descendre et supprimer. */
+    remote.classList.toggle('is-card', row.classList.contains('group-head'));
+    if (activeRow !== row) {
+      if (activeRow) activeRow.classList.remove('is-active');
+      activeRow = row;
+      row.classList.add('is-active');
+    }
+    updateRemote();
+    remote.classList.add('is-visible');
+  }
+
+  function clearActive() {
+    if (activeRow) activeRow.classList.remove('is-active');
+    activeRow = null;
+    remote.classList.remove('is-visible');
+  }
+
+  function scheduleHide() {
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function () {
+      /* Une ligne en cours de saisie reste active tant que le focus est dedans. */
+      if (activeRow && activeRow.contains(document.activeElement)) return;
+      if (!typeMenu.hidden) return;
+      clearActive();
+    }, 250);
+  }
+
+  proto.addEventListener('pointerover', function (e) {
+    if (drag && drag.active) return;
+    if (!typeMenu.hidden) return;
+    if (e.target.closest('.side-tools')) {
+      clearTimeout(hideTimer);
+      return;
+    }
+    var row = e.target.closest('.row, .group-head');
+    if (row) setActive(row);
+    else if (activeRow) scheduleHide();
+  });
+
+  proto.addEventListener('pointerleave', function () {
+    if (activeRow) scheduleHide();
+  });
+
+  proto.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'touch') return;
+    var row = e.target.closest('.row, .group-head');
+    if (row) setActive(row);
+  });
+
+  window.addEventListener('resize', updateRemote);
+
+  /* Au clavier : le focus sur une ligne l'active, et elle le reste tant que le focus est dedans. */
+  proto.addEventListener('focusin', function (e) {
+    var row = e.target.closest('.row, .group-head');
+    if (row) setActive(row);
+  });
+
+  proto.addEventListener('focusout', function (e) {
+    if (activeRow && !activeRow.contains(e.relatedTarget) && !activeRow.matches(':hover') && !remote.matches(':hover')) {
+      scheduleHide();
+    }
+  });
+
+  /* L'unité choisie (% ou €) se répercute dans la vue en lecture seule. */
+  proto.addEventListener('change', function (e) {
+    if (!e.target.classList.contains('unit-select')) return;
+    e.target.closest('.cell').querySelector('.view .unit').textContent = e.target.value;
+  });
+
+  /* Les valeurs saisies dans les champs se répercutent dans la vue en lecture seule. */
+  proto.addEventListener('input', function (e) {
+    if (!e.target.classList.contains('field') || !e.target.closest('.row.line')) return;
+    var cell = e.target.closest('.cell');
+    var view = cell.querySelector('.view');
+    var target = view.querySelector('.val') || view;
+    target.textContent = e.target.value;
+    /* Total d'une ligne = quantité × PV net HT, puis les totaux remontent aux parents et aux cartes. */
+    var col = cell.dataset.col;
+    var row = e.target.closest('.row.line');
+    if (col === 'qty' || col === 'pv') {
+      setCol(row, 'total', fr(parseFr(colValue(row, 'qty')) * parseFr(colValue(row, 'pv'))));
+    }
+    recomputeTotals();
+  });
+
+  function flash(el) {
+    el.classList.add('just-moved');
+    setTimeout(function () { el.classList.remove('just-moved'); }, 1100);
+  }
+
+  function moveActive(direction) {
+    var el = movableOf(activeRow);
+    var sibling = direction < 0 ? el.previousElementSibling : el.nextElementSibling;
+    if (!sibling) return;
+    if (direction < 0) el.parentElement.insertBefore(el, sibling);
+    else el.parentElement.insertBefore(sibling, el);
+    renumber();
+    updateRemote();
+    flash(activeRow);
+  }
+
+  /* Une ligne ajoutée est du même niveau que la ligne active (parent ou enfant) et arrive en saisie. */
+  function addLine(where) {
+    var el = movableOf(activeRow);
+    var isChild = activeRow.dataset.level === 'child';
+    el.insertAdjacentHTML(where === 'above' ? 'beforebegin' : 'afterend',
+      isChild ? lineRow(EMPTY_LINE, 'child') : parentNode(lineRow(EMPTY_LINE, 'parent'), ''));
+    var created = where === 'above' ? el.previousElementSibling : el.nextElementSibling;
+    var row = isChild ? created : created.querySelector(':scope > .row');
+    renumber();
+    setActive(row);
+    row.querySelector('.field').focus();
+    flash(row);
+  }
+
+  /* Suppression : pour l'instant réservée aux cartes Titre et Sous-titre, avec les lignes qu'elles contiennent. */
+  function deleteActive() {
+    if (!activeRow.classList.contains('group-head')) return;
+    activeRow.closest('.node').remove();
+    clearActive();
+    renumber();
+  }
+
+  remote.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-remote]');
+    if (!btn || btn.disabled || !activeRow) return;
+    var action = btn.dataset.remote;
+    if (action === 'up') moveActive(-1);
+    else if (action === 'down') moveActive(1);
+    else if (action === 'add-above') addLine('above');
+    else if (action === 'add-below') addLine('below');
+    else if (action === 'delete') deleteActive();
+  });
+
+  /* « Ajouter une ligne » : liste déroulante des éléments référencés, dans l'ordre de la liste d'éléments. */
+  var ELEMENTS = [
+    { name: 'Lorem ipsum dolor sit amet, consectetuer adipiscindcdfrgrgggg elit', code: 'REF25959559123456', price: '1 234,56', type: 'fourniture' },
+    { name: 'Pose de parquet', code: '', price: '1 234,56', type: 'ouvrage' },
+    { name: 'Marteau', code: 'REF25959559', price: '1 234,56', type: 'fourniture' },
+    { name: 'Maintenance électricien', code: '', price: '1 234,56', type: 'main-oeuvre' },
+    { name: 'Marteau', code: 'REF25959559', price: '1 234,56', type: 'fourniture' }
+  ];
+  var CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>';
+
+  var addInput = proto.querySelector('.add-line');
+  var elementsList = proto.querySelector('.elements-list');
+  var shownElements = [];
+  var highlighted = 0;
+
+  function renderElements() {
+    var query = addInput.value.trim().toLowerCase();
+    shownElements = ELEMENTS.filter(function (el) {
+      return !query || (el.name + ' ' + el.code).toLowerCase().indexOf(query) !== -1;
+    });
+    highlighted = 0;
+    elementsList.innerHTML = shownElements.length ? shownElements.map(function (el, i) {
+      return '<div class="element-item' + (i === 0 ? ' is-highlighted' : '') + '" role="option" data-index="' + i + '">' +
+        ICONS.typeBadge(el.type) +
+        '<span class="element-main"><span class="element-name">' + el.name + '</span>' +
+          (el.code ? '<span class="element-chip">' + el.code + '</span>' : '') + '</span>' +
+        '<span class="element-price">' + el.price + '</span>' +
+        '<span class="element-check">' + CHECK_ICON + '</span>' +
+      '</div>';
+    }).join('') : '<div class="elements-empty">Aucun élément ne correspond.</div>';
+  }
+
+  function openElements() {
+    renderElements();
+    elementsList.hidden = false;
+    addInput.setAttribute('aria-expanded', 'true');
+    /* S'ouvre vers le haut s'il n'y a pas la place en dessous. */
+    var rect = addInput.getBoundingClientRect();
+    var needed = Math.min(elementsList.offsetHeight, 340) + 12;
+    elementsList.classList.toggle('up', window.innerHeight - rect.bottom < needed && rect.top > needed);
+  }
+
+  function closeElements() {
+    elementsList.hidden = true;
+    addInput.setAttribute('aria-expanded', 'false');
+  }
+
+  function highlightElement(index) {
+    if (!shownElements.length) return;
+    highlighted = (index + shownElements.length) % shownElements.length;
+    [].forEach.call(elementsList.children, function (item, i) {
+      item.classList.toggle('is-highlighted', i === highlighted);
+      if (i === highlighted) item.scrollIntoView({ block: 'nearest' });
+    });
+  }
+
+  /* Chaque élément choisi devient une ligne en fin de grille. */
+  function addElementLines(elements) {
+    var rows = elements.map(function (el) {
+      var d = { ref: '', label: el.name, code: el.code, type: el.type, qty: '1', unit: 'u', cost: '', costPct: '', margin: '', discount: '', pv: el.price, total: el.price, tva: '20,00' };
+      gridBody.insertAdjacentHTML('beforeend', parentNode(lineRow(d, 'parent'), ''));
+      return gridBody.lastElementChild.querySelector(':scope > .row');
+    });
+    renumber();
+    if (rows.length) rows[0].scrollIntoView({ block: 'center', behavior: 'smooth' });
+    rows.forEach(flash);
+  }
+
+  function pickElement(index) {
+    var el = shownElements[index];
+    if (!el) return;
+    addElementLines([el]);
+    addInput.value = '';
+    closeElements();
+  }
+
+  addInput.addEventListener('focus', openElements);
+  addInput.addEventListener('click', function () { if (elementsList.hidden) openElements(); });
+  addInput.addEventListener('input', function () {
+    if (elementsList.hidden) openElements(); else renderElements();
+  });
+  addInput.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (elementsList.hidden) openElements(); else highlightElement(highlighted + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); highlightElement(highlighted - 1); }
+    else if (e.key === 'Enter' && !elementsList.hidden) { e.preventDefault(); pickElement(highlighted); }
+    else if (e.key === 'Escape') { closeElements(); }
+  });
+  elementsList.addEventListener('mousedown', function (e) { e.preventDefault(); });
+  elementsList.addEventListener('mousemove', function (e) {
+    var item = e.target.closest('.element-item');
+    if (item && Number(item.dataset.index) !== highlighted) highlightElement(Number(item.dataset.index));
+  });
+  elementsList.addEventListener('click', function (e) {
+    var item = e.target.closest('.element-item');
+    if (item) pickElement(Number(item.dataset.index));
+  });
+  document.addEventListener('pointerdown', function (e) {
+    if (!elementsList.hidden && !e.target.closest('.add-line-wrap')) closeElements();
+  });
+
+  var TYPES = [
+    { key: 'fourniture', label: 'Fourniture' },
+    { key: 'main-oeuvre', label: 'Main d’œuvre' },
+    { key: 'ouvrage', label: 'Ouvrage' }
+  ];
+
+  /* « Ajouter depuis les éléments » : un tiroir à droite pour choisir dans le catalogue, par catégories. */
+  var CATALOGUE_SPEC = [
+    { name: 'Jardinage', items: [['Aménagement extérieur', 'fourniture'], ['Tonte de pelouse', 'main-oeuvre']] },
+    { name: 'Ornement', items: [['Moulure décorative', 'fourniture']] },
+    { name: 'Peinture', items: [] },
+    { name: 'Plinthe', items: [['Plinthe MDF 10 cm', 'fourniture']] },
+    { name: 'Parquet stratifié', items: [['Pose de parquet', 'ouvrage'], ['Parquet stratifié chêne', 'fourniture']] },
+    { name: 'Robineterie', items: [['Robinet mitigeur', 'fourniture'], ['Robinet d’arrêt', 'fourniture'], ['Mélangeur thermostatique', 'fourniture'], ['Siphon chromé', 'fourniture']] },
+    { name: 'Sol', count: 20, base: [['Carrelage grès cérame', 'fourniture'], ['Parquet contrecollé', 'fourniture'], ['Sol vinyle', 'fourniture'], ['Pose de revêtement de sol', 'main-oeuvre'], ['Béton ciré', 'ouvrage']] },
+    { name: 'Toiture', items: [['Tuile mécanique', 'fourniture'], ['Ardoise naturelle', 'fourniture'], ['Zinguerie', 'ouvrage'], ['Écran sous-toiture', 'fourniture'], ['Pose de faîtage', 'main-oeuvre'], ['Fenêtre de toit', 'fourniture']] },
+    { name: 'Travaux', count: 85, base: [['Démolition de cloison', 'main-oeuvre'], ['Dépose de revêtement', 'main-oeuvre'], ['Ragréage de sol', 'ouvrage'], ['Pose de carrelage', 'ouvrage'], ['Enduit de lissage', 'ouvrage'], ['Peinture murs et plafonds', 'ouvrage'], ['Pose de placo BA13', 'main-oeuvre'], ['Création d’ouverture', 'ouvrage'], ['Pose de menuiserie', 'main-oeuvre'], ['Isolation des combles', 'ouvrage'], ['Étanchéité de terrasse', 'ouvrage'], ['Installation électrique', 'ouvrage'], ['Raccordement plomberie', 'main-oeuvre'], ['Pose de faïence', 'ouvrage'], ['Nettoyage de fin de chantier', 'main-oeuvre']] }
+  ];
+
+  var CATALOGUE = [];
+  CATALOGUE_SPEC.forEach(function (cat) {
+    var entries = cat.items || [];
+    if (cat.count) {
+      for (var i = 0; i < cat.count; i++) {
+        var base = cat.base[i % cat.base.length];
+        entries.push([base[0] + (i >= cat.base.length ? ' — variante ' + (Math.floor(i / cat.base.length) + 1) : ''), base[1]]);
+      }
+    }
+    entries.forEach(function (entry) {
+      var id = CATALOGUE.length;
+      CATALOGUE.push({ id: id, name: entry[0], type: entry[1], category: cat.name, code: 'REF' + (25959559 + id * 7), price: '1 234,56' });
+    });
+  });
+
+  var drawerBackdrop = document.createElement('div');
+  drawerBackdrop.className = 'drawer-backdrop';
+  var drawerEl = document.createElement('aside');
+  drawerEl.className = 'drawer';
+  drawerEl.setAttribute('role', 'dialog');
+  drawerEl.setAttribute('aria-modal', 'true');
+  drawerEl.setAttribute('aria-labelledby', 'drawer-title');
+  drawerEl.innerHTML =
+    '<h2 class="drawer-title" id="drawer-title">Éléments</h2>' +
+    '<div class="drawer-body">' +
+      '<section class="drawer-cats" aria-label="Catégories">' +
+        '<h3>Catégories</h3>' +
+        '<button type="button" class="link-btn" data-drawer="toggle-all">Tout sélectionner</button>' +
+        '<div class="cat-list">' + CATALOGUE_SPEC.map(function (cat) {
+          var count = CATALOGUE.filter(function (it) { return it.category === cat.name; }).length;
+          return '<label class="cat-row"><input type="checkbox" data-cat="' + cat.name + '"><span>' + cat.name + ' (' + count + ')</span></label>';
+        }).join('') + '</div>' +
+      '</section>' +
+      '<section class="drawer-main">' +
+        '<div class="drawer-search"><input type="search" placeholder="Rechercher" aria-label="Rechercher un élément" data-drawer="search">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.500"/><path d="M16 16l4.500 4.500"/></svg></div>' +
+        '<label class="drawer-field" for="drawer-type">Type d’élément</label>' +
+        '<select id="drawer-type" data-drawer="type"><option value="">Tous</option>' +
+          TYPES.map(function (t) { return '<option value="' + t.key + '">' + t.label + '</option>'; }).join('') + '</select>' +
+        '<div class="catalogue-list" role="listbox" aria-multiselectable="true" aria-label="Éléments du catalogue"></div>' +
+      '</section>' +
+    '</div>' +
+    '<div class="drawer-foot">' +
+      '<button type="button" class="link-btn" data-drawer="cancel">Annuler</button>' +
+      '<button type="button" class="btn-primary" data-drawer="confirm" disabled>Ajouter 0 élément au document</button>' +
+    '</div>';
+  document.body.appendChild(drawerBackdrop);
+  document.body.appendChild(drawerEl);
+
+  var drawerState = { cats: [], query: '', type: '', selected: [] };
+  var drawerTrigger = null;
+  var catalogueList = drawerEl.querySelector('.catalogue-list');
+  var confirmBtn = drawerEl.querySelector('[data-drawer="confirm"]');
+  var toggleAllBtn = drawerEl.querySelector('[data-drawer="toggle-all"]');
+  var catChecks = [].slice.call(drawerEl.querySelectorAll('.cat-row input'));
+
+  function drawerItems() {
+    var q = drawerState.query.trim().toLowerCase();
+    return CATALOGUE.filter(function (it) {
+      return (!drawerState.cats.length || drawerState.cats.indexOf(it.category) !== -1) &&
+        (!drawerState.type || it.type === drawerState.type) &&
+        (!q || (it.name + ' ' + it.code).toLowerCase().indexOf(q) !== -1);
+    });
+  }
+
+  function renderCatalogue() {
+    var items = drawerItems();
+    catalogueList.innerHTML = items.length ? items.map(function (it) {
+      var selected = drawerState.selected.indexOf(it.id) !== -1;
+      return '<div class="catalogue-item' + (selected ? ' is-selected' : '') + '" role="option" aria-selected="' + selected + '" data-id="' + it.id + '" title="' + it.name + '">' +
+        ICONS.typeBadge(it.type) +
+        '<span class="element-main"><span class="element-name">' + it.name + '</span><span class="element-chip">' + it.code + '</span></span>' +
+        '<span class="element-check">' + CHECK_ICON + '</span>' +
+      '</div>';
+    }).join('') : '<div class="elements-empty">Aucun élément ne correspond.</div>';
+  }
+
+  function updateDrawerFooter() {
+    var n = drawerState.selected.length;
+    confirmBtn.disabled = n === 0;
+    confirmBtn.textContent = 'Ajouter ' + n + (n > 1 ? ' éléments' : ' élément') + ' au document';
+    toggleAllBtn.textContent = drawerState.cats.length === catChecks.length ? 'Tout désélectionner' : 'Tout sélectionner';
+  }
+
+  function openDrawer(trigger) {
+    drawerTrigger = trigger;
+    drawerState = { cats: [], query: '', type: '', selected: [] };
+    catChecks.forEach(function (c) { c.checked = false; });
+    drawerEl.querySelector('[data-drawer="search"]').value = '';
+    drawerEl.querySelector('[data-drawer="type"]').value = '';
+    renderCatalogue();
+    updateDrawerFooter();
+    catalogueList.scrollTop = 0;
+    drawerBackdrop.classList.add('is-open');
+    drawerEl.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    drawerEl.querySelector('[data-drawer="search"]').focus();
+  }
+
+  function closeDrawer() {
+    if (!drawerEl.classList.contains('is-open')) return;
+    drawerBackdrop.classList.remove('is-open');
+    drawerEl.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (drawerTrigger) drawerTrigger.focus();
+  }
+
+  proto.addEventListener('click', function (e) {
+    var trigger = e.target.closest('[data-action="open-elements"]');
+    if (trigger) openDrawer(trigger);
+  });
+
+  drawerBackdrop.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  drawerEl.addEventListener('change', function (e) {
+    var check = e.target.closest('.cat-row input');
+    if (check) {
+      var cat = check.dataset.cat;
+      var index = drawerState.cats.indexOf(cat);
+      if (check.checked && index === -1) drawerState.cats.push(cat);
+      if (!check.checked && index !== -1) drawerState.cats.splice(index, 1);
+      renderCatalogue();
+      updateDrawerFooter();
+    } else if (e.target.dataset.drawer === 'type') {
+      drawerState.type = e.target.value;
+      renderCatalogue();
+    }
+  });
+
+  drawerEl.addEventListener('input', function (e) {
+    if (e.target.dataset.drawer === 'search') {
+      drawerState.query = e.target.value;
+      renderCatalogue();
+    }
+  });
+
+  drawerEl.addEventListener('click', function (e) {
+    var action = e.target.closest('[data-drawer]');
+    var item = e.target.closest('.catalogue-item');
+    if (item) {
+      var id = Number(item.dataset.id);
+      var at = drawerState.selected.indexOf(id);
+      if (at === -1) drawerState.selected.push(id); else drawerState.selected.splice(at, 1);
+      item.classList.toggle('is-selected', at === -1);
+      item.setAttribute('aria-selected', String(at === -1));
+      updateDrawerFooter();
+    } else if (action && action.dataset.drawer === 'toggle-all') {
+      var all = drawerState.cats.length !== catChecks.length;
+      catChecks.forEach(function (c) { c.checked = all; });
+      drawerState.cats = all ? catChecks.map(function (c) { return c.dataset.cat; }) : [];
+      renderCatalogue();
+      updateDrawerFooter();
+    } else if (action && action.dataset.drawer === 'cancel') {
+      closeDrawer();
+    } else if (action && action.dataset.drawer === 'confirm' && !action.disabled) {
+      var chosen = CATALOGUE.filter(function (it) { return drawerState.selected.indexOf(it.id) !== -1; });
+      closeDrawer();
+      addElementLines(chosen);
+    }
+  });
+
+  /* Tiroirs latéraux : « Options du document » et « Récapitulatif ». */
+  var X_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var BACK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
+  var PERCENT_ICON = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 5L6 19"/><circle cx="7" cy="7" r="2.600"/><circle cx="17" cy="17" r="2.600"/></svg>';
+  var PIGGY_ICON = '<svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M19.500 9.500c-.5-1-1.300-1.800-2.300-2.300L17.700 5l-2.600 1.100A8.600 8.600 0 0013 5.800C8.400 5.800 4.800 8.700 4.800 12.400c0 1.800.8 3.300 2.100 4.400V20h3.200v-1.200c.9.200 1.800.3 2.700.3s1.800-.1 2.700-.3V20h3.200v-3.300c1-.9 1.700-2.100 1.900-3.400l1.400-.4v-3.400zM15.900 11.900a1.100 1.100 0 110-2.200 1.100 1.100 0 010 2.200z"/></svg>';
+  var RECYCLE_ICON = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4.500l3.200 5.200H4.800zM16 4.500l3.200 5.200h-6.400zM12 19.500l-3.200-5.200h6.400z"/></svg>';
+  var CARET = ICONS.chevUp.replace('<svg', '<svg class="caret"');
+
+  function createSideDrawer(label) {
+    var side = { trigger: null };
+    side.backdrop = document.createElement('div');
+    side.backdrop.className = 'drawer-backdrop';
+    side.el = document.createElement('aside');
+    side.el.className = 'drawer drawer-side';
+    side.el.setAttribute('role', 'dialog');
+    side.el.setAttribute('aria-modal', 'true');
+    side.el.setAttribute('aria-label', label);
+    document.body.appendChild(side.backdrop);
+    document.body.appendChild(side.el);
+    side.backdrop.addEventListener('click', function () { closeSide(side); });
+    side.el.addEventListener('click', function (e) {
+      if (e.target.closest('[data-side="close"]')) closeSide(side);
+    });
+    return side;
+  }
+
+  function openSide(side, trigger) {
+    side.trigger = trigger;
+    side.backdrop.classList.add('is-open');
+    side.el.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSide(side) {
+    if (!side.el.classList.contains('is-open')) return;
+    side.backdrop.classList.remove('is-open');
+    side.el.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (side.trigger) side.trigger.focus();
+  }
+
+  /* Options du document */
+  var docOptions = { reverseCharge: true, directPayment: false, category: 'Bien', discount: false, profit: false };
+  var optionsDrawer = createSideDrawer('Options du document');
+
+  function switchButton(key, label, withCheck) {
+    return '<button type="button" class="switch' + (withCheck ? ' has-check' : '') + '" role="switch" aria-checked="' + docOptions[key] + '" aria-label="' + label + '" data-option="' + key + '"></button>';
+  }
+
+  optionsDrawer.el.innerHTML =
+    '<div class="side-head"><h2>Options du document</h2><button type="button" class="side-close" data-side="close" aria-label="Fermer">' + X_ICON + '</button></div>' +
+    '<div class="side-body">' +
+      '<section class="side-card">' +
+        '<h3 class="side-card-title tva">TVA</h3>' +
+        '<div class="side-row"><span>Autoliquidation sous-traitance</span>' + switchButton('reverseCharge', 'Autoliquidation sous-traitance', true) + '</div>' +
+        '<div class="side-row"><span>Paiement direct</span>' + switchButton('directPayment', 'Paiement direct', false) + '</div>' +
+        '<label class="side-label" for="option-category">Catégorie d’opération</label>' +
+        '<select class="side-select" id="option-category" data-option-select="category"><option>Bien</option><option>Service</option><option>Mixte</option></select>' +
+      '</section>' +
+      '<section class="side-card">' +
+        '<h3 class="side-card-title cols">Affichage des colonnes</h3>' +
+        '<div class="side-row"><span>La remise</span>' + switchButton('discount', 'La remise', false) + '</div>' +
+        '<p class="side-help">Permet l’affichage des colonnes Remise/ remise % et montant sur votre devis ou facture</p>' +
+        '<div class="side-row"><span>La rentabilité <small>(Déboursé et marge)</small></span>' + switchButton('profit', 'La rentabilité', false) + '</div>' +
+        '<p class="side-help">Permet d\'afficher les colonnes déboursé marge en € /marge en % et rentabilité dans le pied de votre document</p>' +
+      '</section>' +
+    '</div>';
+
+  function applyOptions() {
+    proto.classList.toggle('hide-discount', !docOptions.discount);
+    proto.classList.toggle('hide-profit', !docOptions.profit);
+  }
+
+  /* Par défaut, la remise et la rentabilité (déboursé, en %, marge) ne sont pas affichées. */
+  applyOptions();
+
+  optionsDrawer.el.addEventListener('click', function (e) {
+    var sw = e.target.closest('.switch');
+    if (!sw) return;
+    var key = sw.dataset.option;
+    docOptions[key] = !docOptions[key];
+    sw.setAttribute('aria-checked', String(docOptions[key]));
+    applyOptions();
+  });
+
+  optionsDrawer.el.addEventListener('change', function (e) {
+    if (e.target.dataset.optionSelect) docOptions[e.target.dataset.optionSelect] = e.target.value;
+  });
+
+  /* Récapitulatif : variante bureau (tiroir) et variante mobile (page « TVA et rentabilité »). */
+  var recapDrawer = createSideDrawer('Récapitulatif');
+  var narrowScreen = window.matchMedia('(max-width: 700px)');
+
+  function euro(n) { return fr(n) + ' €'; }
+
+  function recapDesktop(s) {
+    var tva = '<section class="recap-card" data-open="true"><button type="button" class="recap-card-head" data-recap="toggle">' + PERCENT_ICON + '<span>TVA</span>' + CARET + '</button><div class="recap-card-body">' +
+      (s.rates.length ? s.rates.map(function (r) {
+        return '<div class="rate-block"><div class="rate-tile"><span>' + fr(r.rate) + '%</span><small>Taux</small></div>' +
+          '<div class="rate-lines"><div class="rate-line"><span>Base HT</span><span>' + fr(r.base) + '</span></div>' +
+          '<div class="rate-line"><span>Montant TVA</span><span>' + fr(r.vat) + '</span></div></div></div>';
+      }).join('') : '<p class="side-help">Aucune ligne dans le document.</p>') + '</div></section>';
+    var profit = docOptions.profit ? '<section class="recap-card" data-open="true"><button type="button" class="recap-card-head" data-recap="toggle">' + PIGGY_ICON + '<span>Rentabilité du document</span>' + CARET + '</button><div class="recap-card-body">' +
+      '<div class="profit-row"><span>Total vente</span><span class="val">' + euro(s.sale) + '</span></div>' +
+      '<div class="profit-row"><span>− Déboursé</span><span class="val">' + euro(s.cost) + '</span></div>' +
+      '<div class="profit-row"><span>+ Gain</span><span class="val">' + euro(s.gain) + '<span class="sub">' + fr(s.marginPct) + ' %</span></span></div>' +
+    '</div></section>' : '';
+    return '<div class="side-head"><h2>Récapitulatif</h2><button type="button" class="side-close" data-side="close" aria-label="Fermer">' + X_ICON + '</button></div>' +
+      '<div class="side-body">' + tva + profit + recapEco() + '</div>';
+  }
+
+  function recapMobile(s) {
+    var rates = s.rates.slice().reverse();
+    var tva = '<section class="recap-card" data-open="true"><button type="button" class="recap-card-head" data-recap="toggle">' + PERCENT_ICON + '<span>TVA</span>' + CARET + '</button><div class="recap-card-body">' +
+      (rates.length ? rates.map(function (r) {
+        return '<div class="rate-acc" data-open="false"><button type="button" class="rate-acc-head" data-recap="acc"><small>Taux</small><span>' + fr(r.rate) + '%</span>' + ICONS.chevDown.replace('<svg', '<svg class="caret"') + '</button>' +
+          '<div class="rate-acc-body"><div class="rate-line"><span>Base HT</span><span>' + fr(r.base) + '</span></div><div class="rate-line"><span>Montant TVA</span><span>' + fr(r.vat) + '</span></div></div></div>';
+      }).join('') : '<p class="side-help">Aucune ligne dans le document.</p>') + '</div></section>';
+    var profit = docOptions.profit ? '<section class="recap-card" data-open="true"><button type="button" class="recap-card-head" data-recap="toggle">' + PIGGY_ICON + '<span>Rentabilité</span>' + CARET + '</button><div class="recap-card-body">' +
+      '<div class="profit-row"><span>Déboursé</span><span class="val">' + fr(s.cost) + '</span></div>' +
+      '<div class="profit-row"><span>Total marge en €</span><span class="val">' + fr(s.gain) + '</span></div>' +
+      '<div class="profit-row"><span>Marge totale en %</span><span class="val">' + fr(s.marginPct) + ' %</span></div>' +
+    '</div></section>' : '';
+    return '<div class="side-head"><button type="button" class="side-back" data-side="close" aria-label="Retour">' + BACK_ICON + '</button><h2>TVA et rentabilité</h2><span style="width:38px"></span></div>' +
+      '<div class="side-body">' + tva + profit + recapEco() + '</div>';
+  }
+
+  /* Éco-contribution : repliée, sans détail pour l'instant. */
+  function recapEco() {
+    return '<section class="recap-card" data-open="false"><button type="button" class="recap-card-head" data-recap="toggle">' + RECYCLE_ICON + '<span>Éco-contribution</span>' + CARET +
+      '<span class="eco-val" style="margin-left:auto;font-size:14px;font-weight:500">' + fr(0) + '</span></button>' +
+      '<div class="recap-card-body"><p class="side-help">Aucune éco-contribution sur ce document.</p></div></section>';
+  }
+
+  function renderRecap() {
+    var mobile = narrowScreen.matches;
+    recapDrawer.el.classList.toggle('recap-mobile', mobile);
+    recapDrawer.el.innerHTML = mobile ? recapMobile(documentSummary()) : recapDesktop(documentSummary());
+  }
+
+  recapDrawer.el.addEventListener('click', function (e) {
+    var toggle = e.target.closest('[data-recap="toggle"]');
+    var acc = e.target.closest('[data-recap="acc"]');
+    if (toggle) {
+      var card = toggle.closest('.recap-card');
+      card.dataset.open = String(card.dataset.open !== 'true');
+    } else if (acc) {
+      var item = acc.closest('.rate-acc');
+      item.dataset.open = String(item.dataset.open !== 'true');
+    }
+  });
+
+  narrowScreen.addEventListener('change', function () {
+    if (recapDrawer.el.classList.contains('is-open')) renderRecap();
+  });
+
+  proto.addEventListener('click', function (e) {
+    var options = e.target.closest('[data-action="open-options"]');
+    var recap = e.target.closest('[data-action="open-recap"]');
+    if (options) openSide(optionsDrawer, options);
+    else if (recap) { renderRecap(); openSide(recapDrawer, recap); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    closeSide(optionsDrawer);
+    closeSide(recapDrawer);
+  });
+
+  /* Colonne Type : sur la ligne active, un menu à trois choix type la ligne. */
+  var typeMenu = document.createElement('div');
+  typeMenu.className = 'type-menu';
+  typeMenu.setAttribute('role', 'listbox');
+  typeMenu.hidden = true;
+  document.body.appendChild(typeMenu);
+  var typeTrigger = null;
+  var typeIndex = 0;
+
+  function setRowType(row, key) {
+    var badge = ICONS.typeBadge(key);
+    row.dataset.type = key;
+    row.querySelector('.type-cell .view').innerHTML = badge;
+    row.querySelector('.type-select .ts-badge').innerHTML = badge;
+  }
+
+  function highlightType(index) {
+    typeIndex = (index + TYPES.length) % TYPES.length;
+    [].forEach.call(typeMenu.children, function (option, i) {
+      option.classList.toggle('is-highlighted', i === typeIndex);
+    });
+  }
+
+  function openTypeMenu(trigger) {
+    var current = trigger.closest('.row').dataset.type;
+    typeTrigger = trigger;
+    typeMenu.innerHTML = TYPES.map(function (t) {
+      return '<div class="type-option' + (t.key === current ? ' is-selected' : '') + '" role="option" data-type="' + t.key + '">' +
+        ICONS.typeBadge(t.key) + '<span>' + t.label + '</span><span class="type-check">' + CHECK_ICON + '</span></div>';
+    }).join('');
+    typeMenu.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    var rect = trigger.getBoundingClientRect();
+    var height = typeMenu.offsetHeight;
+    var top = rect.bottom + 4;
+    if (top + height > window.innerHeight && rect.top > height + 8) top = rect.top - height - 4;
+    typeMenu.style.left = rect.left + 'px';
+    typeMenu.style.top = top + 'px';
+    highlightType(TYPES.findIndex(function (t) { return t.key === current; }));
+  }
+
+  function closeTypeMenu() {
+    if (typeMenu.hidden) return;
+    typeMenu.hidden = true;
+    if (typeTrigger) typeTrigger.setAttribute('aria-expanded', 'false');
+    if (activeRow && !activeRow.matches(':hover')) scheduleHide();
+  }
+
+  function chooseType(index) {
+    var trigger = typeTrigger;
+    setRowType(trigger.closest('.row'), TYPES[index].key);
+    closeTypeMenu();
+    trigger.focus();
+  }
+
+  proto.addEventListener('click', function (e) {
+    var trigger = e.target.closest('.type-select');
+    if (!trigger) return;
+    if (typeMenu.hidden) openTypeMenu(trigger); else closeTypeMenu();
+  });
+
+  proto.addEventListener('keydown', function (e) {
+    if (!e.target.classList.contains('type-select') || typeMenu.hidden) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); highlightType(typeIndex + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); highlightType(typeIndex - 1); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chooseType(typeIndex); }
+    else if (e.key === 'Escape') { closeTypeMenu(); }
+  });
+
+  typeMenu.addEventListener('mousedown', function (e) { e.preventDefault(); });
+  typeMenu.addEventListener('mousemove', function (e) {
+    var option = e.target.closest('.type-option');
+    if (option) highlightType([].indexOf.call(typeMenu.children, option));
+  });
+  typeMenu.addEventListener('click', function (e) {
+    var option = e.target.closest('.type-option');
+    if (option) chooseType([].indexOf.call(typeMenu.children, option));
+  });
+  document.addEventListener('pointerdown', function (e) {
+    if (!typeMenu.hidden && !e.target.closest('.type-menu, .type-select')) closeTypeMenu();
+  });
+  window.addEventListener('scroll', closeTypeMenu, true);
+  window.addEventListener('resize', closeTypeMenu);
+
+  /* Les clics qui changent la hauteur d'une ligne (repli, texte déplié…) repositionnent la télécommande. */
+  proto.addEventListener('click', function () {
+    if (activeRow) setTimeout(updateRemote, 0);
+  });
+
+  /* Ligne de texte : défaut → (clic) lecture seule → (clic sur le texte) édition. */
+  var editingRow = null;
+  var savedRange = null;
+  var STATE_COMMANDS = ['bold', 'italic', 'underline', 'strikeThrough', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'insertUnorderedList', 'insertOrderedList'];
+
+  function setTextState(row, state) {
+    row.dataset.state = state;
+    var toggle = row.querySelector('.text-toggle');
+    toggle.setAttribute('aria-expanded', String(state !== 'default'));
+    toggle.setAttribute('aria-label', state === 'default' ? 'Déplier le texte' : 'Replier le texte');
+  }
+
+  function updateToolbarState(row) {
+    STATE_COMMANDS.forEach(function (cmd) {
+      var btn = row.querySelector('.tb-btn[data-cmd="' + cmd + '"]');
+      if (btn) btn.classList.toggle('is-active', document.queryCommandState(cmd));
+    });
+  }
+
+  function enterEdit(row) {
+    if (editingRow && editingRow !== row) exitEdit(editingRow, 'open');
+    var editor = row.querySelector('.text-editor');
+    editor.innerHTML = row.querySelector('.text-read').innerHTML;
+    setTextState(row, 'edit');
+    editingRow = row;
+    editor.focus();
+    var range = document.createRange();
+    range.selectNodeContents(editor);
+    range.collapse(false);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    savedRange = range.cloneRange();
+    updateToolbarState(row);
+  }
+
+  function exitEdit(row, nextState) {
+    var editor = row.querySelector('.text-editor');
+    var html = editor.innerHTML === '<br>' ? '' : editor.innerHTML;
+    row.querySelector('.text-read').innerHTML = html;
+    row.querySelector('.text-preview').textContent = plainText(html);
+    setTextState(row, nextState);
+    if (editingRow === row) editingRow = null;
+    savedRange = null;
+  }
+
+  function runCommand(row, cmd, value) {
+    var editor = row.querySelector('.text-editor');
+    editor.focus();
+    if (savedRange) {
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(savedRange);
+    }
+    document.execCommand('styleWithCSS', false, true);
+    document.execCommand(cmd, false, value);
+    savedRange = window.getSelection().rangeCount ? window.getSelection().getRangeAt(0).cloneRange() : savedRange;
+    updateToolbarState(row);
+  }
+
+  proto.addEventListener('mousedown', function (e) {
+    if (e.target.closest('.text-toolbar') && !e.target.closest('select, input')) e.preventDefault();
+  });
+
+  document.addEventListener('selectionchange', function () {
+    if (!editingRow) return;
+    var sel = window.getSelection();
+    var editor = editingRow.querySelector('.text-editor');
+    if (sel.rangeCount && editor.contains(sel.anchorNode)) {
+      savedRange = sel.getRangeAt(0).cloneRange();
+      updateToolbarState(editingRow);
+    }
+  });
+
+  document.addEventListener('pointerdown', function (e) {
+    if (editingRow && !editingRow.contains(e.target)) exitEdit(editingRow, 'open');
+  });
+
+  proto.addEventListener('click', function (e) {
+    if (e.target.closest('[data-action="add-text"]')) {
+      gridBody.insertAdjacentHTML('beforeend', parentNode(textRow('', ''), ''));
+      renumber();
+      var created = gridBody.lastElementChild.querySelector('.row.text');
+      enterEdit(created);
+      created.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      return;
+    }
+    var row = e.target.closest('.row.text');
+    if (!row) return;
+    var tool = e.target.closest('[data-cmd]');
+    if (tool && row.contains(tool) && tool.classList.contains('tb-btn')) {
+      var cmd = tool.dataset.cmd;
+      if (cmd === 'quote') {
+        var current = String(document.queryCommandValue('formatBlock')).toLowerCase();
+        runCommand(row, 'formatBlock', current === 'blockquote' ? 'p' : 'blockquote');
+      } else if (cmd === 'link') {
+        var url = window.prompt('Adresse du lien (https://…)');
+        if (url) runCommand(row, 'createLink', url);
+      } else if (cmd === 'image') {
+        row.querySelector('[data-file="image"]').click();
+      } else {
+        runCommand(row, cmd);
+      }
+      return;
+    }
+    if (e.target.closest('.text-toggle')) {
+      if (row.dataset.state === 'edit') exitEdit(row, 'default');
+      else setTextState(row, row.dataset.state === 'default' ? 'open' : 'default');
+    } else if (e.target.closest('.text-preview')) {
+      setTextState(row, 'open');
+    } else if (e.target.closest('.text-read')) {
+      enterEdit(row);
+    }
+  });
+
+  proto.addEventListener('change', function (e) {
+    var row = e.target.closest('.row.text');
+    if (!row) return;
+    var select = e.target.closest('[data-select]');
+    if (select) {
+      if (select.value) runCommand(row, select.dataset.select, select.value);
+      if (select.dataset.select === 'fontSize') select.value = '';
+    } else if (e.target.dataset.file === 'image' && e.target.files[0]) {
+      runCommand(row, 'insertImage', URL.createObjectURL(e.target.files[0]));
+      e.target.value = '';
+    }
+  });
+
+  proto.addEventListener('input', function (e) {
+    var row = e.target.closest('.row.text');
+    if (!row) return;
+    if (e.target.dataset.color) {
+      runCommand(row, e.target.dataset.color, e.target.value);
+    } else if (e.target.classList.contains('text-editor') && e.target.innerHTML === '<br>') {
+      e.target.innerHTML = '';
+    }
+  });
+
+  proto.addEventListener('keydown', function (e) {
+    var row = e.target.closest('.row.text');
+    if (!row) return;
+    if (e.key === 'Escape' && row.dataset.state === 'edit') {
+      exitEdit(row, 'open');
+    } else if (e.key === 'Enter' && e.target.classList.contains('text-preview')) {
+      setTextState(row, 'open');
+    } else if (e.key === 'Enter' && e.target.classList.contains('text-read')) {
+      enterEdit(row);
+    }
+  });
+
+  proto.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.classList.contains('title-input')) e.target.blur();
+  });
+
+  proto.addEventListener('click', function (e) {
+    if (e.target.closest('[data-action="add-title"]')) {
+      gridBody.insertAdjacentHTML('beforeend', group(0, '', '0,00'));
+      renumber();
+      var created = gridBody.lastElementChild;
+      created.querySelector('.title-input').focus();
+      created.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      var head = headOf(created);
+      head.classList.add('just-moved');
+      setTimeout(function () { head.classList.remove('just-moved'); }, 1100);
+      return;
+    }
+    var btn = e.target.closest('.chev.toggle');
+    if (!btn) return;
+    var node = btn.closest('.node');
+    var open = node.dataset.open !== 'true';
+    node.dataset.open = String(open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Replier' : 'Déplier');
+  });
+</script>
+</body>
+</html>
