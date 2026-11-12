@@ -196,7 +196,7 @@
   .compare-after { object-position: center top; }
   /* Second comparateur : le nouveau devis est un écran long, on cadre la grille et les totaux */
   .compare-devis { aspect-ratio: 4 / 3; }
-  .compare-devis .compare-after { object-position: center 69%; }
+  .compare-devis .compare-after { object-position: center 52%; }
   .compare-before { object-position: left top; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
   .proto-link { margin: 4px 0 20px; }
   .btn-proto {
@@ -215,54 +215,89 @@
   .case-figure img { display: block; width: 100%; border-radius: 16px; border: 1px solid var(--border-light); cursor: zoom-in; }
   .case-figure figcaption { font-size: 13px; color: var(--text-faint); text-align: center; margin-top: 12px; line-height: 1.5; }
 
-  /* Journey map : plus large que la colonne de texte, avec défilement horizontal si l'écran est étroit */
+  /* Journey map : à la largeur de la colonne de texte, une étape après l'autre */
   .jm-bleed {
     --warm: oklch(0.95 0.04 70);
     --warm-border: oklch(0.86 0.07 70);
     --warm-text: oklch(0.42 0.1 55);
-    position: relative;
-    left: 50%;
-    width: min(1180px, calc(100vw - 48px));
     margin: 40px 0 8px;
-    transform: translateX(-50%);
   }
-  .jm-bleed > h3 { margin-top: 0; }
-  .jm-scroll { overflow-x: auto; padding-bottom: 12px; }
-  .jm-map { min-width: 1120px; display: grid; grid-template-columns: 120px repeat(7, minmax(0, 1fr)); }
-  .jm-stage {
-    margin-right: -6px;
-    min-height: 62px;
+  .jm-acc { border: 1px solid var(--border-light); border-radius: 14px; background: #fff; }
+  .jm-acc summary {
     display: flex;
     align-items: center;
-    padding: 14px 18px 14px 22px;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .jm-acc summary::-webkit-details-marker { display: none; }
+  .jm-acc summary:hover { background: var(--accent-soft); border-radius: 14px; }
+  .jm-acc summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 14px; }
+  .jm-acc-text h3 { margin: 0; }
+  .jm-acc-text small { display: block; margin-top: 2px; font-size: 13px; color: var(--text-faint); }
+  .jm-acc-chevron {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    margin-right: 4px;
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    transform: rotate(45deg);
+    transition: transform .2s ease;
+  }
+  .jm-acc[open] .jm-acc-chevron { transform: rotate(-135deg); }
+  .jm-acc-body { padding: 0 20px 24px; }
+  .jm-acc[open] summary { padding-bottom: 12px; }
+  .jm-steps { list-style: none; margin: 24px 0 0; padding: 0; }
+  .jm-step { position: relative; padding: 0 0 24px 46px; }
+  .jm-step::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 36px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--accent-border);
+  }
+  .jm-step:last-child { padding-bottom: 0; }
+  .jm-step:last-child::before { display: none; }
+  .jm-num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     background: var(--accent);
     color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 14px;
-    font-weight: 600;
-    line-height: 1.25;
-    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%);
+    font-weight: 700;
   }
-  .jm-stage:nth-of-type(2) { clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%); }
-  .jm-stage small { display: block; margin-bottom: 2px; font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .04em; opacity: .8; }
-  .jm-label {
-    padding: 18px 12px 18px 0;
-    border-top: 1px solid var(--border-light);
+  .jm-step-head {
+    margin-bottom: 10px;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px;
+    font-size: 17px;
     font-weight: 600;
+    line-height: 1.2;
     color: var(--text-main);
   }
-  .jm-label span { display: block; }
-  .jm-label .jm-sub { margin-top: 2px; font-family: 'IBM Plex Sans', sans-serif; font-size: 11.5px; font-weight: 400; color: var(--text-faint); }
-  .jm-cell { padding: 16px 14px 16px 6px; border-top: 1px solid var(--border-light); font-size: 13px; }
-  .jm-cell ul { margin: 0; padding: 0 0 0 16px; display: flex; flex-direction: column; gap: 6px; }
-  .jm-map > :nth-last-child(-n+8) { background: var(--warm); border-top-color: var(--warm-border); }
-  .jm-map > .jm-label:nth-last-child(8) { padding-left: 12px; border-radius: 10px 0 0 10px; color: var(--warm-text); }
+  .jm-step-head small { display: block; margin-bottom: 2px; font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .05em; color: var(--text-faint); }
+  .jm-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .jm-col { padding: 12px 14px; border: 1px solid var(--border-light); border-radius: 12px; background: #fff; font-size: 13px; }
+  .jm-col-label { margin-bottom: 6px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--text-faint); }
+  .jm-col ul { margin: 0; padding: 0 0 0 16px; display: flex; flex-direction: column; gap: 4px; }
+  .jm-col-fr { background: var(--warm); border-color: var(--warm-border); }
+  .jm-col-fr .jm-col-label { color: var(--warm-text); }
   .jm-friction {
     display: block;
-    margin-bottom: 8px;
-    padding: 8px 10px;
+    margin-bottom: 6px;
+    padding: 7px 9px;
     border: 1px solid var(--warm-border);
     border-radius: 8px;
     background: #fff;
@@ -271,7 +306,10 @@
     color: var(--text-main);
   }
   .jm-friction:last-child { margin-bottom: 0; }
-  .jm-none { font-size: 12px; color: var(--text-faint); }
+  .jm-none { font-size: 12.5px; color: var(--text-faint); }
+  @media (max-width: 640px) {
+    .jm-cols { grid-template-columns: 1fr; }
+  }
   .jm-legend { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; font-size: 13px; color: var(--text-muted); }
   .jm-legend i { display: inline-block; width: 14px; height: 14px; margin-right: 8px; border-radius: 4px; vertical-align: -2px; }
   .jm-k-stage { background: var(--accent); }
@@ -713,48 +751,81 @@
       </div>
     </div>
 
-    <div class="jm-bleed">
-      <h3 data-i18n="jm-title">Le cycle d'un chantier, vu par les artisans</h3>
+    <details class="jm-bleed jm-acc">
+      <summary>
+        <span class="jm-acc-text">
+          <h3 data-i18n="jm-title">Le cycle d'un chantier, vu par les artisans</h3>
+          <small data-i18n="jm-hint">Journey map · 7 étapes</small>
+        </span>
+        <span class="jm-acc-chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="jm-acc-body">
       <p data-i18n="jm-intro">Journey map construite en atelier à partir des interviews : ce que fait un artisan de la prise de contact à la clôture, avec quoi, et où l'administratif coince.</p>
-      <div class="jm-scroll">
-        <div class="jm-map" role="table" aria-label="Journey map du cycle d'un chantier">
-          <div></div>
-          <div class="jm-stage"><div><small><span data-i18n="jm-step">ÉTAPE</span> 1</small><span data-i18n="jm-s1">Prise de contact</span></div></div>
-          <div class="jm-stage"><div><small><span data-i18n="jm-step">ÉTAPE</span> 2</small><span data-i18n="jm-s2">Prise de rendez-vous</span></div></div>
-          <div class="jm-stage"><div><small><span data-i18n="jm-step">ÉTAPE</span> 3</small><span data-i18n="jm-s3">Rendez-vous d'observation</span></div></div>
-          <div class="jm-stage"><div><small><span data-i18n="jm-step">ÉTAPE</span> 4</small><span data-i18n="jm-s4">Devis</span></div></div>
-          <div class="jm-stage"><div><small><span data-i18n="jm-step">ÉTAPE</span> 5</small><span data-i18n="jm-s5">Préparation du chantier</span></div></div>
-          <div class="jm-stage"><div><small><span data-i18n="jm-step">ÉTAPE</span> 6</small><span data-i18n="jm-s6">Réalisation</span></div></div>
-          <div class="jm-stage"><div><small><span data-i18n="jm-step">ÉTAPE</span> 7</small><span data-i18n="jm-s7">Clôture</span></div></div>
-
-          <div class="jm-label"><span data-i18n="jm-l1">Ce qu'il fait</span><span class="jm-sub" data-i18n="jm-l1s">actions clés</span></div>
-          <div class="jm-cell" data-i18n="jm-do-1"><ul><li>Reçoit la demande</li><li>Note le nom, l'adresse, le besoin et le budget</li><li>Répond aux appels d'offre</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-do-2"><ul><li>Fixe un créneau avec le client</li><li>Prépare le matériel du rendez-vous</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-do-3"><ul><li>Journée dédiée aux rendez-vous</li><li>Prend les cotes, fait un croquis</li><li>Photographie les lieux et les accès</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-do-4"><ul><li>Remet ses notes au propre</li><li>Chiffre, ajoute plans et photos</li><li>Envoie, puis attend l'accord</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-do-5"><ul><li>Valide l'achat des matériaux une fois le devis accepté</li><li>Commande, suit la livraison et les stocks</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-do-6"><ul><li>Facture l'acompte puis l'avancement</li><li>Suit la rentabilité en cours de route</li><li>Photographie le chantier</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-do-7"><ul><li>Demande le règlement final</li><li>Clôt le chantier, archive le dossier</li></ul></div>
-
-          <div class="jm-label"><span data-i18n="jm-l2">Avec quoi</span><span class="jm-sub" data-i18n="jm-l2s">outils et supports</span></div>
-          <div class="jm-cell" data-i18n="jm-with-1"><ul><li>Téléphone</li><li>Site, réseaux sociaux</li><li>Bouche-à-oreille</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-with-2"><ul><li>Téléphone, SMS</li><li>Agenda numérique ou papier</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-with-3"><ul><li>Smartphone (photos, notes)</li><li>Mètre ou laser</li><li>Carnet papier</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-with-4"><ul><li>Tableur ou logiciel de devis</li><li>Mail, parfois courrier</li><li>Signature manuscrite ou accord oral</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-with-5"><ul><li>Téléphone, mail</li><li>Site ou magasin du fournisseur</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-with-6"><ul><li>Logiciel de facturation</li><li>Appareil photo du mobile</li></ul></div>
-          <div class="jm-cell" data-i18n="jm-with-7"><ul><li>Ordinateur</li><li>Envoi par mail, archivage numérique</li></ul></div>
-
-          <div class="jm-label"><span data-i18n="jm-l3">Où ça coince</span><span class="jm-sub" data-i18n="jm-l3s">points de friction</span></div>
-          <div class="jm-cell" data-i18n="jm-fr-1"><span class="jm-none">Peu de friction exprimée</span></div>
-          <div class="jm-cell" data-i18n="jm-fr-2"><span class="jm-friction">Se fait souvent en dehors des heures de travail</span></div>
-          <div class="jm-cell" data-i18n="jm-fr-3"><span class="jm-friction">Photos et notes dispersées entre mobile et papier</span></div>
-          <div class="jm-cell" data-i18n="jm-fr-4"><span class="jm-friction">Notes à retaper pour établir le devis</span><span class="jm-friction">Tarifs fournisseurs à mettre à jour à la main</span><span class="jm-friction">Deux versions : une pour le client, une pour l'artisan</span></div>
-          <div class="jm-cell" data-i18n="jm-fr-5"><span class="jm-friction">Paniers de matériaux difficiles à importer</span></div>
-          <div class="jm-cell" data-i18n="jm-fr-6"><span class="jm-friction">Facture d'acompte et facture de situation confondues</span><span class="jm-friction">Marge difficile à suivre pendant le chantier</span></div>
-          <div class="jm-cell" data-i18n="jm-fr-7"><span class="jm-friction">Dossier chantier éparpillé (papier, photos, mails)</span></div>
-        </div>
-      </div>
+      <ol class="jm-steps" aria-label="Journey map du cycle d'un chantier">
+        <li class="jm-step">
+          <span class="jm-num">1</span>
+          <div class="jm-step-head"><small><span data-i18n="jm-step">ÉTAPE</span> 1</small><span data-i18n="jm-s1">Prise de contact</span></div>
+          <div class="jm-cols">
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l1">Ce qu'il fait</div><div data-i18n="jm-do-1"><ul><li>Reçoit la demande</li><li>Note le nom, l'adresse, le besoin et le budget</li><li>Répond aux appels d'offre</li></ul></div></div>
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l2">Avec quoi</div><div data-i18n="jm-with-1"><ul><li>Téléphone</li><li>Site, réseaux sociaux</li><li>Bouche-à-oreille</li></ul></div></div>
+            <div class="jm-col jm-col-fr"><div class="jm-col-label" data-i18n="jm-l3">Où ça coince</div><div data-i18n="jm-fr-1"><span class="jm-none">Peu de friction exprimée</span></div></div>
+          </div>
+        </li>
+        <li class="jm-step">
+          <span class="jm-num">2</span>
+          <div class="jm-step-head"><small><span data-i18n="jm-step">ÉTAPE</span> 2</small><span data-i18n="jm-s2">Prise de rendez-vous</span></div>
+          <div class="jm-cols">
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l1">Ce qu'il fait</div><div data-i18n="jm-do-2"><ul><li>Fixe un créneau avec le client</li><li>Prépare le matériel du rendez-vous</li></ul></div></div>
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l2">Avec quoi</div><div data-i18n="jm-with-2"><ul><li>Téléphone, SMS</li><li>Agenda numérique ou papier</li></ul></div></div>
+            <div class="jm-col jm-col-fr"><div class="jm-col-label" data-i18n="jm-l3">Où ça coince</div><div data-i18n="jm-fr-2"><span class="jm-friction">Se fait souvent en dehors des heures de travail</span></div></div>
+          </div>
+        </li>
+        <li class="jm-step">
+          <span class="jm-num">3</span>
+          <div class="jm-step-head"><small><span data-i18n="jm-step">ÉTAPE</span> 3</small><span data-i18n="jm-s3">Rendez-vous d'observation</span></div>
+          <div class="jm-cols">
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l1">Ce qu'il fait</div><div data-i18n="jm-do-3"><ul><li>Journée dédiée aux rendez-vous</li><li>Prend les cotes, fait un croquis</li><li>Photographie les lieux et les accès</li></ul></div></div>
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l2">Avec quoi</div><div data-i18n="jm-with-3"><ul><li>Smartphone (photos, notes)</li><li>Mètre ou laser</li><li>Carnet papier</li></ul></div></div>
+            <div class="jm-col jm-col-fr"><div class="jm-col-label" data-i18n="jm-l3">Où ça coince</div><div data-i18n="jm-fr-3"><span class="jm-friction">Photos et notes dispersées entre mobile et papier</span></div></div>
+          </div>
+        </li>
+        <li class="jm-step">
+          <span class="jm-num">4</span>
+          <div class="jm-step-head"><small><span data-i18n="jm-step">ÉTAPE</span> 4</small><span data-i18n="jm-s4">Devis</span></div>
+          <div class="jm-cols">
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l1">Ce qu'il fait</div><div data-i18n="jm-do-4"><ul><li>Remet ses notes au propre</li><li>Chiffre, ajoute plans et photos</li><li>Envoie, puis attend l'accord</li></ul></div></div>
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l2">Avec quoi</div><div data-i18n="jm-with-4"><ul><li>Tableur ou logiciel de devis</li><li>Mail, parfois courrier</li><li>Signature manuscrite ou accord oral</li></ul></div></div>
+            <div class="jm-col jm-col-fr"><div class="jm-col-label" data-i18n="jm-l3">Où ça coince</div><div data-i18n="jm-fr-4"><span class="jm-friction">Notes à retaper pour établir le devis</span><span class="jm-friction">Tarifs fournisseurs à mettre à jour à la main</span><span class="jm-friction">Deux versions : une pour le client, une pour l'artisan</span></div></div>
+          </div>
+        </li>
+        <li class="jm-step">
+          <span class="jm-num">5</span>
+          <div class="jm-step-head"><small><span data-i18n="jm-step">ÉTAPE</span> 5</small><span data-i18n="jm-s5">Préparation du chantier</span></div>
+          <div class="jm-cols">
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l1">Ce qu'il fait</div><div data-i18n="jm-do-5"><ul><li>Valide l'achat des matériaux une fois le devis accepté</li><li>Commande, suit la livraison et les stocks</li></ul></div></div>
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l2">Avec quoi</div><div data-i18n="jm-with-5"><ul><li>Téléphone, mail</li><li>Site ou magasin du fournisseur</li></ul></div></div>
+            <div class="jm-col jm-col-fr"><div class="jm-col-label" data-i18n="jm-l3">Où ça coince</div><div data-i18n="jm-fr-5"><span class="jm-friction">Paniers de matériaux difficiles à importer</span></div></div>
+          </div>
+        </li>
+        <li class="jm-step">
+          <span class="jm-num">6</span>
+          <div class="jm-step-head"><small><span data-i18n="jm-step">ÉTAPE</span> 6</small><span data-i18n="jm-s6">Réalisation</span></div>
+          <div class="jm-cols">
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l1">Ce qu'il fait</div><div data-i18n="jm-do-6"><ul><li>Facture l'acompte puis l'avancement</li><li>Suit la rentabilité en cours de route</li><li>Photographie le chantier</li></ul></div></div>
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l2">Avec quoi</div><div data-i18n="jm-with-6"><ul><li>Logiciel de facturation</li><li>Appareil photo du mobile</li></ul></div></div>
+            <div class="jm-col jm-col-fr"><div class="jm-col-label" data-i18n="jm-l3">Où ça coince</div><div data-i18n="jm-fr-6"><span class="jm-friction">Facture d'acompte et facture de situation confondues</span><span class="jm-friction">Marge difficile à suivre pendant le chantier</span></div></div>
+          </div>
+        </li>
+        <li class="jm-step">
+          <span class="jm-num">7</span>
+          <div class="jm-step-head"><small><span data-i18n="jm-step">ÉTAPE</span> 7</small><span data-i18n="jm-s7">Clôture</span></div>
+          <div class="jm-cols">
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l1">Ce qu'il fait</div><div data-i18n="jm-do-7"><ul><li>Demande le règlement final</li><li>Clôt le chantier, archive le dossier</li></ul></div></div>
+            <div class="jm-col"><div class="jm-col-label" data-i18n="jm-l2">Avec quoi</div><div data-i18n="jm-with-7"><ul><li>Ordinateur</li><li>Envoi par mail, archivage numérique</li></ul></div></div>
+            <div class="jm-col jm-col-fr"><div class="jm-col-label" data-i18n="jm-l3">Où ça coince</div><div data-i18n="jm-fr-7"><span class="jm-friction">Dossier chantier éparpillé (papier, photos, mails)</span></div></div>
+          </div>
+        </li>
+      </ol>
       <div class="jm-legend">
         <span><i class="jm-k-stage"></i><span data-i18n="jm-leg1">Étape du chantier</span></span>
         <span><i class="jm-k-fric"></i><span data-i18n="jm-leg2">Point de friction identifié en atelier</span></span>
@@ -763,7 +834,8 @@
         <h4 data-i18n="jm-trans-h">Une friction qui traverse tout le cycle</h4>
         <p data-i18n="jm-trans-p">L'administratif se fait le soir et le week-end, une fois la journée de chantier terminée : chaque minute gagnée sur le devis et la facturation compte.</p>
       </div>
-    </div>
+      </div>
+    </details>
   </section>
 
   <section>
@@ -1065,6 +1137,7 @@
     'hs-s1-p2': 'The challenge was as much about understanding users as it was about getting the team to converge on a shared understanding of the problem.',
 
     'jm-title': 'A construction job cycle, seen by tradespeople',
+    'jm-hint': 'Journey map · 7 steps',
     'jm-intro': 'Journey map built in a workshop from the interviews: what a tradesperson does from first contact to closing, with what, and where the paperwork gets stuck.',
     'jm-step': 'STEP',
     'jm-s1': 'First contact',
@@ -1075,11 +1148,8 @@
     'jm-s6': 'Execution',
     'jm-s7': 'Closing',
     'jm-l1': 'What they do',
-    'jm-l1s': 'key actions',
     'jm-l2': 'With what',
-    'jm-l2s': 'tools and media',
     'jm-l3': 'Where it gets stuck',
-    'jm-l3s': 'friction points',
     'jm-do-1': '<ul><li>Receives the request</li><li>Notes the name, address, need and budget</li><li>Answers calls for tender</li></ul>',
     'jm-do-2': '<ul><li>Sets a time slot with the client</li><li>Prepares the equipment for the visit</li></ul>',
     'jm-do-3': '<ul><li>A day set aside for visits</li><li>Takes measurements, sketches</li><li>Photographs the site and access</li></ul>',
