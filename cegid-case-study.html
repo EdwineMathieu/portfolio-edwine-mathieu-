@@ -54,12 +54,19 @@
   h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; margin: 32px 0 12px; }
   .case-block:first-of-type h2 { margin-top: 0; }
   p { margin: 0 0 16px; font-size: 15.5px; color: var(--text-body); }
+  strong { font-weight: 600; color: var(--text-main); }
+  ul.bullets { margin: 0 0 16px; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 8px; }
+  ul.bullets li { font-size: 15.5px; color: var(--text-body); }
+  .impact-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0 24px; }
+  .impact-stat { background: white; border: 1px solid var(--border-light); border-radius: 14px; padding: 20px 16px; text-align: center; }
+  .impact-stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .impact-stat-label { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
   .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; }
   .pill { font-size: 13px; font-weight: 500; color: var(--text-main); background: white; border: 1px solid var(--border-light); border-radius: 100px; padding: 6px 14px; }
   .back-to-top { position: fixed; bottom: 24px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-light); background: white; color: var(--text-main); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,.12); }
   .back-to-top:hover { background: oklch(0.94 0.008 90); }
   .back-to-top[hidden] { display: none; }
-  @media (max-width: 640px) { .site-nav { padding: 14px 20px; } .site-nav-links { gap: 2px; } .site-nav-item { padding: 7px 10px; font-size: 13px; } .wrap { padding: 40px 20px 96px; } h1 { font-size: 30px; } }
+  @media (max-width: 640px) { .site-nav { padding: 14px 20px; } .site-nav-links { gap: 2px; } .site-nav-item { padding: 7px 10px; font-size: 13px; } .wrap { padding: 40px 20px 96px; } h1 { font-size: 30px; } .impact-stats { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -102,12 +109,54 @@
   </div>
 
   <div class="case-block">
-    <h2 data-i18n="cs-h1-1">Démarche</h2>
-    <p data-i18n="cs-t1">5 groupes de designers ont proposé un prototype incarnant la nouvelle marque Cegid. Après veille et conception, les 5 prototypes finaux ont été testés auprès de 100 testeurs avec l'aide d'un paneliste.</p>
+    <h2 data-i18n="cg-brief-h">En bref</h2>
+    <p data-i18n="cg-brief-p1">À l'été 2025, un exercice de design du groupe a réuni 6 équipes de designers : chacune devait proposer un prototype incarnant la nouvelle marque Cegid, portée par le Marketing, sur un même cas d'usage de gestion RH.</p>
+    <p data-i18n="cg-brief-p2">Volontaire pour y participer, j'ai créé la page des absences (vues tableau et kanban), retravaillé la card Objectifs de l'accueil et animé les maquettes en prototype. Testée auprès de 100 utilisateurs, la proposition de mon équipe a obtenu <strong>4,04 / 5</strong> d'appréciation globale.</p>
   </div>
+
   <div class="case-block">
-    <h2 data-i18n="cs-h1-2">Résultats</h2>
-    <p data-i18n="cs-t2">Comparaison des projets selon des critères établis (couleur, ergonomie...) pour identifier points de friction et éléments attractifs, et orienter les décisions de design à l'échelle du groupe.</p>
+    <h2 data-i18n="cg-start-h">Un prototype de départ à transformer</h2>
+    <p data-i18n="cg-start-p">Le Head of Design a transmis aux équipes un prototype de départ : une page d'accueil, une page avec un tableau, une modale d'ajout d'absence et un assistant IA. L'exercice consistait à refaire ce parcours en retravaillant le look and feel, tout en respectant les éléments de la marque fournis par le Marketing (logo, couleurs, typographie). J'ai commencé par une veille pour nourrir ma proposition.</p>
+  </div>
+
+  <div class="case-block">
+    <h2 data-i18n="cg-choices-h">Trois partis pris pour une nouvelle marque</h2>
+    <p data-i18n="cg-choices-intro">J'ai réfléchi avec les autres designers de l'équipe au ton, aux interactions, aux couleurs et à la hiérarchisation du contenu. Trois partis pris en sont ressortis :</p>
+    <ul class="bullets">
+      <li data-i18n="cg-choices-l1"><strong>Minimalisme et clarté</strong> : des sections et des modules bien délimités, des titres explicites, des espaces blancs généreux et une palette dominée par les bleus, avec des aplats beige pour structurer l'espace.</li>
+      <li data-i18n="cg-choices-l2"><strong>Un assistant IA discret, mais toujours partant</strong> : présent sur toutes les pages dans un panneau latéral, il permet de naviguer sans briser l'harmonie visuelle, avec un ton qui assume sa vocation à réaliser n'importe quelle tâche.</li>
+      <li data-i18n="cg-choices-l3"><strong>L'humain au centre</strong> : des illustrations animées sur la connexion et la page d'erreur, de la personnalisation (« Bonjour Axel ») et des messages d'accueil qui renforcent l'engagement.</li>
+    </ul>
+    <p data-i18n="cg-choices-p">Je me suis inspirée du Material Design (cartes aux ombres subtiles, boutons arrondis, grille et espacements cohérents) et de la navigation d'un navigateur récent pour structurer les espaces, dont celui de l'assistant IA.</p>
+  </div>
+
+  <div class="case-block">
+    <h2 data-i18n="cg-test-h">Un test à grande échelle pour converger</h2>
+    <p data-i18n="cg-test-p">Chaque proposition a été testée, sans modération, par un panel de 100 utilisateurs B2B, via un questionnaire et un prototype Figma, en 20 à 25 minutes. Le questionnaire mesurait la perception de la marque et les émotions provoquées (AttrakDiff) ainsi que l'appréciation de chaque élément (couleurs, typographie, animations, navigation…), et recueillait des verbatims. Le principe : diverger avec plusieurs propositions, puis converger vers une seule à l'échelle du groupe.</p>
+  </div>
+
+  <div class="case-block">
+    <h2 data-i18n="cg-res-h">Ce que les résultats ont montré</h2>
+    <div class="impact-stats">
+      <div class="impact-stat">
+        <div class="impact-stat-value">4,04</div>
+        <div class="impact-stat-label" data-i18n="cg-stat1">appréciation globale, sur 5</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-stat-value">69 %</div>
+        <div class="impact-stat-label" data-i18n="cg-stat2">des testeurs ont noté 4 ou plus</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-stat-value">1,62</div>
+        <div class="impact-stat-label" data-i18n="cg-stat3">attractivité (AttrakDiff, de −3 à +3)</div>
+      </div>
+    </div>
+    <p data-i18n="cg-res-p">AttrakDiff est positif sur les quatre dimensions (attractivité 1,62, identification 1,45, pragmatique 1,26, stimulation 1,21). Les éléments les mieux notés sont les tableaux (4,24), la dataviz (4,23) et la navigation (4,15), les moins bien notés l'iconographie (3,91) et la typographie (3,93). Les verbatims saluent la simplicité, la clarté et l'assistant IA intégré, et critiquent des bleus trop pâles, des textes et des icônes trop petits, et un bouton d'assistant trop discret.</p>
+  </div>
+
+  <div class="case-block">
+    <h2 data-i18n="cg-learn-h">Ce que je renforcerais</h2>
+    <p data-i18n="cg-learn-p">Ces retours pointent trois chantiers : le contraste des couleurs, la taille des textes et des icônes, et la visibilité de l'assistant. Ce sont les premiers points que je reprendrais pour une prochaine itération.</p>
   </div>
 
   <div class="pill-row">
@@ -196,10 +245,26 @@
     'cs-eyebrow': 'Case study',
     'cs-h1': 'Cegid — Brand Redesign &amp; Design System',
     'cs-meta': 'Design System · Brand · 2025',
-    'cs-h1-1': 'Approach',
-    'cs-t1': 'Five designer groups each proposed a prototype embodying the new Cegid brand. After research and design, the five final prototypes were tested with 100 testers with the help of an external panel provider.',
-    'cs-h1-2': 'Results',
-    'cs-t2': 'Compared the projects against established criteria (color, usability...) to identify friction points and appealing elements, and to steer design decisions group-wide.'
+    'cg-brief-h': 'In brief',
+    'cg-brief-p1': 'In summer 2025, a group-wide design exercise brought six designer teams together: each had to propose a prototype embodying the new Cegid brand, driven by Marketing, on the same HR-management use case.',
+    'cg-brief-p2': "As a volunteer, I created the absences page (table and kanban views), reworked the Objectives card on the home page and animated the mockups into a prototype. Tested with 100 users, my team's proposal scored <strong>4.04 / 5</strong> for overall appreciation.",
+    'cg-start-h': 'A starting prototype to transform',
+    'cg-start-p': 'The Head of Design gave the teams a starting prototype: a home page, a page with a table, a modal to add an absence and an AI assistant. The exercise was to redo this journey by reworking the look and feel, while respecting the brand elements supplied by Marketing (logo, colors, typography). I started with a round of research to feed my proposal.',
+    'cg-choices-h': 'Three guiding choices for a new brand',
+    'cg-choices-intro': 'I worked with the other designers on the team on tone, interactions, colors and content hierarchy. Three guiding choices came out of it:',
+    'cg-choices-l1': '<strong>Minimalism and clarity</strong>: clearly delimited sections and modules, explicit titles, generous white space and a palette dominated by blues, with beige flat areas to structure the space.',
+    'cg-choices-l2': '<strong>A discreet AI assistant that is always up for it</strong>: present on every page in a side panel, it lets users navigate without breaking the visual harmony, with a tone that embraces its ability to do any task.',
+    'cg-choices-l3': '<strong>The human at the center</strong>: animated illustrations on the login and error pages, personalization ("Bonjour Axel") and welcome messages that strengthen engagement.',
+    'cg-choices-p': 'I drew inspiration from Material Design (cards with subtle shadows, rounded buttons, consistent grid and spacing) and from the navigation of a recent browser to structure the spaces, including the AI assistant.',
+    'cg-test-h': 'A large-scale test to converge',
+    'cg-test-p': 'Each proposal was tested, unmoderated, by a panel of 100 B2B users, through a questionnaire and a Figma prototype, in 20 to 25 minutes. The questionnaire measured brand perception and the emotions triggered (AttrakDiff) as well as the appreciation of each element (colors, typography, animations, navigation…), and collected verbatims. The principle: diverge with several proposals, then converge on a single one at group level.',
+    'cg-res-h': 'What the results showed',
+    'cg-stat1': 'overall appreciation, out of 5',
+    'cg-stat2': 'of testers rated 4 or higher',
+    'cg-stat3': 'attractiveness (AttrakDiff, from −3 to +3)',
+    'cg-res-p': 'AttrakDiff is positive on all four dimensions (attractiveness 1.62, identification 1.45, pragmatic 1.26, stimulation 1.21). The best-rated elements are tables (4.24), data visualization (4.23) and navigation (4.15); the lowest are iconography (3.91) and typography (3.93). Verbatims praise simplicity, clarity and the built-in AI assistant, and criticize overly pale blues, texts and icons that are too small, and an assistant button that is too discreet.',
+    'cg-learn-h': 'What I would strengthen',
+    'cg-learn-p': 'This feedback points to three areas: color contrast, the size of texts and icons, and the visibility of the assistant. These are the first points I would take up in a next iteration.'
   };
   (function () {
     var LANG_KEY = 'site-lang';

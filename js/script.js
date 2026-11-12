@@ -318,7 +318,7 @@
 
     'cegid-title': 'Cegid — Brand &amp; Design System redesign',
     'cegid-h1': 'Approach',
-    'cegid-t1': '5 designer groups each proposed a prototype embodying the new Cegid brand. After research and design, the 5 final prototypes were tested with 100 testers with the help of a panel provider.',
+    'cegid-t1': '6 designer groups each proposed a prototype embodying the new Cegid brand. After research and design, the 6 final prototypes were tested with 100 testers with the help of a panel provider.',
     'cegid-h2': 'Results',
     'cegid-t2': 'Compared the projects against established criteria (color, usability...) to identify friction points and appealing elements, and to steer design decisions group-wide.',
 
